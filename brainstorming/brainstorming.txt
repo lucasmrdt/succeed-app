@@ -1,0 +1,45 @@
+What an "need unfound icon" do ?
+
+FRAGMENTS:
+  - icon
+    @rotation
+    @height
+    #Auto compute width
+  - progress:
+    - bar:
+      @horizontal
+      @animated
+    - circle
+  - buttons:
+    @animated
+    @size: s|m|l
+    @light
+    @icon
+    @color?
+    - roundedButton
+    - ledgeButton
+    - blockButton
+  - text
+    - ration:
+      @icon
+    - warning
+    - title
+    - date
+  - overlay
+  - chart
+  - input:
+    - inputWithIcon
+    - formatedInput
+
+COMPONENTS:
+  - filterOverlay
+  - slider
+  - goal:
+    - goalTitle
+    - goalItem
+    - goalInformation
+    - goalSummary
+  - notificationItem
+  - footBar
+  - level:
+    @size: s|l
