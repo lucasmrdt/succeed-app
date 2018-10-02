@@ -164,7 +164,7 @@ class ChartLine extends React.Component {
         y2={y2}
         stroke={isSelected ? '#67F' : '#000'}
         strokeLinecap="round"
-        strokeWidth={isSelected ? .5 : .5}
+        strokeWidth={isSelected ? 1 : .5}
       />
     );
   }
