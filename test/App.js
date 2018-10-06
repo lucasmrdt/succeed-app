@@ -1,16 +1,19 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ChartTest from './src/ChartTest';
+import SharedAnimation from './src/SharedAnimation';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <ChartTest />
-      </View>
-    );
-  }
-}
+export default () => <SharedAnimation />;
+
+// export default class App extends React.Component {
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//         <ChartTest />
+//       </View>
+//     );
+//   }
+// }
 
 const styles = StyleSheet.create({
   container: {
