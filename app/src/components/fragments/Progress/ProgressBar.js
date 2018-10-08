@@ -5,17 +5,21 @@ import * as Utils from '@/utils';
 import { RNTypes } from '@/types';
 
 const SIZES = {
-  wrapperWidth: { s: 70, m: 70, xl: 320 },
+  wrapperWidth: { s: 70, m: 70, xl: Constants.SIZES.WIDTH * .85 },
   wrapperHeight: { s: 15, m: 20, xl: 32 },
-  minTextWidth: { s: 20, m: 30, xl: 50 },
-  fontSize: { s: 8, m: 9, xl: 11 },
+  minTextWidth: { s: 20, m: 25, xl: 50 },
+  fontSize: { s: 8, m: 9, xl: 13 },
 };
 
 type Props = {
+  direction?: 'vertical' | 'horizontal',
   color?: string,
-  textContent?: string,
+  text?: string,
   animatedProgress: number,
-  size?: 's' | 'm' | 'xl',
+  size?: 's' | 'm' | 'xl' | {
+    height?: number,
+    width?: number,
+  },
   style?: {
     text?: RNTypes.StylesheetType,
     wrapper?: RNTypes.StylesheetType,
@@ -29,20 +33,29 @@ type State = {
 
 class ProgressBar extends Utils.AnimatedComponent<Props, State> {
   static defaultProps = {
-    textContent: null,
+    text: null,
     size: 's',
     color: Constants.COLORS.WHITE,
     style: {},
+    direction: 'horizontal',
   };
 
   shouldComponentUpdate(nextProps: Props) {
-    const { textContent, animatedProgress } = this.props;
-    return (nextProps.textContent != textContent
+    const { text, animatedProgress } = this.props;
+    return (nextProps.text != text
     || nextProps.animatedProgress != animatedProgress);
   };
 
   get size() {
     const { size } = this.props;
+    if (typeof size === 'object') {
+      return {
+        wrapperHeight: size.height || SIZES.wrapperHeight.m,
+        wrapperWidth: size.width || SIZES.wrapperWidth.m,
+        minTextWidth: SIZES.minTextWidth.m,
+        fontSize: SIZES.fontSize.m,
+      }
+    }
     return {
       wrapperHeight: SIZES.wrapperHeight[size],
       wrapperWidth: SIZES.wrapperWidth[size],
@@ -53,32 +66,39 @@ class ProgressBar extends Utils.AnimatedComponent<Props, State> {
 
   renderText() {
     const {
-      textContent,
+      text,
       animatedProgress,
       style: propStyle,
     } = this.props;
+    const { animatedProgress: progress } = this.state;
     const size = this.size;
     const finalProgressWidth = size.wrapperWidth * animatedProgress;
+    const letterSpacing = progress.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 4],
+    });
 
     const textStyle: Array<RNTypes.StylesheetType> = [
       styles.text,
       propStyle.text,
-      { fontSize: size.fontSize },
+      {
+        fontSize: size.fontSize,
+        letterSpacing,
+      },
     ];
 
-    if (!textContent
-    || finalProgressWidth < size.minTextWidth) {
+    if (!text || finalProgressWidth < size.minTextWidth) {
       return null;
     }
     return (
-      <Text style={textStyle}>
-        {textContent}
-      </Text>
+      <Animated.Text style={textStyle}>
+        {text}
+      </Animated.Text>
     );
   }
 
   render() {
-    const { color, style: propStyle } = this.props;
+    const { color, style: propStyle, direction } = this.props;
     const { animatedProgress } = this.state;
     const size = this.size;
     const progressWidth = animatedProgress.interpolate({
@@ -90,6 +110,11 @@ class ProgressBar extends Utils.AnimatedComponent<Props, State> {
       styles.wrapper,
       propStyle.wrapper,
       {
+        transform: [{
+          rotate: direction === 'vertical'
+            ? '-90deg'
+            : '0deg'
+        }],
         borderColor: color,
         height: size.wrapperHeight,
         width: size.wrapperWidth,
