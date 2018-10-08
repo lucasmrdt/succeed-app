@@ -8,11 +8,26 @@ import * as Utils from '@/utils';
 class App extends React.Component {
   state = {
     isLoaded: false,
+    progress: .1,
   }
 
   async componentDidMount() {
     await Font.loadAsync(Constants.FONTS);
     this.setState({ isLoaded: true });
+
+    setInterval(() => this.setState(prev => ({ progress: prev.progress + .05 })), 1000);
+  }
+
+  renderContent() {
+    return (
+      <View>
+        <ProgressBar
+          animatedProgress={this.state.progress}
+          color={Constants.COLORS.GREEN}
+          textContent={`${Math.floor(this.state.progress * 100)} %`}
+        />
+      </View>
+    );
   }
 
 
@@ -22,12 +37,7 @@ class App extends React.Component {
       <View style={styles.wrapper}>
         {!isLoaded
           ? <Text>loading ...</Text>
-          : <ProgressBar
-            animateAtMount
-            animatedProgress={.5}
-            size='xl'
-            color={Constants.COLORS.GREEN}
-          />
+          : this.renderContent()
         }
       </View>
     );

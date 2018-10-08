@@ -2,18 +2,21 @@
 
 import _ from 'lodash';
 import React from 'react';
-import { Animated } from 'react-native';
+import { Animated, Easing } from 'react-native';
 
 type Props = {
   animateAtMount?: bool,
   animationOptions?: {
     duration?: number,
+    useNativeDriver?: bool,
+    easing?: any,
   },
 };
 
 const ANIMATION_OPTIONS = {
   duration: 500,
-  useNativeDriver: true,
+  easing: Easing.out(Easing.exp),
+  useNativeDriver: false,
 };
 
 /**
@@ -27,7 +30,7 @@ class AnimatedComponent<RefProps, RefState> extends React.Component<Props> {
 
   static defaultProps = {
     animationOptions: {},
-    animateAtMount: false,
+    animateAtMount: true,
   };
 
   static getDerivedStateFromProps(nextProps: Props, prevState: RefState) {
@@ -51,7 +54,7 @@ class AnimatedComponent<RefProps, RefState> extends React.Component<Props> {
     _.forEach(animatedProps, (value, key) => {
       Animated.timing(state[key], {
         toValue: nextProps[key],
-        duration: options.duration,
+        ...options,
       }).start();
     });
 
