@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { onlyUpdateForKeys } from 'recompose';
 import { createStyleSheet } from '@/utils';
 import * as Constants from '@/constants';
 import ProgressBar from './ProgressBar';
@@ -26,4 +27,8 @@ const HorizontalProgress = (props: Props) => {
   );
 }
 
-export default HorizontalProgress;
+// Never update!
+const OptimizedHorizontalProgress: React.ComponentType<Props> = (
+  onlyUpdateForKeys(['progress', 'text'])(HorizontalProgress)
+);
+export default OptimizedHorizontalProgress;

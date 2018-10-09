@@ -1,7 +1,9 @@
+// @flow
+
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Font } from 'expo';
-import { ProgressBar, VerticalProgress, HorizontalProgress } from '@/components/fragments';
+import { ProgressBar, VerticalProgress, HorizontalProgress, CircleProgress, TextValue } from '@/components/fragments';
 import * as Constants from '@/constants';
 import * as Utils from '@/utils';
 
@@ -29,7 +31,13 @@ class App extends React.Component {
         />
         <VerticalProgress
           progress={this.state.progress}
+          renderText={(progress) => <TextValue value={`${Math.round(progress)} %`} label='of your goal' />}
           text='of your goal'
+        />
+        <CircleProgress
+          renderText={(progress) => <TextValue value='17' label='days left' />}
+          progress={this.state.progress}
+          color={Constants.COLORS.GREEN}
         />
       </React.Fragment>
     );

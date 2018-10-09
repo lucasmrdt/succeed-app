@@ -13,7 +13,7 @@ type Props = {
   },
 };
 
-const ANIMATION_OPTIONS = {
+export const ANIMATION_OPTIONS = {
   duration: 500,
   easing: Easing.out(Easing.exp),
   useNativeDriver: false,

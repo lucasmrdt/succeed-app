@@ -6,22 +6,15 @@ import ProgressBar from './ProgressBar';
 
 type Props = {
   progress: number,
-  text?: string,
+  renderText?: string,
 };
 
 const VerticalProgress = (props: Props) => {
-  const { progress, text } = props;
+  const { progress, renderText } = props;
 
   return (
     <View style={styles.wrapper}>
-      {text && <View style={styles.textWrapper}>
-        <Text style={styles.textProgress}>
-          {`${Math.round(progress * 100)} %`}
-        </Text>
-        <Text style={styles.text}>
-          {text}
-        </Text>
-      </View>}
+      {renderText && renderText(progress * 100)}
       <ProgressBar
         animateAtMount
         animatedProgress={progress}
