@@ -1,5 +1,2 @@
-import { ProgressBar } from './Progress';
-
-export {
-  ProgressBar,
-};
+export * from './Progress';
+export * from './Text';
