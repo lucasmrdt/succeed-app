@@ -57,7 +57,7 @@ class CircleProgress extends React.Component<Props, State> {
     return { size: outputSize };
   }
 
-  shouldComponentUpdate(nextProps: Props, nextState: State) {
+  shouldComponentUpdate(nextProps: Props) {
     const { progress, size } = this.props;
 
     return (progress !== nextProps.progress);

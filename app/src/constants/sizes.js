@@ -6,4 +6,3 @@ export const {
   height: HEIGHT,
   width: WIDTH,
 } = Dimensions.get('window');
-
