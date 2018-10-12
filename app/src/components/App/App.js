@@ -3,7 +3,15 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Font } from 'expo';
-import { ProgressBar, VerticalProgress, HorizontalProgress, CircleProgress, TextValue } from '@/components/fragments';
+import {
+  ProgressBar,
+  VerticalProgress,
+  HorizontalProgress,
+  CircleProgress,
+  TextValue,
+  RoundedButton,
+  AnimatedRoundedButton,
+} from '@/components/fragments';
 import * as Constants from '@/constants';
 import * as Utils from '@/utils';
 
@@ -29,6 +37,26 @@ class App extends React.Component {
           color={Constants.COLORS.GREEN}
           size='xl'
         />
+        <RoundedButton
+          rounded='fully'
+          size={this.state.progress < .5 ? { width: 100, height: 30 } : { width: 200, height: 50 }}
+          onPress={(e) => console.log(e)}
+          color={Constants.COLORS.GREEN}
+          id='ok'
+        >
+          <Text>1</Text>
+          <Text>2</Text>
+        </RoundedButton>
+        <AnimatedRoundedButton
+          rounded='fully'
+          size={this.state.progress < .5 ? { width: 100, height: 30 } : { width: 200, height: 50 }}
+          onPress={(e) => console.log(e)}
+          color={Constants.COLORS.GREEN}
+          id='ok'
+        >
+          <Text>1</Text>
+          <Text>2</Text>
+        </AnimatedRoundedButton>
         <VerticalProgress
           progress={this.state.progress}
           renderText={(progress) => <TextValue value={`${Math.round(progress)} %`} label='of your goal' />}
