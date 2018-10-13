@@ -13,8 +13,8 @@ import {
 import * as Utils from '@/utils';
 import { RNTypes } from '@/types';
 
-const OFFSET_ONPRESS = 10;
-const DURATION_ONPRESSIN = 50;
+const SCALE_ONPRESS = 1.1;
+const DURATION_ONPRESSIN = 100;
 const DURATION_ONPRESSOUT = 500;
 const EASING = Easing.out(Easing.back(1.5));
 
@@ -49,7 +49,7 @@ class AnimatedButton extends Utils.AnimatedComponent<Props, State> {
 
   onPressIn = () => {
     Animated.timing(this.animatedOffset, {
-      toValue: OFFSET_ONPRESS,
+      toValue: 1,
       duration: DURATION_ONPRESSIN,
       easing: EASING,
     }).start();
@@ -72,11 +72,17 @@ class AnimatedButton extends Utils.AnimatedComponent<Props, State> {
       animatedHeight,
     } = this.state;
 
+    const scale = this.animatedOffset.interpolate({
+      inputRange: [0, 1],
+      outputRange: [1, SCALE_ONPRESS],
+    });
+
     const wrapperStyle: Array<RNTypes.StylesheetType> = [
       style,
       {
         width: Animated.add(animatedWidth, this.animatedOffset),
         height: Animated.add(animatedHeight, this.animatedOffset),
+        transform: [{ scale }],
       },
     ];
 
