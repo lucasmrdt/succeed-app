@@ -46,7 +46,7 @@ AnimatedRoundedButton.defaultProps = {
   rounded: 'little',
   animateAtMount: true,
   animationOptions: {
-    duration: 300,
+    duration: 500,
     easing: Easing.out(Easing.back(1.5)),
   },
 };

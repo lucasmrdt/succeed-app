@@ -51,12 +51,13 @@ class AnimatedComponent<RefProps, RefState> extends React.Component<Props> {
       if (!animateAtMount) return state;
     }
 
-    _.forEach(animatedProps, (value, key) => {
-      Animated.timing(state[key], {
-        toValue: nextProps[key],
-        ...options,
-      }).start();
-    });
+
+    Animated.parallel(
+      _.map(animatedProps, (value, key) => Animated.timing(
+        state[key],
+        { toValue: nextProps[key], ...options },
+      ))
+    ).start()
 
     return isFirstOccurence ? state : null;
   }
