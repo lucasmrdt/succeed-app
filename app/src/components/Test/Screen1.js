@@ -1,9 +1,11 @@
 // @flow
 
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Animated } from 'react-native';
 import {
   AnimatedRoundedButton,
+  ProgressBar,
+  HorizontalProgress,
 } from '@/components/fragments';
 import { RNTypes } from '@/types';
 import * as Constants from '@/constants';
@@ -23,7 +25,7 @@ class Test extends React.Component<Props> {
   render() {
     return (
       <View style={styles.wrapper}>
-        <AnimatedRoundedButton
+        {/* <AnimatedRoundedButton
           rounded='fully'
           size={{ width: 200, height: 50 }}
           onPress={this.onPress}
@@ -32,7 +34,19 @@ class Test extends React.Component<Props> {
         >
           <Text>1</Text>
           <Text>2</Text>
-        </AnimatedRoundedButton>
+        </AnimatedRoundedButton> */}
+        <HorizontalProgress
+          progress={1}
+          text='petit test'
+          size='l'
+        />
+        <ProgressBar
+          animateAtMount
+          animatedProgress={1}
+          size={{ width: 200, height: 30 }}
+          color={Constants.COLORS.GREEN}
+          renderText={p => <Animated.Text style={{ color: 'white' }}>{`${Math.round(p * 100)} / 100`}</Animated.Text>}
+        />
       </View>
     );
   }

@@ -16,7 +16,7 @@ type Props = {
 export const ANIMATION_OPTIONS = {
   duration: 500,
   easing: Easing.out(Easing.exp),
-  useNativeDriver: false,
+  useNativeDriver: true,
 };
 
 /**
