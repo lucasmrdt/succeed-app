@@ -1,6 +1,9 @@
 // @flow
 
+
 type FlexAlignType = 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+
+import { NavigationInjectedProps } from 'react-navigation';
 
 export type StylesheetType = {
   backfaceVisibility?: 'visible' | 'hidden',
@@ -111,3 +114,7 @@ export type StylesheetType = {
   tintColor?: string,
   opacity?: number,
 }
+
+export {
+  NavigationInjectedProps,
+};

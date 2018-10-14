@@ -5,7 +5,7 @@ import { View, Easing, StyleSheet } from 'react-native';
 import { onlyUpdateForKeys } from 'recompose';
 import * as Utils from '@/utils';
 import * as Constants from '@/constants';
-import AnimatedButton from './AnimatedButton';
+import AnimatedButton, { type AnimatedButtonProps } from './AnimatedButton';
 import { type RNTypes } from '@/types';
 
 type Props = {
@@ -22,7 +22,7 @@ type Props = {
   id?: string,
   children?: React.Component,
   light?: bool,
-};
+} & AnimatedButtonProps ;
 
 const AnimatedRoundedButton = (props: Props) => {
   const { size, ...otherProps } = props;
@@ -65,7 +65,7 @@ const getStyle = ({ color, light, rounded }: Props) => {
   return [ styles.global, style ];
 }
 
-const OptimizedAnimatedRoundedButton = (
+const OptimizedAnimatedRoundedButton: React.ComponentElement = (
   onlyUpdateForKeys(['size', 'color', 'light'])(AnimatedRoundedButton)
 );
 

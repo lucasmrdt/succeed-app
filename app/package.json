@@ -17,7 +17,14 @@
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
     "react-native-circular-progress": "^1.0.1",
-    "recompose": "^0.30.0"
+    "react-navigation": "^2.18.0",
+    "react-navigation-fluid-transitions": "^0.2.72",
+    "react-navigation-redux-helpers": "^2.0.6",
+    "react-redux": "^5.0.7",
+    "recompose": "^0.30.0",
+    "redux": "^4.0.1",
+    "redux-persist": "^5.10.0",
+    "redux-saga": "^0.16.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

@@ -22,6 +22,7 @@ type Props = {
   animatedWidth: number,
   animatedHeight: number,
   onPress: (id: string) => void,
+  isNavigationTransition?: bool,
   id?: string,
   children?: React.Component,
   style?: RNTypes.StylesheetType,
@@ -38,6 +39,7 @@ class AnimatedButton extends Utils.AnimatedComponent<Props, State> {
   static defaultProps = {
     id: null,
     style: null,
+    isNavigationTransition: false,
   };
 
   static propTypes = {
@@ -65,7 +67,7 @@ class AnimatedButton extends Utils.AnimatedComponent<Props, State> {
     }).start();
   }
 
-  render() {
+  _renderChildren() {
     const { children, style } = this.props;
     const {
       animatedWidth,
@@ -87,16 +89,30 @@ class AnimatedButton extends Utils.AnimatedComponent<Props, State> {
     ];
 
     return (
-      <TouchableWithoutFeedback
-        onPressIn={this.onPressIn}
-        onPressOut={this.onPressOut}
-      >
-        <Animated.View style={wrapperStyle}>
-          {children}
-        </Animated.View>
+      <Animated.View style={wrapperStyle}>
+        {children}
+      </Animated.View>
+    );
+  }
+
+  render() {
+    const {
+      onPress,
+      isNavigationTransition,
+    } = this.props;
+
+    const touchableProps = (isNavigationTransition
+      ? { onPress }
+      : { onPressIn: this.onPressIn, onPressOut: this.onPressOut }
+    );
+
+    return (
+      <TouchableWithoutFeedback {...touchableProps}>
+        {this._renderChildren()}
       </TouchableWithoutFeedback>
     );
   }
 };
 
+export type AnimatedButtonProps = Props;
 export default AnimatedButton;
