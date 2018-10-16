@@ -13,7 +13,7 @@ type Props = {
   },
 };
 
-export const ANIMATION_OPTIONS = {
+const ANIMATION_OPTIONS = {
   duration: 500,
   easing: Easing.out(Easing.exp),
   useNativeDriver: true,
@@ -50,7 +50,6 @@ class AnimatedComponent<RefProps, RefState> extends React.Component<Props> {
 
       if (!animateAtMount) return state;
     }
-
 
     Animated.parallel(
       _.map(animatedProps, (value, key) => Animated.timing(

@@ -9,7 +9,7 @@ import { SIZES, COLORS } from '@/constants';
 import { RNTypes } from '@/types';
 
 const WIDTH = SIZES.WIDTH;
-const RATIO_FONT_SIZE_TO_MIN_TEXT_WIDTH = 2.5;
+const RATIO_FONT_SIZE_TO_MIN_TEXT_WIDTH = 3.2;
 
 const STYLE_BY_SIZES = {
   s: { wHeight: 15, wWidth: 70, fontSize: 8 },
@@ -44,7 +44,7 @@ class HorizontalProgress extends React.Component<Props> {
     text: null,
   };
 
-  computeStyle() {
+  _computeStyle() {
     const { size, color, light } = this.props;
     const selectedStyle = STYLE_BY_SIZES[size];
 
@@ -77,17 +77,19 @@ class HorizontalProgress extends React.Component<Props> {
     };
   }
 
-  defaultTextRender(style) {
+  _renderText(style) {
     const { text, size } = this.props;
     const selectedStyle = STYLE_BY_SIZES[size];
 
     return (progress: number) => {
       const isVisible = (progress * selectedStyle.wWidth >
-        RATIO_FONT_SIZE_TO_MIN_TEXT_WIDTH
+        RATIO_FONT_SIZE_TO_MIN_TEXT_WIDTH * selectedStyle.fontSize
       );
 
-      if (!text || !isVisible) {
-        return null;
+      if (!text || !isVisible) return null;
+
+      if (typeof text === 'function') {
+        return text(progress);
       }
       return (
         <Text style={style}>{text}</Text>
@@ -97,7 +99,7 @@ class HorizontalProgress extends React.Component<Props> {
 
   render() {
     const { text, size, progress } = this.props;
-    const style = this.computeStyle();
+    const style = this._computeStyle();
     const selectedStyle = STYLE_BY_SIZES[size];
 
     return (
@@ -111,10 +113,7 @@ class HorizontalProgress extends React.Component<Props> {
           width: selectedStyle.wWidth,
           height: selectedStyle.wHeight,
         }}
-        renderText={typeof text === 'function'
-          ? text
-          : this.defaultTextRender(style.text)
-        }
+        renderText={this._renderText(style.text)}
       />
     );
   }

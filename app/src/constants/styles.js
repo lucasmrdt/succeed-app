@@ -13,8 +13,9 @@ export const SPACE_BETWEEN: RNTypes.StylesheetType = {
   alignItems: 'center',
 };
 
-export const ROUNDED_BUTTON: RNTypes.StylesheetType = {
+export const BUTTON: RNTypes.StylesheetType = {
   ...CENTER_CHILDS,
+  position: 'relative',
   flexDirection: 'row',
   shadowOpacity: 1,
   shadowOffset: {
@@ -24,4 +25,9 @@ export const ROUNDED_BUTTON: RNTypes.StylesheetType = {
   shadowColor: 'rgba(0, 0, 0, .15)',
   shadowRadius: 20,
   borderWidth: 1,
+};
+
+export const SHARED_BUTTON: RNTypes.StylesheetType = {
+  ...BUTTON,
+  position: 'absolute',
 };

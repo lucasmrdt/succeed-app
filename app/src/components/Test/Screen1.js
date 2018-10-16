@@ -1,52 +1,51 @@
 // @flow
 
 import React from 'react';
-import { Text, View, Animated } from 'react-native';
+import { Text, View, Animated, FlatList } from 'react-native';
 import {
   AnimatedRoundedButton,
   ProgressBar,
   HorizontalProgress,
+  VerticalProgress,
+  CircleProgress,
+  Button,
 } from '@/components/fragments';
 import { RNTypes } from '@/types';
 import * as Constants from '@/constants';
 import { createStyleSheet } from '@/utils';
 
+const DATA = [...Array(16)].map((_, i) => `this is the ${i}`);
+
 type Props = RNTypes.NavigationInjectedProps;
 
 class Test extends React.Component<Props> {
   state = {
-    progress: .1,
+    progress: .7,
   }
 
-  onPress = () => {
-    this.props.navigation.push('Screen2');
+  componentDidMount() {
+    // setInterval(() => this.setState(s => s.progress < 1 ? ({ progress: s.progress + .05}) : s), 1500);
+  }
+
+  onPress = (buttonId) => {
+    this.props.navigation.push('Screen2', { buttonId });
   }
 
   render() {
     return (
       <View style={styles.wrapper}>
-        {/* <AnimatedRoundedButton
-          rounded='fully'
-          size={{ width: 200, height: 50 }}
+        <Button
+          style={{
+            marginBottom: 30,
+          }}
+          key={'test'}
+          id={'test'}
+          color={'blue'}
+          size={{width: 200, height: 50}}
           onPress={this.onPress}
-          color={Constants.COLORS.GREEN}
-          id='ok'
         >
-          <Text>1</Text>
-          <Text>2</Text>
-        </AnimatedRoundedButton> */}
-        <HorizontalProgress
-          progress={1}
-          text='petit test'
-          size='l'
-        />
-        <ProgressBar
-          animateAtMount
-          animatedProgress={1}
-          size={{ width: 200, height: 30 }}
-          color={Constants.COLORS.GREEN}
-          renderText={p => <Animated.Text style={{ color: 'white' }}>{`${Math.round(p * 100)} / 100`}</Animated.Text>}
-        />
+          <Text>{'petit poid'}</Text>
+        </Button>
       </View>
     );
   }
@@ -54,9 +53,11 @@ class Test extends React.Component<Props> {
 
 const styles  = createStyleSheet({
   wrapper: {
-    ...Constants.STYLES.CENTER_CHILDS,
-    flexDirection: 'column',
-    justifyContent: 'space-around',
+    // ...Constants.STYLES.CENTER_CHILDS,
+    alignItems: 'center',
+    backgroundColor: 'blue',
+    // flexDirection: 'column',
+    // justifyContent: 'space-around',
     height: Constants.SIZES.HEIGHT,
     width: Constants.SIZES.WIDTH,
   },

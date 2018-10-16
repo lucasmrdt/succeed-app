@@ -29,7 +29,7 @@ class ProgressBar extends Utils.AnimatedComponent<Props, State> {
   state = {};
 
   static defaultProps = {
-    animationOptions: {},
+    animationOptions: Constants.ANIMATIONS.PROGRESS_ANIMATION_OPTIONS,
     animateAtMount: true,
     text: null,
     style: {},
@@ -41,7 +41,7 @@ class ProgressBar extends Utils.AnimatedComponent<Props, State> {
     || nextProps.animatedProgress != animatedProgress);
   }
 
-  computeStyle() {
+  _computeStyle() {
     const {
       direction,
       size,
@@ -69,7 +69,7 @@ class ProgressBar extends Utils.AnimatedComponent<Props, State> {
           })},
           {scaleX: progress.interpolate({
             inputRange: [0, 1],
-            outputRange: [0, 1],
+            outputRange: [.00001, 1], // Fix bu when scaleX is null on android.
           })},
         ],
       },
@@ -109,7 +109,7 @@ class ProgressBar extends Utils.AnimatedComponent<Props, State> {
 
   render() {
     const { renderText } = this.props;
-    const style = this.computeStyle();
+    const style = this._computeStyle();
 
     return (
       <View style={style.wrapper}>
@@ -138,10 +138,10 @@ const styles = Utils.createStyleSheet({
   },
   progress: {
     ...StyleSheet.absoluteFillObject,
-    width: '100%',
+    width: '101%', // Fix border issue on android
     borderRadius: 100,
     height: '100%',
-    left: 0,
+    left: '-.5%',
   },
 });
 

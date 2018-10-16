@@ -10,7 +10,6 @@ import { type RNTypes } from '@/types';
 
 type Props = {
   onPress: (id: string) => void,
-  size: { height: number, width: number },
   rounded?: 'fully' | 'little',
   color?: string,
   id?: string,
