@@ -1,10 +1,43 @@
 import React from 'react';
-import { View, Text, Animated } from 'react-native';
+import { View, Text, Animated, Button, TouchableWithoutFeedback, Easing } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { createFluidNavigator } from 'react-navigation-fluid-transitions';
+import { createFluidNavigator, Transition } from 'react-navigation-fluid-transitions';
 import { createMaterialTopTabNavigator, TabBarBottom } from 'react-navigation';
 
-const Screen1 = () => <Text style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >screen 1</Text>;
+const Screen1_A = (props) => (
+  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Transition shared="shared">
+      <View style={{ width: 200, height: 200, backgroundColor: 'blue' }} />
+    </Transition>
+    <TouchableWithoutFeedback
+      onPressIn={() => props.navigation.push('Screen1_B')}
+    >
+      <View style={{ height: 30, width: 100, backgroundColor: 'red' }}>
+        <Text>NEXT!</Text>
+      </View>
+    </TouchableWithoutFeedback>
+    <Button onPress={() => props.navigation.push('Screen1_B')} title='next' />
+  </View>
+)
+const Screen1_B = (props) => (
+  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Transition shared="shared">
+      <View style={{ width: 100, height: 100, backgroundColor: 'pink' }} />
+    </Transition>
+    <Button onPress={() => props.navigation.goBack()} title='back' />
+  </View>
+)
+const Screen1 = createFluidNavigator({
+  Screen1_A: { screen: Screen1_A },
+  Screen1_B: { screen: Screen1_B },
+}, {
+  transitionConfig: {
+    duration: 150,
+    timing: Animated.timing,
+    easing: Easing.easing,
+    delay: 0,
+  }
+});
 const Screen2 = () => <Text style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >screen 1</Text>;
 
 class Tab extends React.Component {
