@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { Animated, View, StyleSheet, Text } from 'react-native';
+import AnimatedComponent from '../AnimatedComponent';
 import * as Constants from '@/constants';
-import * as Utils from '@/utils';
+import { createStyleSheet } from '@/utils';
 import { RNTypes } from '@/types';
 
 const TEXT_CHILD_WIDTH = 100;
@@ -25,23 +26,24 @@ type State = {
   animatedProgress: Animated.Value,
 };
 
-class ProgressBar extends Utils.AnimatedComponent<Props, State> {
+class ProgressBar extends AnimatedComponent<Props, State> {
   state = {};
 
   static defaultProps = {
-    animationOptions: Constants.ANIMATIONS.PROGRESS_ANIMATION_OPTIONS,
+    animationOptions: Constants.ANIMATIONS.BASIC_ANIMATIONS_OPTIONS,
     animateAtMount: true,
     text: null,
     style: {},
   };
 
   shouldComponentUpdate(nextProps: Props) {
-    const { text, animatedProgress } = this.props;
-    return (nextProps.text != text
-    || nextProps.animatedProgress != animatedProgress);
+    const { text, style } = this.props;
+
+    return (nextProps.text !== text
+    || nextProps.style !== style);
   }
 
-  _computeStyle() {
+  computeStyle() {
     const {
       direction,
       size,
@@ -94,7 +96,7 @@ class ProgressBar extends Utils.AnimatedComponent<Props, State> {
     };
   }
 
-  _renderText(style: RNTypes.StylesheetType) {
+  renderText(style: RNTypes.StylesheetType) {
     const { renderText } = this.props;
     const { animatedProgress: targetProgress } = this.props;
 
@@ -109,18 +111,18 @@ class ProgressBar extends Utils.AnimatedComponent<Props, State> {
 
   render() {
     const { renderText } = this.props;
-    const style = this._computeStyle();
+    const style = this.computeStyle();
 
     return (
       <View style={style.wrapper}>
         <Animated.View style={style.progress} />
-        {renderText && this._renderText(style.textWrapper)}
+        {renderText && this.renderText(style.textWrapper)}
       </View>
     );
   }
 };
 
-const styles = Utils.createStyleSheet({
+const styles = createStyleSheet({
   wrapper: {
     position: 'relative',
     overflow: 'hidden',

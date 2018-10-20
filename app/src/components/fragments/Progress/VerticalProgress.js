@@ -4,7 +4,8 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import ProgressBar from './ProgressBar';
-import { createStyleSheet, converters } from '@/utils';
+import { Memoize, Converter } from '@/helpers';
+import { createStyleSheet } from '@/utils';
 import { SIZES, COLORS, STYLES, ANIMATIONS } from '@/constants';
 import { RNTypes } from '@/types';
 
@@ -41,15 +42,24 @@ class VerticalProgress extends React.Component<Props> {
     text: null,
   };
 
-  _computeStyle() {
-    const { size, color, light } = this.props;
+  shouldComponentUpdate(nextProps: Props) {
+    const { text, color, progress } = this.props;
+
+    return (nextProps.color !== color
+    || nextProps.text !== text
+    || nextProps.progress !== progress);
+  }
+
+  @Memoize.shouldUpdate('color')
+  computeStyle(props: Props) {
+    const { size, color, light } = props;
     const selectedStyle = STYLE_BY_SIZES[size];
 
     const wrapperStyle: Array<RNTypes.StylesheetType> = [
       styles.progressWrapper,
       {
         backgroundColor: (!light
-          ? converters.rgbWithOpacity(color, BACKGROUND_OPACITY)
+          ? Converter.rgbWithOpacity(color, BACKGROUND_OPACITY)
           : COLORS.TRANSPARENT_WHITE
         ),
       },
@@ -77,7 +87,7 @@ class VerticalProgress extends React.Component<Props> {
     };
   }
 
-  _renderText(style) {
+  renderText(style) {
     const { text, size, progress } = this.props;
 
     if (!text) return null;
@@ -92,20 +102,17 @@ class VerticalProgress extends React.Component<Props> {
 
   render() {
     const { text, size, progress } = this.props;
-    const style = this._computeStyle();
+    const computedStyle = this.computeStyle(this.props);
     const selectedStyle = STYLE_BY_SIZES[size];
 
     return (
       <View style={styles.wrapper}>
-        {this._renderText(style.text)}
+        {this.renderText(computedStyle.text)}
         <View style={styles.rotate}>
           <ProgressBar
             animationOptions={ANIMATION_OPTIONS}
             animatedProgress={progress}
-            style={{
-              progress: style.progress,
-              wrapper: style.wrapper,
-            }}
+            style={computedStyle}
             size={{
               // Think that progress will rotate.
               width: selectedStyle.wHeight,

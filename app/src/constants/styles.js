@@ -13,9 +13,7 @@ export const SPACE_BETWEEN: RNTypes.StylesheetType = {
   alignItems: 'center',
 };
 
-export const BUTTON: RNTypes.StylesheetType = {
-  ...CENTER_CHILDS,
-  position: 'relative',
+export const SHADOW: RNTypes.StylesheetType = {
   flexDirection: 'row',
   shadowOpacity: 1,
   shadowOffset: {
@@ -24,10 +22,15 @@ export const BUTTON: RNTypes.StylesheetType = {
   },
   shadowColor: 'rgba(0, 0, 0, .15)',
   shadowRadius: 20,
-  borderWidth: 1,
 };
 
-export const SHARED_BUTTON: RNTypes.StylesheetType = {
-  ...BUTTON,
-  position: 'absolute',
+export const FULLY_ROUNDED_BORDER_RADIUS = 100;
+export const LITTLE_ROUNDED_BORDER_RADIUS = 6;
+
+export const BUTTON: RNTypes.StylesheetType = {
+  ...CENTER_CHILDS,
+  ...SHADOW,
+  position: 'relative',
+  flexDirection: 'row',
+  borderWidth: 1,
 };

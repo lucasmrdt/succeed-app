@@ -1,13 +1,10 @@
 // @flow
 
-import { createNavigationReducer } from 'react-navigation-redux-helpers';
-import { AppNavigator } from '../navigator';
 import { combineReducers } from 'redux';
-
-const navReducer = createNavigationReducer(AppNavigator);
+import testReducer from './testReducer';
 
 const reducer = combineReducers({
-  nav: navReducer,
+  testReducer,
 });
 
 export default reducer;

@@ -3,6 +3,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { Animated, Easing } from 'react-native';
+import { ANIMATIONS } from '@/constants';
 
 type Props = {
   animateAtMount?: bool,
@@ -13,11 +14,7 @@ type Props = {
   },
 };
 
-const ANIMATION_OPTIONS = {
-  duration: 500,
-  easing: Easing.out(Easing.exp),
-  useNativeDriver: true,
-};
+const { BASIC_ANIMATIONS_OPTIONS } = ANIMATIONS;
 
 /**
  * HOW TO USE ?
@@ -38,7 +35,7 @@ class AnimatedComponent<RefProps, RefState> extends React.Component<Props> {
 
     const isFirstOccurence = _.isEmpty(state);
     const { animationOptions, animateAtMount } = nextProps;
-    const options = { ...ANIMATION_OPTIONS, ...animationOptions };
+    const options = { ...BASIC_ANIMATIONS_OPTIONS, ...animationOptions };
     const animatedProps = _.pickBy(nextProps, (val, key) => (
       key.match(/^animated.*/)
     ));
@@ -56,7 +53,7 @@ class AnimatedComponent<RefProps, RefState> extends React.Component<Props> {
         state[key],
         { toValue: nextProps[key], ...options },
       ))
-    ).start()
+    ).start();
 
     return isFirstOccurence ? state : null;
   }

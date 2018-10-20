@@ -5,12 +5,12 @@ import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import ProgressBar from './ProgressBar';
 import { createStyleSheet } from '@/utils';
+import { Memoize } from '@/helpers';
 import { SIZES, COLORS } from '@/constants';
 import { RNTypes } from '@/types';
 
 const WIDTH = SIZES.WIDTH;
 const RATIO_FONT_SIZE_TO_MIN_TEXT_WIDTH = 3.2;
-
 const STYLE_BY_SIZES = {
   s: { wHeight: 15, wWidth: 70, fontSize: 8 },
   m: { wHeight: 20, wWidth: 70, fontSize: 9 },
@@ -44,8 +44,17 @@ class HorizontalProgress extends React.Component<Props> {
     text: null,
   };
 
-  _computeStyle() {
-    const { size, color, light } = this.props;
+  shouldComponentUpdate(nextProps: Props) {
+    const { text, color, progress } = this.props;
+
+    return (nextProps.color !== color
+    || nextProps.text !== text
+    || nextProps.progress !== progress);
+  }
+
+  @Memoize.shouldUpdate('color')
+  computeStyle(props: Props) {
+    const { size, color, light } = props;
     const selectedStyle = STYLE_BY_SIZES[size];
 
     const wrapperStyle: Array<RNTypes.StylesheetType> = [
@@ -77,7 +86,7 @@ class HorizontalProgress extends React.Component<Props> {
     };
   }
 
-  _renderText(style) {
+  renderText(style) {
     const { text, size } = this.props;
     const selectedStyle = STYLE_BY_SIZES[size];
 
@@ -99,21 +108,18 @@ class HorizontalProgress extends React.Component<Props> {
 
   render() {
     const { text, size, progress } = this.props;
-    const style = this._computeStyle();
+    const computedStyle = this.computeStyle(this.props);
     const selectedStyle = STYLE_BY_SIZES[size];
 
     return (
       <ProgressBar
         animatedProgress={progress}
-        style={{
-          progress: style.progress,
-          wrapper: style.wrapper,
-        }}
+        style={computedStyle}
         size={{
           width: selectedStyle.wWidth,
           height: selectedStyle.wHeight,
         }}
-        renderText={this._renderText(style.text)}
+        renderText={this.renderText(computedStyle.text)}
       />
     );
   }

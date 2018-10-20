@@ -23,6 +23,7 @@
     "react-redux": "^5.0.7",
     "recompose": "^0.30.0",
     "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.5",
     "redux-persist": "^5.10.0",
     "redux-saga": "^0.16.2"
   },
@@ -35,6 +36,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
-    "flow-bin": "^0.82.0"
+    "flow-bin": "^0.82.0",
+    "why-did-you-update": "^0.1.1"
   }
 }

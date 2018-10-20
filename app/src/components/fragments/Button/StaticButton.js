@@ -1,15 +1,20 @@
 // @flow
+/**
+ * Why this component is created ?
+ * It's allow you to use the simplest stylised button
+ * for you app without any animation. (usefull in FlatList for example).
+ * It's optimized component.
+ * It's also used with fluid-transition for expense to the window
+ * size for example.
+ */
 
 import React from 'react';
-import { Transition } from 'react-navigation-fluid-transitions';
 import PropTypes from 'prop-types';
 import { View, TouchableWithoutFeedback } from 'react-native';
+import { Transition } from 'react-navigation-fluid-transitions';
 import { createStyleSheet } from '@/utils';
-import { ANIMATIONS, STYLES,COLORS } from '@/constants';
+import { ANIMATIONS, STYLES, COLORS } from '@/constants';
 import { type RNTypes } from '@/types';
-
-const FULLY_ROUNDED_BORDER_RADIUS = 100;
-const LITTLE_ROUNDED_BORDER_RADIUS = 6;
 
 type Props = {
   onPress: (id: string) => void,
@@ -22,7 +27,7 @@ type Props = {
   style?: RNTypes.StylesheetType,
 };
 
-class Button extends React.Component<Props> {
+class StaticButton extends React.Component<Props> {
   static defaultProps = {
     color: COLORS.GREEN,
     rounded: 'little',
@@ -46,10 +51,10 @@ class Button extends React.Component<Props> {
 
   shouldComponentUpdate() {
     // We never refresh component, we suppose that it's static component.
-    return true;
+    return false;
   }
 
-  _computeStyle() {
+  computeStyle() {
     const {
       style,
       size,
@@ -59,13 +64,13 @@ class Button extends React.Component<Props> {
     } = this.props;
 
     const borderRadius = (rounded === 'fully'
-      ? FULLY_ROUNDED_BORDER_RADIUS
-      : LITTLE_ROUNDED_BORDER_RADIUS
+      ? STYLES.FULLY_ROUNDED_BORDER_RADIUS
+      : STYLES.LITTLE_ROUNDED_BORDER_RADIUS
     );
 
     const wrapperStyle: Array<RNTypes.StylesheetType> = [
-      style,
       styles.wrapper,
+      style,
       {
         width: size.width,
         height: size.height,
@@ -73,12 +78,9 @@ class Button extends React.Component<Props> {
         borderRadius,
       },
     ];
-
     const buttonStyle: Array<RNTypes.StylesheetType> = [
       styles.button,
       {
-        width: size.width,
-        height: size.height,
         backgroundColor: !light ? color : 'transparent',
         borderRadius,
       },
@@ -90,18 +92,18 @@ class Button extends React.Component<Props> {
     };
   }
 
-  _onPress = () => {
+  onPress = () => {
     const { onPress, id } = this.props;
     onPress(id);
   }
 
   render() {
     const { children, id: buttonId } = this.props;
-    const style = this._computeStyle();
+    const style = this.computeStyle();
 
     return (
       <TouchableWithoutFeedback
-        onPress={this._onPress}
+        onPress={this.onPress}
       >
         <View style={style.wrapper}>
           <Transition shared={buttonId}>
@@ -117,11 +119,13 @@ class Button extends React.Component<Props> {
 const styles = createStyleSheet({
   wrapper: {
     ...STYLES.BUTTON,
-    position: 'relative',
   },
   button: {
     position: 'absolute',
+    height: '100%',
+    width: '100%',
   },
 });
 
-export default Button;
+export const staticButtonStyles = styles;
+export default StaticButton;

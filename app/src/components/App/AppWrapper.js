@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import LoadScreen from '../LoadScreen';
-import { AppNavigator } from '@/navigator';
+import { AppNavigator, HomeNavigator } from '@/navigators';
 import { store, persistor } from '@/store';
 import setup from '@/setup';
 
@@ -10,7 +10,7 @@ type State = {
   isLoaded: bool,
 };
 
-class AppWrapper extends React.Component<*, State> {
+class AppWrapper extends React.PureComponent<void, State> {
   state = {
     isLoaded: false
   };
@@ -24,7 +24,7 @@ class AppWrapper extends React.Component<*, State> {
     const { isLoaded } = this.state;
 
     if (!isLoaded) {
-      return <LoadScreen />
+      return <LoadScreen />;
     }
     return (
       <Provider store={store}>

@@ -4,7 +4,6 @@ import { createStore, applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 import storage from 'redux-persist/lib/storage';
-import { middleware } from './navigator';
 import reducer from './reducers';
 import saga from './saga';
 
@@ -20,7 +19,7 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 
 const store = createStore(
     persistedReducer,
-    applyMiddleware(sagaMiddleware, middleware),
+    applyMiddleware(sagaMiddleware),
 );
 
 const persistor = persistStore(store);

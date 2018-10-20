@@ -1,51 +1,51 @@
 // @flow
 
 import React from 'react';
-import { Text, View, Animated, FlatList } from 'react-native';
+import { Text, View, Animated, FlatList, TouchableWithoutFeedback } from 'react-native';
+import { Transition } from 'react-navigation-fluid-transitions';
 import {
-  AnimatedRoundedButton,
-  ProgressBar,
-  HorizontalProgress,
-  VerticalProgress,
-  CircleProgress,
-  Button,
+  HorizontalProgress, VerticalProgress, Link,
 } from '@/components/fragments';
-import { RNTypes } from '@/types';
+import { type RNTypes } from '@/types';
 import * as Constants from '@/constants';
 import { createStyleSheet } from '@/utils';
 
 const DATA = [...Array(16)].map((_, i) => `this is the ${i}`);
 
-type Props = RNTypes.NavigationInjectedProps;
+type Props = RNTypes.NavigationType;
 
 class Test extends React.Component<Props> {
   state = {
-    progress: .7,
+    progress: .2,
   }
 
   componentDidMount() {
-    // setInterval(() => this.setState(s => s.progress < 1 ? ({ progress: s.progress + .05}) : s), 1500);
   }
 
   onPress = (buttonId) => {
-    this.props.navigation.push('Screen2', { buttonId });
+    this.props.navigation.push('Screen2', { [Constants.ANIMATIONS.SHARED_BACKRGOUND_KEY]: Constants.ANIMATIONS.SHARED_BACKRGOUND_ID });
   }
 
   render() {
     return (
       <View style={styles.wrapper}>
-        <Button
-          style={{
-            marginBottom: 30,
-          }}
-          key={'test'}
-          id={'test'}
-          color={'blue'}
-          size={{width: 200, height: 50}}
+        {/* <TouchableWithoutFeedback
           onPress={this.onPress}
         >
-          <Text>{'petit poid'}</Text>
-        </Button>
+          <View style={{ position: 'absolute', bottom: 100, width: 100, height: 25 }}>
+            <Transition shared={Constants.ANIMATIONS.SHARED_BACKRGOUND_ID}>
+              <View style={{ width: '100%', height: '100%', backgroundColor: Constants.COLORS.GREEN }}/>
+            </Transition>
+            <Text>OK</Text>
+          </View>
+        </TouchableWithoutFeedback> */}
+        <Link to='Screen2' rounded='fully' style={{ position: 'absolute', bottom: 100 }}>
+          <Text>LINK</Text>
+        </Link>
+        {/* <HorizontalProgress
+          progress={this.state.progress}
+          color={this.state.progress > .5 ? Constants.COLORS.GREEN : Constants.COLORS.BLACK}
+        /> */}
       </View>
     );
   }
@@ -54,14 +54,22 @@ class Test extends React.Component<Props> {
 const styles  = createStyleSheet({
   wrapper: {
     // ...Constants.STYLES.CENTER_CHILDS,
+    position: 'relative',
     alignItems: 'center',
-    backgroundColor: 'blue',
+    justifyContent: 'center',
+    // backgroundColor: 'blue',
     // flexDirection: 'column',
     // justifyContent: 'space-around',
     height: Constants.SIZES.HEIGHT,
     width: Constants.SIZES.WIDTH,
   },
+  button: {
+    position: 'absolute',
+    bottom: 100,
+    width: 100,
+    height: 25,
+    backgroundColor: Constants.COLORS.GREEN,
+  },
 });
 
 export default Test;
-
