@@ -1,68 +1,150 @@
+// @flow
+
 import React from 'react';
 import { View, Text } from 'react-native';
-import { createStyleSheet } from '@/utils';
-import * as Constants from '@/constants';
+import PropTypes from 'prop-types';
 import ProgressBar from './ProgressBar';
+import { Memoize, Converter } from '@/helpers';
+import { createStyleSheet } from '@/utils';
+import { SIZES, COLORS, STYLES, ANIMATIONS } from '@/constants';
+import { RNTypes } from '@/types';
+
+const ANIMATION_OPTIONS = ANIMATIONS.PROGRESS_ANIMATION_OPTIONS;
+const BACKGROUND_OPACITY = .11;
+const STYLE_BY_SIZES = {
+  m: { wHeight: 64, wWidth: 22, fontSize: 17 },
+};
 
 type Props = {
   progress: number,
-  renderText?: string,
+  color?: string,
+  light?: bool,
+  size?: 'm',
+  text?: string | (progress: number) => React.Component | null,
 };
 
-const VerticalProgress = (props: Props) => {
-  const { progress, renderText } = props;
+class VerticalProgress extends React.Component<Props> {
+  static propTypes = {
+    progress: PropTypes.number.isRequired,
+    color: PropTypes.string,
+    light: PropTypes.bool,
+    size: PropTypes.oneOf(['m']),
+    text: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.string,
+    ]),
+  };
 
-  return (
-    <View style={styles.wrapper}>
-      {renderText && renderText(progress * 100)}
-      <ProgressBar
-        animateAtMount
-        animatedProgress={progress}
-        direction='vertical'
-        color={Constants.COLORS.GREEN}
-        size={{
-          // Think about is horizontal progress bar rotated.
-          height: 22,
-          width: 64,
-        }}
-        style={{
-          progress: styles.progressBar,
-          wrapper: styles.progressWrapper,
-        }}
-      />
-    </View>
-  );
+  static defaultProps = {
+    color: COLORS.GREEN,
+    light: false,
+    size: 'm',
+    text: null,
+  };
+
+  shouldComponentUpdate(nextProps: Props) {
+    const { text, color, progress } = this.props;
+
+    return (nextProps.color !== color
+    || nextProps.text !== text
+    || nextProps.progress !== progress);
+  }
+
+  @Memoize.shouldUpdate('color')
+  computeStyle(props: Props) {
+    const { size, color, light } = props;
+    const selectedStyle = STYLE_BY_SIZES[size];
+
+    const wrapperStyle: Array<RNTypes.StylesheetType> = [
+      styles.progressWrapper,
+      {
+        backgroundColor: (!light
+          ? Converter.rgbWithOpacity(color, BACKGROUND_OPACITY)
+          : COLORS.TRANSPARENT_WHITE
+        ),
+      },
+    ];
+
+    const progressStyle: Array<RNTypes.StylesheetType> = [
+      styles.progress,
+      {
+        backgroundColor: !light ? color : COLORS.WHITE,
+      },
+    ];
+
+    const textStyle: Array<RNTypes.StylesheetType> = [
+      styles.text,
+      {
+        color: !light ? color : COLORS.WHITE,
+        fontSize: selectedStyle.fontSize,
+      },
+    ];
+
+    return {
+      wrapper: wrapperStyle,
+      progress: progressStyle,
+      text: textStyle,
+    };
+  }
+
+  renderText(style) {
+    const { text, size, progress } = this.props;
+
+    if (!text) return null;
+
+    if (typeof text === 'function') {
+      return text(progress);
+    }
+    return (
+      <Text style={style}>{text}</Text>
+    )
+  }
+
+  render() {
+    const { text, size, progress } = this.props;
+    const computedStyle = this.computeStyle(this.props);
+    const selectedStyle = STYLE_BY_SIZES[size];
+
+    return (
+      <View style={styles.wrapper}>
+        {this.renderText(computedStyle.text)}
+        <View style={styles.rotate}>
+          <ProgressBar
+            animationOptions={ANIMATION_OPTIONS}
+            animatedProgress={progress}
+            style={computedStyle}
+            size={{
+              // Think that progress will rotate.
+              width: selectedStyle.wHeight,
+              height: selectedStyle.wWidth,
+            }}
+          />
+        </View>
+      </View>
+    );
+  }
 }
 
 const styles = createStyleSheet({
   wrapper: {
-    width: 90,
+    ...STYLES.SPACE_BETWEEN,
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 90,
+  },
+  rotate: {
+    transform: [{rotate: '-90deg'}],
   },
   progressWrapper: {
     borderRadius: 5,
     borderWidth: 0,
-    backgroundColor: Constants.COLORS.TRANSPARENT_GREEN,
   },
-  progressBar: {
-    borderRadius: 0,
-  },
-  textWrapper: {
-    ...Constants.STYLES.CENTER_CHILDS,
-    flexDirection: 'column',
-  },
-  textProgress: {
-    color: Constants.COLORS.GREEN,
-    fontFamily: 'poppins-bold',
-    fontSize: 16,
+  progress: {
+    borderRadius: 5,
   },
   text: {
-    color: Constants.COLORS.GREEN,
     fontFamily: 'poppins',
     fontSize: 11,
   },
-})
+});
 
 export default VerticalProgress;

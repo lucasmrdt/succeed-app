@@ -2,60 +2,42 @@
 
 import _ from 'lodash';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import { ANIMATION_OPTIONS } from '@/utils/AnimatedComponent';
-import * as Constants from '@/constants';
+import { converters } from '@/utils';
+import { ANIMATIONS, COLORS, SIZES } from '@/constants';
 
-const SIZES = {
-  radius: { s: 32 },
-  progressWidth: { s: 6 },
+const ANIMATION_OPTIONS = ANIMATIONS.PROGRESS_ANIMATION_OPTIONS;
+const BACKGROUND_OPACITY = .11;
+const STYLE_BY_SIZES = {
+  m: { radius: 32, progressWidth: 6, fontSize: 17 },
 };
 
 type Props = {
   progress: number,
   color?: string,
-  backgroundColor?: string,
-  renderText?: React.Component,
-  size?: 's' | {
-    radius?: number,
-    progressWidth?: number,
-  },
-};
-
-type State = {
-  size: {
-    radius: number,
-    progressWidth: number,
-    circumference: number,
-  },
+  light?: bool,
+  size?: 'm',
+  text?: (progress: number) => React.Component,
 };
 
 class CircleProgress extends React.Component<Props, State> {
-  state = {};
   circularProgress = null;
+
+  static propTypes = {
+    progress: PropTypes.number.isRequired,
+    color: PropTypes.string,
+    light: PropTypes.bool,
+    size: PropTypes.oneOf(['m']),
+    text: PropTypes.func,
+  };
 
   static defaultProps = {
     size: 's',
-    color: Constants.COLORS.GREEN,
-    backgroundColor: Constants.COLORS.TRANSPARENT_GREEN,
+    color: COLORS.GREEN,
     renderText: null,
     style: {},
   };
-
-  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
-    if (!_.isEmpty(prevState)) {
-      // Compute only one time size, it should doesn't change yet.
-      return null;
-    }
-
-    const { size } = nextProps;
-    const outputSize = {
-      radius: size.radius || SIZES.radius.s,
-      progressWidth: size.progressWidth || SIZES.progressWidth.s,
-    };
-
-    return { size: outputSize };
-  }
 
   shouldComponentUpdate(nextProps: Props) {
     const { progress, size } = this.props;
@@ -63,27 +45,39 @@ class CircleProgress extends React.Component<Props, State> {
     return (progress !== nextProps.progress);
   };
 
+  _computeStyle() {
+    const { size, color, light } = this.props;
+    const selectedStyle = STYLE_BY_SIZES[size];
+    const computedColor = (!light ? color : COLORS.WHITE);
+    const backgroundColor = (!light
+      ? converters.rgbWithOpacity(color, BACKGROUND_OPACITY)
+      : COLORS.TRANSPARENT_WHITE
+    );
+
+    return {
+      backgroundColor,
+      color: computedColor,
+      radius: selectedStyle.radius,
+      progressWidth: selectedStyle.progressWidth,
+    };
+  }
+
   render() {
-    const { size } = this.state;
-    const {
-      color,
-      renderText,
-      progress,
-      backgroundColor
-    } = this.props;
+    const style = this._computeStyle();
+    const { text, progress } = this.props;
 
     return (
       <AnimatedCircularProgress
-        size={size.radius * 2}
-        width={size.progressWidth}
+        size={style.radius * 2}
+        width={style.progressWidth}
         fill={progress * 100}
-        tintColor={color}
-        backgroundColor={backgroundColor}
+        tintColor={style.color}
+        backgroundColor={style.backgroundColor}
         easing={ANIMATION_OPTIONS.easing}
         duration={ANIMATION_OPTIONS.duration}
         rotation={0}
       >
-        {renderText}
+        {text}
       </AnimatedCircularProgress>
     );
   }

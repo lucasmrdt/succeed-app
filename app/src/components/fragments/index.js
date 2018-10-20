@@ -1,3 +1,9 @@
+import Button from './Button';
+import Link from './Link';
+
 export * from './Progress';
 export * from './Text';
-export * from './Buttons';
+export {
+  Button,
+  Link,
+};

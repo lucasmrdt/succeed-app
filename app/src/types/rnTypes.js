@@ -1,6 +1,6 @@
 // @flow
 
-type FlexAlignType = 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+import { type NavigationInjectedProps } from 'react-navigation';
 
 export type StylesheetType = {
   backfaceVisibility?: 'visible' | 'hidden',
@@ -110,4 +110,13 @@ export type StylesheetType = {
   overlayColor?: string,
   tintColor?: string,
   opacity?: number,
-}
+  shadowColor?: string,
+  shadowOffset?: {
+    width?: number,
+    height?: number,
+  },
+  shadowOpacity?: number,
+  shadowRadius?: number,
+};
+
+export type NavigationType = NavigationInjectedProps;

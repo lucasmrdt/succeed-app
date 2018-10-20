@@ -1,12 +1,39 @@
 import React from 'react';
-import App from './App';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import LoadScreen from '../LoadScreen';
+import { AppNavigator, HomeNavigator } from '@/navigators';
+import { store, persistor } from '@/store';
+import setup from '@/setup';
 
-class AppWrapper extends React.Component {
+type State = {
+  isLoaded: bool,
+};
+
+class AppWrapper extends React.PureComponent<void, State> {
+  state = {
+    isLoaded: false
+  };
+
+  async componentDidMount() {
+    await setup();
+    this.setState({ isLoaded: true });
+  }
+
   render() {
+    const { isLoaded } = this.state;
+
+    if (!isLoaded) {
+      return <LoadScreen />;
+    }
     return (
-      <App />
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <AppNavigator />
+        </PersistGate>
+      </Provider>
     );
   }
 };
 
-export default App;
+export default AppWrapper;
