@@ -7,6 +7,7 @@ import { ANIMATIONS, SIZES } from '@/constants';
 import { Rocket, Profile, Bell } from '@/assets/icons';
 
 import TabBar from '@/components/TabBar';
+import Home from '@/components/Home';
 import Screen1 from '@/components/Test/Screen1';
 import Screen2 from '@/components/Test/Screen2';
 import IconsScreen from '@/components/Test/IconsScreen';
@@ -15,7 +16,7 @@ import IconsScreen from '@/components/Test/IconsScreen';
 
 const routes = {
   Home: {
-    screen: Screen2,
+    screen: Home,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Rocket color={tintColor} size={SIZES.TAB_BAR_ICON_SIZE}/>
