@@ -11,7 +11,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, TouchableWithoutFeedback } from 'react-native';
-import { Transition } from 'react-navigation-fluid-transitions';
 import { createStyleSheet } from '@/utils';
 import { ANIMATIONS, STYLES, COLORS } from '@/constants';
 import { type RNTypes } from '@/types';
@@ -54,6 +53,11 @@ class StaticButton extends React.Component<Props> {
     return false;
   }
 
+  onPress = () => {
+    const { onPress, id } = this.props;
+    onPress(id);
+  }
+
   computeStyle() {
     const {
       style,
@@ -74,43 +78,35 @@ class StaticButton extends React.Component<Props> {
       {
         width: size.width,
         height: size.height,
+        backgroundColor: !light ? color : 'transparent',
         borderColor: !light ? 'transparent' : color,
         borderRadius,
       },
     ];
-    const buttonStyle: Array<RNTypes.StylesheetType> = [
-      styles.button,
-      {
-        backgroundColor: !light ? color : 'transparent',
-        borderRadius,
-      },
-    ];
 
-    return {
-      wrapper: wrapperStyle,
-      button: buttonStyle,
-    };
+    return wrapperStyle;
   }
 
-  onPress = () => {
-    const { onPress, id } = this.props;
-    onPress(id);
+  renderChildren() {
+    const { children, id: buttonId } = this.props;
+    const style = this.computeStyle();
+
+    return (
+
+      <View style={style}>
+        {children}
+      </View>
+    );
   }
 
   render() {
-    const { children, id: buttonId } = this.props;
-    const style = this.computeStyle();
+    //console.log(`Render ${this.constructor.name}.`);
 
     return (
       <TouchableWithoutFeedback
         onPress={this.onPress}
       >
-        <View style={style.wrapper}>
-          <Transition shared={buttonId}>
-            <View style={style.button}/>
-          </Transition>
-          {children}
-        </View>
+        {this.renderChildren()}
       </TouchableWithoutFeedback>
     );
   }
@@ -119,11 +115,6 @@ class StaticButton extends React.Component<Props> {
 const styles = createStyleSheet({
   wrapper: {
     ...STYLES.BUTTON,
-  },
-  button: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
   },
 });
 
