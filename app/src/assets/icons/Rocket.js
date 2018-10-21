@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import { Animated } from 'react-native';
 import { Svg } from 'expo';
 import IconWrapper from './IconWrapper';
 const { Path } = Svg;
@@ -17,4 +18,4 @@ class Rocket extends IconWrapper {
   }
 }
 
-export default Rocket;
+export default Animated.createAnimatedComponent(Rocket);

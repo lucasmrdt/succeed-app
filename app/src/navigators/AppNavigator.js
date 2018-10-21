@@ -3,8 +3,8 @@
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from 'react-navigation';
-import { ANIMATIONS } from '@/constants';
-// import { Rocket, Check } from '@/assets/icons';
+import { ANIMATIONS, SIZES } from '@/constants';
+import { Rocket, Profile, Bell } from '@/assets/icons';
 
 import TabBar from '@/components/TabBar';
 import Screen1 from '@/components/Test/Screen1';
@@ -15,27 +15,27 @@ import IconsScreen from '@/components/Test/IconsScreen';
 
 const routes = {
   Home: {
-    screen: Screen1,
-    navigationOptions: {
-      // tabBarIcon: () => <Check color="blue" />
-    },
-  },
-  Home2: {
     screen: Screen2,
     navigationOptions: {
-      tabBarIcon: () => <Ionicons name='ios-american-football' size={25} />
+      tabBarIcon: ({ tintColor }) => (
+        <Rocket color={tintColor} size={SIZES.TAB_BAR_ICON_SIZE}/>
+      ),
     },
   },
-  Home3: {
+  Profile: {
     screen: Screen1,
     navigationOptions: {
-      tabBarIcon: () => <Ionicons name='ios-basketball' size={25} />
+      tabBarIcon: ({ tintColor }) => (
+        <Profile color={tintColor} size={SIZES.TAB_BAR_ICON_SIZE}/>
+      ),
     },
   },
-  Icons: {
+  Notification: {
     screen: IconsScreen,
     navigationOptions: {
-      tabBarIcon: () => <Ionicons name='ios-archive' size={25} />
+      tabBarIcon: ({ tintColor }) => (
+        <Bell color={tintColor} size={SIZES.TAB_BAR_ICON_SIZE}/>
+      ),
     },
   },
 };
