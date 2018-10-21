@@ -44,6 +44,8 @@ class Button extends React.PureComponent<Props> {
     const propsSize = this.getPropsSize();
     const Button = optimized ? StaticButton : AnimatedButton;
 
+    console.log(`Render ${this.constructor.name}.`);
+
     return (
       <Button
         {...props}

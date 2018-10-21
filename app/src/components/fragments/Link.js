@@ -47,6 +47,7 @@ class Link extends React.PureComponent<Props> {
   }
 
   render() {
+    console.log(`Render ${this.constructor.name}.`);
     return (
       <Button
         {...this.props}

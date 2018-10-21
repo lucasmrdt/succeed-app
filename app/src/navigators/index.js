@@ -1,7 +1,3 @@
-import AppNavigator from './AppNavigator';
-import HomeNavigator from './HomeNavigator';
+import RootNavigator from './RootNavigator';
 
-export {
-  AppNavigator,
-  HomeNavigator,
-};
+export default RootNavigator;

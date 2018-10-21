@@ -15,35 +15,41 @@ class Screen2 extends React.Component<Props> {
     const { navigation } = this.props;
     const buttonId = navigation.getParam(Constants.ANIMATIONS.SHARED_BACKRGOUND_KEY, '');
 
+    console.log(`Render ${this.constructor.name}.`);
     return (
-      <View style={styles.wrapper}>
-        <Transition shared={buttonId}>
-          <View style={styles.background}/>
-        </Transition>
-        <Transition anchor={buttonId}>
-          <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-            <Text>screen2</Text>
-            <Button
-              onPress={() => this.props.navigation.goBack()}
-              size={{width: 200, height: 75}}
-            >
-              <Text>BACK!</Text>
-            </Button>
-          </View>
-        </Transition>
-      </View>
+      <Transition appear='bottom'>
+        <View style={styles.wrapper}>
+          {/* <Transition shared={buttonId}>
+            <View style={styles.background}/>
+          </Transition>
+          <Transition anchor={buttonId}> */}
+            <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+              <Text>screen2</Text>
+              <Button
+                onPress={() => this.props.navigation.goBack()}
+                size={{width: 200, height: 75}}
+              >
+                <Text>BACK!</Text>
+              </Button>
+            </View>
+          {/* </Transition> */}
+        </View>
+      </Transition>
     );
   }
 };
 
 const styles  = createStyleSheet({
   background: {
-    height: 600,
-    width: 75,
-    backgroundColor: Constants.COLORS.GREEN,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
   wrapper: {
     ...Constants.STYLES.CENTER_CHILDS,
+    backgroundColor: Constants.COLORS.GREEN,
     flexDirection: 'column',
     justifyContent: 'space-around',
     height: Constants.SIZES.HEIGHT,

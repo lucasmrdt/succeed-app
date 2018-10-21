@@ -9,3 +9,5 @@ export const {
 
 export const DEFAULT_BUTTON_WIDTH = 200;
 export const DEFAULT_BUTTON_HEIGHT = 50;
+
+export const TAB_BAR_HEIGHT = 60;
