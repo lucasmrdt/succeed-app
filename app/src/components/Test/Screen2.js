@@ -15,7 +15,7 @@ class Screen2 extends React.Component<Props> {
     const { navigation } = this.props;
     const buttonId = navigation.getParam(Constants.ANIMATIONS.SHARED_BACKRGOUND_KEY, '');
 
-    console.log(`Render ${this.constructor.name}.`);
+    //console.log(`Render ${this.constructor.name}.`);
     return (
       <Transition appear='bottom'>
         <View style={styles.wrapper}>
