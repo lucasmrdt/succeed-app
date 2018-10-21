@@ -157,7 +157,7 @@ class AnimatedButton extends AnimatedComponent<Props, State> {
   }
 
   render() {
-    console.log(`Render ${this.constructor.name}.`);
+    //console.log(`Render ${this.constructor.name}.`);
 
     return (
       <TouchableWithoutFeedback

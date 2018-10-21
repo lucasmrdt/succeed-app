@@ -37,6 +37,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.82.0",
+    "react-native-svg-transformer": "^0.11.0",
     "why-did-you-update": "^0.1.1"
   }
 }

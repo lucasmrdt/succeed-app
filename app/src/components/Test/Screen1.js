@@ -27,7 +27,7 @@ class Test extends React.Component<Props> {
   }
 
   render() {
-    console.log(`Render ${this.constructor.name}.`);
+    //console.log(`Render ${this.constructor.name}.`);
     return (
       <View style={styles.wrapper}>
         {/* <TouchableWithoutFeedback
