@@ -14,7 +14,7 @@ type Props = {
   },
 };
 
-const { BASIC_ANIMATIONS_OPTIONS } = ANIMATIONS;
+const { GENERAL_ANIMATIONS_OPTIONS } = ANIMATIONS;
 
 /**
  * HOW TO USE ?
@@ -35,7 +35,7 @@ class AnimatedComponent<RefProps, RefState> extends React.Component<Props> {
 
     const isFirstOccurence = _.isEmpty(state);
     const { animationOptions, animateAtMount } = nextProps;
-    const options = { ...BASIC_ANIMATIONS_OPTIONS, ...animationOptions };
+    const options = { ...GENERAL_ANIMATIONS_OPTIONS, ...animationOptions };
     const animatedProps = _.pickBy(nextProps, (val, key) => (
       key.match(/^animated.*/)
     ));

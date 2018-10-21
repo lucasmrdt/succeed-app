@@ -1,27 +1,60 @@
 // @flow
 
-import { Animated, Easing } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
-import Home from './HomeNavigator';
+import React from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import { createMaterialTopTabNavigator } from 'react-navigation';
+import { ANIMATIONS } from '@/constants';
+
+import TabBar from '@/components/TabBar';
+import Screen1 from '@/components/Test/Screen1';
+import Screen2 from '@/components/Test/Screen2';
+
+// 21h15 la fontana à libourne
 
 const routes = {
-  Home: { screen: Home },
+  Home: {
+    screen: Screen1,
+    navigationOptions: {
+      tabBarIcon: () => <Ionicons name='ios-analytics' size={25} />
+    },
+  },
+  Home2: {
+    screen: Screen2,
+    navigationOptions: {
+      tabBarIcon: () => <Ionicons name='ios-american-football' size={25} />
+    },
+  },
+  Home3: {
+    screen: Screen1,
+    navigationOptions: {
+      tabBarIcon: () => <Ionicons name='ios-basketball' size={25} />
+    },
+  },
+  Home4: {
+    screen: Screen2,
+    navigationOptions: {
+      tabBarIcon: () => <Ionicons name='ios-archive' size={25} />
+    },
+  },
 };
 
-const RootNavigator = createStackNavigator(
+const AppNavigator = createMaterialTopTabNavigator(
   routes,
   {
     initialRouteName: 'Home',
-    headerMode: 'none',
-    gesturesEnabled: true,
-    mode: 'card',
-    // TODO: use BottomMaterialTab
-    // transitionConfig: {
-    //   duration: 500,
-    //   timing: Animated.timing,
-    //   easing: Easing.out(Easing.exp),
-    // }
+    animationEnabled: false,
+    tabBarComponent: TabBar,
+    tabBarPosition: 'bottom',
+    tabBarOptions: {
+      style: { backgroundColor: 'rgba(0, 0, 0, 0)' },
+      showIcon: true,
+      pressOpacity: 0,
+      pressColor: 'rgba(0, 0, 0, 0)',
+    },
+    transitionConfig: () => ({
+      transitionSpec: ANIMATIONS.GENERAL_ANIMATIONS_OPTIONS,
+    }),
   },
 );
 
-export default RootNavigator
+export default AppNavigator;
