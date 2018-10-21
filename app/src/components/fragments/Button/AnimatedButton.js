@@ -13,7 +13,6 @@ import {
   TouchableWithoutFeedback,
   Easing,
 } from 'react-native';
-import { Transition } from 'react-navigation-fluid-transitions';
 import { staticButtonStyles } from './StaticButton';
 import AnimatedComponent from '../AnimatedComponent';
 import { ANIMATIONS, STYLES, COLORS } from '@/constants';
@@ -127,18 +126,7 @@ class AnimatedButton extends AnimatedComponent<Props, State> {
       },
     ];
 
-    const buttonStyle: Array<RNTypes.StylesheetType> = [
-      styles.button,
-      {
-        backgroundColor: !light ? color : 'transparent',
-        borderRadius,
-      },
-    ];
-
-    return {
-      wrapper: wrapperStyle,
-      button: buttonStyle,
-    };
+    return wrapperStyle;
   }
 
   renderChildren() {
@@ -147,10 +135,7 @@ class AnimatedButton extends AnimatedComponent<Props, State> {
 
     return (
 
-      <Animated.View style={style.wrapper}>
-        <Transition shared={buttonId}>
-          <View style={style.button}/>
-        </Transition>
+      <Animated.View style={style}>
         {children}
       </Animated.View>
     );
