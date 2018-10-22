@@ -11,6 +11,7 @@ const SCALE_ONPRESS = 1.08;
 
 type Props = {
   onPress: (id: string) => void,
+  disable?: bool,
   id?: string,
   scale?: {
     x?: Animated.Value,
@@ -23,6 +24,7 @@ class Touchable extends React.Component<Props> {
   scale = new Animated.Value(1);
 
   static defaultProps = {
+    disable: false,
     id: null,
     style: null,
     scale: {},
@@ -98,12 +100,12 @@ class Touchable extends React.Component<Props> {
   }
 
   render() {
-    console.log(`Render ${this.constructor.name}.`);
+    const { disable } = this.props;
 
     return (
       <TouchableWithoutFeedback
-        onPressIn={this.onPressIn}
-        onPressOut={this.onPressOut}
+        onPressIn={!disable ? this.onPressIn : null}
+        onPressOut={!disable ? this.onPressOut : null}
       >
         {this.renderChildren()}
       </TouchableWithoutFeedback>
@@ -111,4 +113,5 @@ class Touchable extends React.Component<Props> {
   }
 };
 
+export type TouchableProps = Props;
 export default Touchable;

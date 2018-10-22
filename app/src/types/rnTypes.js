@@ -45,7 +45,7 @@ export type StylesheetType = {
   textShadowOffset?: { width: number, height: number },
   textShadowRadius?: number,
   alignContent?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around',
-  alignItems?: FlexAlignType,
+  alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around',
   alignSelf?: 'auto' | FlexAlignType,
   aspectRatio?: number,
   borderBottomWidth?: number,

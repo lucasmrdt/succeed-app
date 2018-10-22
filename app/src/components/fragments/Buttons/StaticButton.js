@@ -6,13 +6,9 @@ import Touchable from './Touchable';
 import { createStyleSheet } from '@/utils';
 
 import { type RNTypes } from '@/types';
+import { type TouchableProps } from './Touchable';
 
-type Props = {
-  onPress: (id: string) => void,
-  children: React.Component,
-  id?: string,
-  style?: RNTypes.StylesheetType,
-};
+type Props = TouchableProps;
 
 class StaticButton extends React.PureComponent<Props> {
   static defaultProps = {

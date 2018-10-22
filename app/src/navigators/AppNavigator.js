@@ -11,6 +11,7 @@ import { BottomTabBar, TabBarIcon } from '@/components/TabBar';
 import Home from '@/components/Home';
 import Screen1 from '@/components/Test/Screen1';
 import Screen2 from '@/components/Test/Screen2';
+import Screen3 from '@/components/Test/Screen3';
 import IconsScreen from '@/components/Test/IconsScreen';
 
 // 21h15 la fontana à libourne
@@ -25,7 +26,7 @@ const routes = {
     },
   },
   Profile: {
-    screen: Screen1,
+    screen: Screen3,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <TabBarIcon colorisedIconOpacity={tintColor} icon={Profile} />
