@@ -10,6 +10,8 @@ import { createStyleSheet } from '@/utils';
 type Props = RNTypes.NavigationType;
 
 class Home extends React.Component<Props> {
+  shouldComponentUpdate = () => false;
+
   render() {
     return (
       <View style={styles.wrapper}>

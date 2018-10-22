@@ -3,7 +3,7 @@
 import React from 'react';
 import { TouchableWithoutFeedback, View, Animated } from 'react-native';
 import { createStyleSheet } from '@/utils';
-import { STYLES, SIZES,COLORS } from '@/constants';
+import { STYLES, SIZES, COLORS } from '@/constants';
 
 import { RNTypes } from '@/types';
 import {
@@ -18,7 +18,7 @@ const COLORISED_ROUTES_INDEX = [0];
 
 type Props = TabBarBottomProps;
 
-class TabBar extends React.Component<Props> {
+class BottomTabBar extends React.Component<Props> {
   shouldComponentUpdate() {
     // The bottom tab bar should never update, only his childs
     // can update.
@@ -43,8 +43,8 @@ class TabBar extends React.Component<Props> {
     const outputOpacityRange = [...inputRange.map(i =>
       i === index ? SELECTED_ICON_OPACITY : ICON_OPACITY
     )];
-    const outputColorRange = [...inputRange.map(i =>
-      COLORISED_ROUTES_INDEX.includes(i) ? COLORS.WHITE : COLORS.PURPLE
+    const outputTintOpacityRange = [...inputRange.map(i =>
+      COLORISED_ROUTES_INDEX.includes(i) ? 0 : 1
     )];
 
     const scale = position.interpolate({
@@ -55,9 +55,9 @@ class TabBar extends React.Component<Props> {
       inputRange,
       outputRange: outputOpacityRange,
     });
-    const color = position.interpolate({
+    const tintOpacity = position.interpolate({
       inputRange,
-      outputRange: outputColorRange,
+      outputRange: outputTintOpacityRange,
     });
 
     const style: RNTypes.StylesheetType = {
@@ -72,7 +72,7 @@ class TabBar extends React.Component<Props> {
         key={route.routeName}
       >
         <Animated.View style={[ style, styles.icon ]}>
-          {renderIcon({ route, tintColor: color, focused, index })}
+          {renderIcon({ route, tintColor: tintOpacity, focused, index })}
         </Animated.View>
       </TouchableWithoutFeedback>
     );
@@ -101,7 +101,8 @@ const styles = createStyleSheet({
   icon: {
     ...STYLES.CENTER_CHILDS,
     height: '100%',
+    position: 'relative',
   },
 });
 
-export default TabBar;
+export default BottomTabBar;

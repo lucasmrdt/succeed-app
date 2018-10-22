@@ -17,7 +17,7 @@ class IconWrapper extends React.Component<Props> {
   shouldComponentUpdate(nextProps: Props) {
     const { color } = this.props;
 
-    return color !== nextProps.color;
+    return (nextProps.color !== color);
   }
 }
 

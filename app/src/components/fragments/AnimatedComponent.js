@@ -26,8 +26,8 @@ class AnimatedComponent<RefProps, RefState> extends React.Component<Props> {
   props : RefProps & Props;
 
   static defaultProps = {
-    animationOptions: {},
-    animateAtMount: true,
+    animationOptions: GENERAL_ANIMATIONS_OPTIONS,
+    animateAtMount: false,
   };
 
   static getDerivedStateFromProps(nextProps: Props, prevState: RefState) {

@@ -1,61 +1,71 @@
 // @flow
-/**
- * Why this component is created ?
- * It's allow you to use the simplest stylised button
- * for you app without any animation. (usefull in FlatList for example).
- * It's optimized component.
- * It's also used with fluid-transition for expense to the window
- * size for example.
- */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, TouchableWithoutFeedback } from 'react-native';
+import AnimatedButton from './AnimatedButton';
+import StaticButton from './StaticButton';
 import { createStyleSheet } from '@/utils';
-import { ANIMATIONS, STYLES, COLORS } from '@/constants';
+import { SIZES, COLORS, STYLES } from '@/constants';
+
 import { type RNTypes } from '@/types';
 
 type Props = {
   onPress: (id: string) => void,
-  size: { height: number, width: number },
   color?: string,
+  size?: { height: number, width: number },
+  optimized?: bool,
   rounded?: 'fully' | 'little',
   light?: bool,
-  id?: string | null,
-  children?: React.Component,
+  id?: string,
   style?: RNTypes.StylesheetType,
 };
 
-class StaticButton extends React.Component<Props> {
+class Button extends React.Component<Props> {
   static defaultProps = {
     color: COLORS.GREEN,
     rounded: 'little',
     light: false,
     id: null,
     style: null,
-  };
+    optimized: false,
+    size: {
+      width: SIZES.DEFAULT_BUTTON_WIDTH,
+      height: SIZES.DEFAULT_BUTTON_HEIGHT,
+    },
+  }
 
   static propTypes = {
+    onPress: PropTypes.func.isRequired,
     size: PropTypes.shape({
       height: PropTypes.number.isRequired,
       width: PropTypes.number.isRequired,
-    }).isRequired,
-    onPress: PropTypes.func.isRequired,
+    }),
     color: PropTypes.string,
     rounder: PropTypes.oneOf(['fully', 'little']),
     light: PropTypes.bool,
     style: PropTypes.any,
     id: PropTypes.string,
-  };
-
-  shouldComponentUpdate() {
-    // We never refresh component, we suppose that it's static component.
-    return false;
   }
 
-  onPress = () => {
-    const { onPress, id } = this.props;
-    onPress(id);
+  shouldComponentUpdate(nextProps: Props) {
+    const { size, color, light } = this.props;
+
+    return (nextProps.size.height !== size.height
+    || nextProps.size.width !== size.width
+    || nextProps.color !== color
+    || nextProps.light !== light)
+  }
+
+  getPropsSize() {
+    const { optimized, size } = this.props;
+
+    if (optimized) {
+      return { size };
+    }
+    return {
+      animatedWidth: size.width,
+      animatedHeight: size.height,
+    };
   }
 
   computeStyle() {
@@ -72,7 +82,7 @@ class StaticButton extends React.Component<Props> {
       : STYLES.LITTLE_ROUNDED_BORDER_RADIUS
     );
 
-    const wrapperStyle: Array<RNTypes.StylesheetType> = [
+    const computedStyle: Array<RNTypes.StylesheetType> = [
       styles.wrapper,
       style,
       {
@@ -84,33 +94,24 @@ class StaticButton extends React.Component<Props> {
       },
     ];
 
-    return wrapperStyle;
-  }
-
-  renderChildren() {
-    const { children, id: buttonId } = this.props;
-    const style = this.computeStyle();
-
-    return (
-
-      <View style={style}>
-        {children}
-      </View>
-    );
+    return computedStyle;
   }
 
   render() {
-    //console.log(`Render ${this.constructor.name}.`);
+    const { optimized, ...props } = this.props;
+    const propsSize = this.getPropsSize();
+    const style = this.computeStyle();
+    const Button = optimized ? StaticButton : AnimatedButton;
 
     return (
-      <TouchableWithoutFeedback
-        onPress={this.onPress}
-      >
-        {this.renderChildren()}
-      </TouchableWithoutFeedback>
+      <Button
+        {...props}
+        {...propsSize}
+        style={style}
+      />
     );
   }
-};
+}
 
 const styles = createStyleSheet({
   wrapper: {
@@ -118,5 +119,5 @@ const styles = createStyleSheet({
   },
 });
 
-export const staticButtonStyles = styles;
-export default StaticButton;
+export type ButtonProps = Props;
+export default Button;
