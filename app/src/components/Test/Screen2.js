@@ -25,12 +25,12 @@ class Screen2 extends React.Component<Props> {
           <Transition anchor={buttonId}> */}
             <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
               <Text>screen2</Text>
-              <Button
+              {/* <Button
                 onPress={() => this.props.navigation.goBack()}
                 size={{width: 200, height: 75}}
               >
                 <Text>BACK!</Text>
-              </Button>
+              </Button> */}
             </View>
           {/* </Transition> */}
         </View>

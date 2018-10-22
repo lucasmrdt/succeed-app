@@ -20,6 +20,7 @@ class Test extends React.Component<Props> {
   }
 
   componentDidMount() {
+    setInterval(() => this.setState(s => ({ progress: s.progress + .1 })), 1000)
   }
 
   onPress = (buttonId) => {
@@ -39,7 +40,7 @@ class Test extends React.Component<Props> {
             <Text>OK</Text>
           </View>
         </TouchableWithoutFeedback> */}
-        <Link to='Screen2' rounded='fully' style={{ position: 'absolute', bottom: 100 }}>
+        <Link to='Screen2' rounded='fully' style={{ position: 'absolute', bottom: 100 }} size={{ height: 50, width: this.state.progress > .5 ? 300 : 100 }}>
           <Text>LINK</Text>
         </Link>
         {/* <HorizontalProgress

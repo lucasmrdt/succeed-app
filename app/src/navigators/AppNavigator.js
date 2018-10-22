@@ -2,11 +2,12 @@
 
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { Animated } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
-import { ANIMATIONS, SIZES } from '@/constants';
+import { ANIMATIONS, SIZES, COLORS } from '@/constants';
 import { Rocket, Profile, Bell } from '@/assets/icons';
 
-import TabBar from '@/components/TabBar';
+import { BottomTabBar, TabBarIcon } from '@/components/TabBar';
 import Home from '@/components/Home';
 import Screen1 from '@/components/Test/Screen1';
 import Screen2 from '@/components/Test/Screen2';
@@ -19,7 +20,7 @@ const routes = {
     screen: Home,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <Rocket color={tintColor} size={SIZES.TAB_BAR_ICON_SIZE}/>
+        <TabBarIcon colorisedIconOpacity={tintColor} icon={Rocket} />
       ),
     },
   },
@@ -27,7 +28,7 @@ const routes = {
     screen: Screen1,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <Profile color={tintColor} size={SIZES.TAB_BAR_ICON_SIZE}/>
+        <TabBarIcon colorisedIconOpacity={tintColor} icon={Profile} />
       ),
     },
   },
@@ -35,7 +36,7 @@ const routes = {
     screen: IconsScreen,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <Bell color={tintColor} size={SIZES.TAB_BAR_ICON_SIZE}/>
+        <TabBarIcon colorisedIconOpacity={tintColor} icon={Bell} />
       ),
     },
   },
@@ -46,7 +47,7 @@ const AppNavigator = createMaterialTopTabNavigator(
   {
     initialRouteName: 'Home',
     animationEnabled: false,
-    tabBarComponent: TabBar,
+    tabBarComponent: BottomTabBar,
     tabBarPosition: 'bottom',
     tabBarOptions: {
       style: { backgroundColor: 'rgba(0, 0, 0, 0)' },
