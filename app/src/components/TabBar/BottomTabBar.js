@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { TouchableWithoutFeedback, View, Animated } from 'react-native';
+import { Touchable } from '@/components/fragments';
 import { createStyleSheet } from '@/utils';
 import { STYLES, SIZES, COLORS } from '@/constants';
 
@@ -60,21 +61,23 @@ class BottomTabBar extends React.Component<Props> {
       outputRange: outputTintOpacityRange,
     });
 
-    const style: RNTypes.StylesheetType = {
-      transform: [{ scale }],
-      opacity,
-      width: `${100 / routes.length}%`,
-    };
+    const style: Array<RNTypes.StylesheetType> = [
+      styles.icon,
+      {
+        opacity,
+        width: `${100 / routes.length}%`,
+      },
+    ];
 
     return (
-      <TouchableWithoutFeedback
+      <Touchable
+        style={style}
+        scale={{ x: scale, y: scale }}
         onPress={() => navigation.navigate(route.routeName)}
         key={route.routeName}
       >
-        <Animated.View style={[ style, styles.icon ]}>
-          {renderIcon({ route, tintColor: tintOpacity, focused, index })}
-        </Animated.View>
-      </TouchableWithoutFeedback>
+        {renderIcon({ route, tintColor: tintOpacity, focused, index })}
+      </Touchable>
     );
   }
 

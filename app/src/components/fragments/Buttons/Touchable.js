@@ -81,6 +81,8 @@ class Touchable extends React.Component<Props> {
       },
     ];
 
+    if (style === null) console.log(computedStyle)
+
     return computedStyle;
   }
 

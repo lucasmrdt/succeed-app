@@ -16,7 +16,10 @@ type Props = RNTypes.NavigationType & ButtonProps & {
 class Link extends React.PureComponent<Props> {
   static defaultProps = Button.defaultProps
 
-  static propTypes = Button.propTypes
+  static propTypes = {
+    ...Button.propTypes,
+    onPress: PropTypes.func,
+  }
 
   onPress = (id: string) => {
     const { to, navigation } = this.props;
