@@ -1,7 +1,10 @@
 // @flow
 
-import _ from 'lodash';
+import React from 'react';
 import { StyleSheet } from 'react-native';
+import * as Icons from '@/assets/icons';
+
+import { type IconPropsType } from '@/assets/icons/IconWrapper';
 import { type RNTypes } from '@/types';
 
 /**
@@ -14,6 +17,14 @@ export const createStyleSheet = (styles: CreateStyleSheetParam) => (
   StyleSheet.create(styles)
 );
 
-/**
- * memoize
- */
+export const getIcon = (
+  icon: string | React.Component,
+) : null | React.ComponentType<IconPropsType> => {
+  if (!icon) {
+    return null;
+  }
+  if (typeof icon === 'string') {
+    return Icons[icon] || Icons.Rocket;
+  }
+  return icon;
+};

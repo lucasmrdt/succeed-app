@@ -7,26 +7,22 @@ import StaticButton from './StaticButton';
 import { createStyleSheet } from '@/utils';
 import { SIZES, COLORS, STYLES } from '@/constants';
 
+import { type TouchableProps } from './Touchable';
 import { type RNTypes } from '@/types';
 
-type Props = {
-  onPress: (id: string) => void,
+type Props = TouchableProps & {
   color?: string,
   size?: { height: number, width: number },
   optimized?: bool,
   rounded?: 'fully' | 'little',
   light?: bool,
-  id?: string,
-  style?: RNTypes.StylesheetType,
 };
 
 class Button extends React.Component<Props> {
   static defaultProps = {
     color: COLORS.GREEN,
-    rounded: 'little',
     light: false,
-    id: null,
-    style: null,
+    rounded: 'little',
     optimized: false,
     size: {
       width: SIZES.DEFAULT_BUTTON_WIDTH,
@@ -114,9 +110,7 @@ class Button extends React.Component<Props> {
 }
 
 const styles = createStyleSheet({
-  wrapper: {
-    ...STYLES.BUTTON,
-  },
+  wrapper: STYLES.BUTTON,
 });
 
 export type ButtonProps = Props;

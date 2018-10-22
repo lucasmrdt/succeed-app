@@ -21,4 +21,5 @@ class IconWrapper extends React.Component<Props> {
   }
 }
 
+export type IconPropsType = Props;
 export default IconWrapper;

@@ -1,3 +1,5 @@
+// @flow
+
 import Add from './Add';
 import Avatar from './Avatar';
 import Bell from './Bell';

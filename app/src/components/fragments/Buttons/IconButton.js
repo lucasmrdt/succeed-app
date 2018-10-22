@@ -1,15 +1,16 @@
 // @flow
 
 import React from 'react';
-import Button from './Button';
+import Button, { type ButtonProps } from './Button';
 import * as Icons from '@/assets/icons';
 import { COLORS } from '@/constants';
+import { getIcon } from '@/utils';
 
 import { type RNTypes } from '@/types';
 
 const SIZE = 50;
 
-type Props = {
+type Props = ButtonProps & {
   onPress: (id: string) => void,
   icon: string | React.Component,
   color?: string,
@@ -30,18 +31,9 @@ class ButtonIcon extends React.Component<Props> {
     return (isSelected !== nextProps.isSelected);
   }
 
-  getIcon() {
-    const { icon } = this.props;
-
-    if (typeof icon === 'string') {
-      return Icons[icon] || Icons.Rocket;
-    }
-    return icon;
-  }
-
   render() {
-    const { isSelected, ...props } = this.props;
-    const Icon = this.getIcon();
+    const { isSelected, icon, ...props } = this.props;
+    const Icon = getIcon(icon);
 
     return (
       <Button

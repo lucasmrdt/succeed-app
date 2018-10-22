@@ -7,14 +7,11 @@ import Touchable from './Touchable';
 import { createStyleSheet } from '@/utils';
 
 import { type RNTypes } from '@/types';
+import { type TouchableProps } from './Touchable';
 
-type Props = {
+type Props = TouchableProps & {
   animatedWidth: number,
   animatedHeight: number,
-  onPress: (id: string) => void,
-  children: React.Component,
-  id?: string,
-  style?: RNTypes.StylesheetType,
 };
 
 type State = {

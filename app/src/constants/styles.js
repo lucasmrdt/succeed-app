@@ -1,7 +1,11 @@
 // @flow
 
-import { TRANSPARENT_BLACK } from './colors';
-import { RNTypes } from '@/types';
+import * as Colors from './colors';
+import * as Sizes from './sizes';
+
+
+import { type RNTypes } from '@/types';
+import * as COLORS from './colors';
 
 export const CENTER_CHILDS: RNTypes.StylesheetType = {
   justifyContent: 'center',
@@ -20,7 +24,7 @@ export const SHADOW: RNTypes.StylesheetType = {
     width: 0,
     height: 0,
   },
-  shadowColor: 'rgba(0, 0, 0, .15)',
+  shadowColor: COLORS.TRANSPARENT_BLACK,
   shadowRadius: 20,
 };
 
