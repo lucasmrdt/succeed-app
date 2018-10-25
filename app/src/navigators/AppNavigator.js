@@ -14,8 +14,6 @@ import Screen2 from '@/components/Test/Screen2';
 import Screen3 from '@/components/Test/Screen3';
 import IconsScreen from '@/components/Test/IconsScreen';
 
-// 21h15 la fontana à libourne
-
 const routes = {
   Home: {
     screen: Home,
@@ -56,9 +54,6 @@ const AppNavigator = createMaterialTopTabNavigator(
       pressOpacity: 0,
       pressColor: 'rgba(0, 0, 0, 0)',
     },
-    transitionConfig: () => ({
-      transitionSpec: ANIMATIONS.GENERAL_ANIMATIONS_OPTIONS,
-    }),
   },
 );
 

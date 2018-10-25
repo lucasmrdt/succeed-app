@@ -22,7 +22,7 @@ const RootNavigator = createStackNavigator(
     initialRouteName: 'App',
     headerMode: 'none',
     transitionConfig: () => ({
-      transitionSpec: ANIMATIONS.GENERAL_ANIMATIONS_OPTIONS,
+      transitionSpec: ANIMATIONS.DEFAULT_ANIMATIONS_OPTIONS,
     }),
   }
 );

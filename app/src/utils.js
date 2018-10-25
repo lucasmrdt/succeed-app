@@ -4,8 +4,10 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import * as Icons from '@/assets/icons';
 
-import { type IconPropsType } from '@/assets/icons/IconWrapper';
-import { type RNTypes } from '@/types';
+import {
+  type RNTypes,
+  type DataTypes,
+} from '@/types';
 
 /**
  * WHY ?
@@ -18,7 +20,7 @@ export const createStyleSheet = (styles: CreateStyleSheetParam) => (
 );
 
 export const getIcon = (
-  icon: string | React.Component,
+  icon: DataTypes.IconTypes,
 ) : null | React.ComponentType<IconPropsType> => {
   if (!icon) {
     return null;
@@ -28,3 +30,8 @@ export const getIcon = (
   }
   return icon;
 };
+
+export const isReactComponent = (component: any): bool => (
+  typeof component === 'function'
+  && component.prototype.isReactComponent
+);

@@ -1,25 +1,25 @@
 // @flow
 
 import React from 'react';
-import { SIZES, COLORS } from '@/constants';
+import { DEFAULT_ICON_SIZE } from '@/constants/sizes';
+import { WHITE } from '@/constants/colors';
 
-type Props = {
-  size?: number,
-  color?: number,
-};
+import { type DataTypes } from '@/types';
+
+type Props = DataTypes.IconPropsType;
 
 class IconWrapper extends React.Component<Props> {
+
   static defaultProps = {
-    size: SIZES.DEFAULT_ICON_SIZE,
-    color: COLORS.WHITE,
-  };
+    size: DEFAULT_ICON_SIZE,
+    color: WHITE,
+  }
 
   shouldComponentUpdate(nextProps: Props) {
     const { color } = this.props;
-
     return (nextProps.color !== color);
   }
+
 }
 
-export type IconPropsType = Props;
 export default IconWrapper;

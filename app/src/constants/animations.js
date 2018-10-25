@@ -2,16 +2,17 @@
 
 import { Easing } from 'react-native';
 
-export const GENERAL_DURATION = 500;
-export const QUICK_DURATION = 250;
-export const VERY_QUICK_DURATION = 300;
-export const INSTANT_DURATION = 200;
+export const DEFAULT_DURATION = 500;
+export const QUICK_DURATION = 300;
+export const VERY_QUICK_DURATION = 200;
+export const INSTANT_DURATION = 100;
 
 export const EASING_EXP = Easing.out(Easing.exp);
 export const EASING_BOUNCE = Easing.out(Easing.back(1.5));
+export const EASING_POLY = Easing.out(Easing.poly(4));
 
-export const GENERAL_ANIMATIONS_OPTIONS = {
-  duration: GENERAL_DURATION,
+export const DEFAULT_ANIMATIONS_OPTIONS = {
+  duration: DEFAULT_DURATION,
   easing: EASING_EXP,
   useNativeDriver: true,
 };

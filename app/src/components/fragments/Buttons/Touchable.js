@@ -11,6 +11,8 @@ const SCALE_ONPRESS = 1.08;
 
 type Props = {
   onPress: (id: string) => void,
+  onPressOut?: () => void,
+  onPressIn?: () => void,
   disable?: bool,
   id?: string,
   scale?: {
@@ -21,13 +23,20 @@ type Props = {
 };
 
 class Touchable extends React.Component<Props> {
-  scale = new Animated.Value(1);
+  scale: Animated.Value
+
+  constructor(props: Props) {
+    super(props);
+    this.scale = new Animated.Value(1);
+  }
 
   static defaultProps = {
     disable: false,
     id: null,
     style: null,
     scale: {},
+    onPressOut: null,
+    onPressIn: null,
   };
 
   static propTypes = {
@@ -43,20 +52,35 @@ class Touchable extends React.Component<Props> {
   }
 
   onPressIn = () => {
+    const { onPressIn } = this.props;
+
+    if (onPressIn) {
+      onPressIn();
+    }
+
     Animated.timing(this.scale, {
       toValue: SCALE_ONPRESS,
-      duration: ANIMATIONS.INSTANT_DURATION,
+      duration: ANIMATIONS.VERY_QUICK_DURATION,
       easing: ANIMATIONS.EASING_BOUNCE,
       useNativeDriver: true,
     }).start();
   }
 
-  onPressOut = () => {
+  onPress = () => {
     const { onPress, id } = this.props;
     onPress(id);
+  }
+
+  onPressOut = () => {
+    const { onPressOut } = this.props;
+
+    if (onPressOut) {
+      onPressOut();
+    }
+
     Animated.timing(this.scale, {
       toValue: 1,
-      duration: ANIMATIONS.VERY_QUICK_DURATION,
+      duration: ANIMATIONS.QUICK_DURATION,
       easing: ANIMATIONS.EASING_BOUNCE,
       useNativeDriver: true,
     }).start();
@@ -83,8 +107,6 @@ class Touchable extends React.Component<Props> {
       },
     ];
 
-    if (style === null) console.log(computedStyle)
-
     return computedStyle;
   }
 
@@ -104,8 +126,10 @@ class Touchable extends React.Component<Props> {
 
     return (
       <TouchableWithoutFeedback
-        onPressIn={!disable ? this.onPressIn : null}
-        onPressOut={!disable ? this.onPressOut : null}
+        disabled={disable}
+        onPressIn={this.onPressIn}
+        onPress={this.onPress}
+        onPressOut={this.onPressOut}
       >
         {this.renderChildren()}
       </TouchableWithoutFeedback>

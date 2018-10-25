@@ -36,14 +36,16 @@ class Test extends React.Component<Props> {
         <LightButton
           onPress={this.onPress}
           color={Constants.COLORS.GREEN}
-          icon='Tick'
+          justify='left'
+          leftIcon='Tick'
         >
           next
         </LightButton>
         <LightButton
           onPress={this.onPress}
           color={Constants.COLORS.YELLOW}
-          icon='Danger'
+          justify='left'
+          leftIcon='Danger'
           disable
         >
           warning
@@ -56,14 +58,16 @@ class Test extends React.Component<Props> {
         <ButtonWithIcon
           onPress={this.onPress}
           selected
-          icon='Scales'
+          justify='left'
+          leftIcon='Scales'
         >
           distance
         </ButtonWithIcon>
         <ButtonWithIcon
           onPress={this.onPress}
           selected
-          icon={Clock}
+          justify='left'
+          leftIcon={Clock}
         >
           time
         </ButtonWithIcon>
@@ -72,7 +76,8 @@ class Test extends React.Component<Props> {
           selected
           color={Constants.COLORS.PURPLE}
           disable
-          icon={Clock}
+          justify='left'
+          leftIcon={Clock}
         >
           time
         </ButtonWithIcon>
