@@ -1,8 +1,9 @@
 // @flow
 
 import React from 'react';
-import { Text } from 'react-native';
-import { COLORS, SIZES } from '@/constants';
+import { Text, Platform } from 'react-native';
+import { COLORS, SIZES, STYLES } from '@/constants';
+import { createStyleSheet } from '@/utils';
 
 import { type RNTypes } from '@/types';
 
@@ -39,15 +40,22 @@ class StylisedText extends React.PureComponent<Props> {
       fontFamily = 'poppins-light';
     }
 
-    const fontSize = SIZES.TEXT_SIZE[size] || SIZES.TEXT_SIZE.m;
+    const lineHeight = SIZES.LINE_TEXT_HEIGHTS[size];
+    const fontSize = SIZES.TEXT_SIZES[size];
 
     const wrapperStyle: Array<RNTypes.StylesheetType> = [
       {
         fontSize,
         fontFamily,
         color,
-        letterSpacing,
+        ...Platform.select({
+          ios: {
+            lineHeight,
+          },
+        }),
+        // letterSpacing,
       },
+      styles.wrapper,
       style,
     ];
 
@@ -65,5 +73,19 @@ class StylisedText extends React.PureComponent<Props> {
     );
   }
 }
+
+const styles = createStyleSheet({
+  wrapper: {
+    ...STYLES.CENTER_CHILDS,
+    alignSelf: 'center',
+    textAlign: 'center',
+    ...Platform.select({
+      android: {
+        lineHeight: 50,
+        marginTop: 4,
+      },
+    }),
+  },
+});
 
 export default StylisedText;

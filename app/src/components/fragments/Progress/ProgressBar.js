@@ -30,7 +30,7 @@ class ProgressBar extends AnimatedComponent<Props, State> {
   state = {};
 
   static defaultProps = {
-    animationOptions: Constants.ANIMATIONS.GENERAL_ANIMATIONS_OPTIONS,
+    animationOptions: Constants.ANIMATIONS.DEFAULT_ANIMATIONS_OPTIONS,
     animateAtMount: true,
     text: null,
     style: {},

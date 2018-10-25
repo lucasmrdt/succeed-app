@@ -71,7 +71,6 @@ class AnimatedButton extends AnimatedComponent<Props, State> {
   render() {
     const { children, ...props } = this.props;
     const scale = this.computeScale();
-    // console.log(`Render ${this.constructor.name}.`);
 
     return (
       <Touchable {...props} scale={scale}>

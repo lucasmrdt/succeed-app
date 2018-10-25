@@ -5,41 +5,65 @@ import { View, Text } from 'react-native';
 import Button from './Button';
 import { StylisedText } from '../Text';
 import * as Icons from '@/assets/icons';
-import { STYLES, COLORS } from '@/constants';
-import { getIcon, createStyleSheet } from '@/utils';
+import { STYLES, COLORS, SIZES } from '@/constants';
+import { getIcon, createStyleSheet, isReactComponent } from '@/utils';
 
-import { type RNTypes } from '@/types';
+import {
+  type RNTypes,
+  type DataTypes,
+} from '@/types';
 import { type ButtonProps } from './Button';
 
 const LETTER_SPACING = 1;
 const MARGIN_BETWEEN_TEXT_ICON = 5;
-const ICON_SIZE = 20;
 
 type Props = ButtonProps & {
-  icon?: string,
-  selected?: bool,
+  leftIcon?: DataTypes.IconTypes,
+  rightIcon?: DataTypes.IconTypes,
+  fontSize?: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl',
+  iconSize?: number,
+  justify?: 'left' | 'space-between',
+  light?: bool,
   color?: string,
   textStyle?: RNTypes.StylesheetType,
 };
 
 class ButtonWithIcon extends React.PureComponent<Props> {
+
   static defaultProps = {
-    selected: false,
+    leftIcon: null,
+    rightIcon: null,
+    iconSize: SIZES.ICON_SIZE_M,
+    light: false,
     color: COLORS.GREEN,
     icon: null,
+    fontSize: 'm',
     textStyle: STYLES.TEXT,
+    justify: 'left',
   };
 
-  renderIcon(color) {
-    const { icon } = this.props;
-    const Icon = getIcon(icon);
+  renderIcon(color, renderIcon) {
+    const { justify, iconSize, dynamicWidth } = this.props;
+    const Icon = getIcon(renderIcon);
+
+    const transform = [{ translateX: -iconSize / 2 }];
+    const style = (justify === 'left'
+      ? [
+        styles.icon,
+        dynamicWidth && { transform },
+      ]
+      : null
+    );
 
     if (!Icon) {
       return null;
     }
     return (
-      <View style={styles.icon}>
-        <Icon size={ICON_SIZE} color={color} />
+      <View style={style}>
+        {isReactComponent(Icon)
+          ? <Icon size={iconSize} color={color} />
+          : renderIcon(color)
+        }
       </View>
     );
   }
@@ -47,40 +71,58 @@ class ButtonWithIcon extends React.PureComponent<Props> {
   render() {
     const {
       children,
-      icon,
+      leftIcon,
+      rightIcon,
       style,
       textStyle,
-      selected,
+      fontSize,
+      light,
+      justify,
       color,
       ...props
     } = this.props;
-    const childColor = (selected ? color : COLORS.WHITE);
+    const childColor = (light ? color : COLORS.WHITE);
+
+    const computedStyle: Array<RNTypes.StylesheetType> = [
+      styles.wrapper,
+      style,
+      {
+        justifyContent: (justify === 'space-between'
+          ? 'space-between'
+          : 'center'
+        ),
+      },
+    ];
 
     return (
       <Button
-        {...props}
         color={color}
-        light={selected}
-        style={[ styles.wrapper, style ]}
+        light={light}
+        style={computedStyle}
+        {...props}
       >
-        {this.renderIcon(childColor)}
+        {this.renderIcon(childColor, leftIcon)}
         <StylisedText
+          size={fontSize}
           style={textStyle}
           color={childColor}
           letterSpacing={LETTER_SPACING}
         >
           {children}
         </StylisedText>
+        {this.renderIcon(childColor, rightIcon)}
       </Button>
     );
   }
+
 }
 
 const styles = createStyleSheet({
   wrapper: {
-    ...STYLES.CENTER_CHILDS,
     position: 'relative',
     flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
   },
   icon: {
     position: 'absolute',

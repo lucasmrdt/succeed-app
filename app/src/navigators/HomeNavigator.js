@@ -20,7 +20,7 @@ const HomeNavigator = createFluidNavigator(
     gesturesEnabled: true,
     mode: 'card',
     transitionConfig: {
-      duration: ANIMATIONS.VERY_QUICK_DURATION,
+      duration: ANIMATIONS.QUICK_DURATION,
       easing: Easing.out(Easing.back(1.5)),
     }
   },

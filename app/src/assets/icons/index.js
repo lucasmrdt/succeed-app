@@ -19,6 +19,7 @@ import Profile from './Profile';
 import Rocket from './Rocket';
 import Rubbish from './Rubbish';
 import Ruler from './Ruler';
+import RedoArrow from './RedoArrow';
 import Setting from './Setting';
 import Tick from './Tick';
 
@@ -38,6 +39,7 @@ export {
   EmojiSad,
   Flag,
   RightArrow,
+  RedoArrow,
   Mark,
   Profile,
   Rocket,

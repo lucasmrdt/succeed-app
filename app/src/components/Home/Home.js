@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Link } from '@/components/fragments';
+import { FilterOverlay } from '@/containers';
+import { Link, Overlay, StylisedText } from '@/components/fragments';
 import { type RNTypes } from '@/types';
 import * as Constants from '@/constants';
 import { createStyleSheet } from '@/utils';
@@ -15,6 +16,7 @@ class Home extends React.Component<Props> {
   render() {
     return (
       <View style={styles.wrapper}>
+        <FilterOverlay />
         <Link to='Screen2' rounded='fully' style={styles.button} color={Constants.COLORS.WHITE}>
           <Text>LINK</Text>
         </Link>

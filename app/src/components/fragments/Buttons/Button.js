@@ -16,6 +16,7 @@ type Props = TouchableProps & {
   optimized?: bool,
   rounded?: 'fully' | 'little',
   light?: bool,
+  dynamicWidth?: bool,
 };
 
 class Button extends React.Component<Props> {
@@ -24,6 +25,7 @@ class Button extends React.Component<Props> {
     light: false,
     rounded: 'little',
     optimized: false,
+    dynamicWidth: false,
     size: {
       width: SIZES.DEFAULT_BUTTON_WIDTH,
       height: SIZES.DEFAULT_BUTTON_HEIGHT,
@@ -53,9 +55,9 @@ class Button extends React.Component<Props> {
   }
 
   getPropsSize() {
-    const { optimized, size } = this.props;
+    const { optimized, dynamicWidth, size } = this.props;
 
-    if (optimized) {
+    if (optimized || dynamicWidth) {
       return { size };
     }
     return {
@@ -71,6 +73,7 @@ class Button extends React.Component<Props> {
       rounded,
       color,
       light,
+      dynamicWidth,
     } = this.props;
 
     const borderRadius = (rounded === 'fully'
@@ -82,11 +85,13 @@ class Button extends React.Component<Props> {
       styles.wrapper,
       style,
       {
-        width: size.width,
         height: size.height,
         backgroundColor: !light ? color : 'transparent',
         borderColor: !light ? 'transparent' : color,
         borderRadius,
+      },
+      !dynamicWidth && {
+        width: size.width,
       },
     ];
 
@@ -94,10 +99,13 @@ class Button extends React.Component<Props> {
   }
 
   render() {
-    const { optimized, ...props } = this.props;
+    const { optimized, dynamicWidth, ...props } = this.props;
     const propsSize = this.getPropsSize();
     const style = this.computeStyle();
-    const Button = optimized ? StaticButton : AnimatedButton;
+    const Button = (optimized || dynamicWidth
+      ? StaticButton
+      : AnimatedButton
+    );
 
     return (
       <Button

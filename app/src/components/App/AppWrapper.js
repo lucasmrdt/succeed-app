@@ -28,7 +28,7 @@ class AppWrapper extends React.PureComponent<void, State> {
     }
     return (
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        <PersistGate loading={<LoadScreen />} persistor={persistor}>
           <Navigator />
         </PersistGate>
       </Provider>
