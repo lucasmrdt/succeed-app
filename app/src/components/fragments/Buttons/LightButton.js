@@ -49,7 +49,8 @@ class LightButton extends React.PureComponent<Props> {
         >
           {children}
         </StylisedText>
-        {icon && <Icon size={ICON_SIZE} color={color}/>}
+        {/* $FlowFixMe don't understand... */}
+        {Icon && <Icon size={ICON_SIZE} color={color}/>}
       </Touchable>
     );
   }

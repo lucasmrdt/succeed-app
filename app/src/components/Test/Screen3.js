@@ -8,6 +8,7 @@ import {
   IconButton,
   LightButton,
 } from '@/components/fragments';
+import Level from '../Level';
 import { Clock } from '@/assets/icons';
 import { type RNTypes } from '@/types';
 import * as Constants from '@/constants';
@@ -32,55 +33,12 @@ class Test extends React.Component<Props> {
   render() {
     return (
       <View style={styles.wrapper}>
-        <LightButton onPress={this.onPress}>void lightButton</LightButton>
-        <LightButton
-          onPress={this.onPress}
-          color={Constants.COLORS.GREEN}
-          justify='left'
-          leftIcon='Tick'
-        >
-          next
-        </LightButton>
-        <LightButton
-          onPress={this.onPress}
-          color={Constants.COLORS.YELLOW}
-          justify='left'
-          leftIcon='Danger'
-          disable
-        >
-          warning
-        </LightButton>
-        <ButtonWithIcon
-          onPress={this.onPress}
-        >
-          time
-        </ButtonWithIcon>
-        <ButtonWithIcon
-          onPress={this.onPress}
-          selected
-          justify='left'
-          leftIcon='Scales'
-        >
-          distance
-        </ButtonWithIcon>
-        <ButtonWithIcon
-          onPress={this.onPress}
-          selected
-          justify='left'
-          leftIcon={Clock}
-        >
-          time
-        </ButtonWithIcon>
-        <ButtonWithIcon
-          onPress={this.onPress}
-          selected
-          color={Constants.COLORS.PURPLE}
-          disable
-          justify='left'
-          leftIcon={Clock}
-        >
-          time
-        </ButtonWithIcon>
+        <Level
+          size='l'
+          score={12}
+          limit={20}
+          progress={17}
+        />
       </View>
     );
   }

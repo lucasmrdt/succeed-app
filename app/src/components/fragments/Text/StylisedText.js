@@ -8,6 +8,7 @@ import { createStyleSheet } from '@/utils';
 import { type RNTypes } from '@/types';
 
 type Props = {
+  children: React$Element<any>,
   style?: RNTypes.StylesheetType,
   size?: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl',
   type?: 'normal' | 'bold' | 'light',
@@ -53,7 +54,7 @@ class StylisedText extends React.PureComponent<Props> {
             lineHeight,
           },
         }),
-        // letterSpacing,
+        letterSpacing,
       },
       styles.wrapper,
       style,

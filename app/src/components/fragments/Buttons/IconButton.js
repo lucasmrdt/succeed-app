@@ -12,7 +12,7 @@ const SIZE = 50;
 
 type Props = ButtonProps & {
   onPress: (id: string) => void,
-  icon: string | React.Component,
+  icon: string | React$Element<any>,
   color?: string,
   style?: RNTypes.StylesheetType,
   isSelected?: bool,
@@ -32,7 +32,7 @@ class ButtonIcon extends React.Component<Props> {
   }
 
   render() {
-    const { isSelected, icon, ...props } = this.props;
+    const { isSelected, icon, color, ...props } = this.props;
     const Icon = getIcon(icon);
 
     return (
@@ -40,9 +40,11 @@ class ButtonIcon extends React.Component<Props> {
         size={{ height: SIZE, width: SIZE }}
         rounded='little'
         light={isSelected}
+        color={color}
         {...props}
       >
-        <Icon color={isSelected ? color : COLORS.WHITE} />
+        {/* $FlowFixMe don't understand... */}
+        {Icon && <Icon color={isSelected ? color : COLORS.WHITE} />}
       </Button>
     );
   }

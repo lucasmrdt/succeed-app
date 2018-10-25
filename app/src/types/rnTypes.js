@@ -1,5 +1,6 @@
 // @flow
 
+// $FlowFixMe
 import { type NavigationInjectedProps } from 'react-navigation';
 
 export type StylesheetType = {
@@ -46,7 +47,7 @@ export type StylesheetType = {
   textShadowRadius?: number,
   alignContent?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around',
   alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around',
-  alignSelf?: 'auto' | FlexAlignType,
+  alignSelf?: 'auto',
   aspectRatio?: number,
   borderBottomWidth?: number,
   borderEndWidth?: number | string,

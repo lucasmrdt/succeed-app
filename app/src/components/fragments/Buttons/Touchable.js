@@ -8,14 +8,21 @@ import { ANIMATIONS } from '@/constants';
 import { type RNTypes } from '@/types';
 
 const SCALE_ONPRESS = 1.08;
+const PRESS_RETENTION_OFFSET = {
+  top: 15,
+  bottom: 15,
+  left: 15,
+  right: 15,
+};
 
 type Props = {
+  children: React$Element<any>,
   onPress: (id: string) => void,
+  id: string,
   onPressOut?: () => void,
   onPressIn?: () => void,
   disable?: bool,
-  id?: string,
-  scale?: {
+  scale: {
     x?: Animated.Value,
     y?: Animated.Value,
   },
@@ -130,6 +137,7 @@ class Touchable extends React.Component<Props> {
         onPressIn={this.onPressIn}
         onPress={this.onPress}
         onPressOut={this.onPressOut}
+        pressRetentionOffset={PRESS_RETENTION_OFFSET}
       >
         {this.renderChildren()}
       </TouchableWithoutFeedback>

@@ -18,13 +18,13 @@ const LETTER_SPACING = 1;
 const MARGIN_BETWEEN_TEXT_ICON = 5;
 
 type Props = ButtonProps & {
+  iconSize: number,
+  color: string,
   leftIcon?: DataTypes.IconTypes,
   rightIcon?: DataTypes.IconTypes,
   fontSize?: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl',
-  iconSize?: number,
   justify?: 'left' | 'space-between',
   light?: bool,
-  color?: string,
   textStyle?: RNTypes.StylesheetType,
 };
 
@@ -42,15 +42,15 @@ class ButtonWithIcon extends React.PureComponent<Props> {
     justify: 'left',
   };
 
-  renderIcon(color, renderIcon) {
-    const { justify, iconSize, dynamicWidth } = this.props;
+  renderIcon(color: string, renderIcon: DataTypes.IconTypes) {
+    const { justify, iconSize, dynamicSize } = this.props;
     const Icon = getIcon(renderIcon);
 
     const transform = [{ translateX: -iconSize / 2 }];
     const style = (justify === 'left'
       ? [
         styles.icon,
-        dynamicWidth && { transform },
+        dynamicSize && { transform },
       ]
       : null
     );
@@ -61,6 +61,7 @@ class ButtonWithIcon extends React.PureComponent<Props> {
     return (
       <View style={style}>
         {isReactComponent(Icon)
+          // $FlowFixMe don't understand...
           ? <Icon size={iconSize} color={color} />
           : renderIcon(color)
         }
@@ -122,7 +123,6 @@ const styles = createStyleSheet({
     position: 'relative',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 15,
   },
   icon: {
     position: 'absolute',

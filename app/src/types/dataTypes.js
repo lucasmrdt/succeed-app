@@ -1,7 +1,5 @@
 // @flow
 
-import { type ComponentType } from 'react';
-
 export type IconPropsType = {
   size: number,
   color: string,
@@ -45,9 +43,9 @@ export type IconTypes = 'RightArrow'
   | 'Tick'
   | 'Bell'
   | 'RedoArrow'
-  | Component;
+  | React$Element<any>;
 
 export type FilterType = {
   label: string,
-  icon: ComponentType<IconPropsType>,
+  icon: React$Element<IconPropsType>,
 };

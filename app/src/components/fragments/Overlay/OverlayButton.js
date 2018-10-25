@@ -1,0 +1,100 @@
+// @flow
+
+import React from 'react';
+import { Animated, Platform } from 'react-native';
+import { Touchable, ButtonWithIcon } from '../Buttons';
+import OverlayItem from './OverlayItem';
+import OverlayBackground from './OverlayBackground';
+import { DownArrow } from '@/assets/icons';
+import { createStyleSheet } from '@/utils';
+import { ANIMATIONS, COLORS, SIZES, STYLES } from '@/constants';
+
+import {
+  type RNTypes,
+  type DataTypes,
+} from '@/types';
+
+const TEXT_BUTTON_PADDING = 20;
+const ICON_SIZE = SIZES.ICON_SIZE_S;
+
+type Props = {
+  color: string,
+  buttonText: string,
+  buttonIcon: DataTypes.IconTypes,
+  progress: Animated.Value,
+  onPress: () => void,
+};
+
+class OverlayButton extends React.PureComponent<Props> {
+
+  renderArrow = (color: string) => {
+    const { progress } = this.props;
+    const rotate = progress.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '180deg'],
+    });
+
+    const style: RNTypes.StylesheetType = {
+      transform: [ {rotate} ],
+    };
+
+    return (
+      <Animated.View style={style}>
+        <DownArrow color={color} size={ICON_SIZE} />
+      </Animated.View>
+    );
+  }
+
+  render() {
+    const { buttonIcon, buttonText, ...props } = this.props;
+
+    return (
+      <ButtonWithIcon
+        {...props}
+        leftIcon={buttonIcon}
+        rightIcon={this.renderArrow}
+        iconSize={ICON_SIZE}
+        style={styles.button}
+        textStyle={styles.textButton}
+        fontSize='xl'
+        justify='space-between'
+        light
+        dynamicSize
+      >
+        {buttonText.toUpperCase()}
+      </ButtonWithIcon>
+    );
+  }
+
+}
+
+const styles = createStyleSheet({
+  textButton: {
+    paddingLeft: TEXT_BUTTON_PADDING,
+    paddingRight: TEXT_BUTTON_PADDING,
+    ...Platform.select({
+      ios: {
+        // Fix vertical align with text on ios.
+        // TODO: Fix better solution.
+        transform: [{ translateY: -4 }],
+      },
+    }),
+  },
+  button: {
+    ...STYLES.HEADER_LEFT,
+    ...Platform.select({
+      ios: {
+        // Fix the height of the button on ios
+        // because, lineHeight of text increase
+        // the height of the parrent width, and so
+        // position of the parent.
+        height: 25,
+      },
+    }),
+    padding: 0,
+    zIndex: 3,
+    borderWidth: 0,
+  },
+});
+
+export default OverlayButton;

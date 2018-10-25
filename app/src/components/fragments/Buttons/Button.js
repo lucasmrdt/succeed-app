@@ -11,12 +11,13 @@ import { type TouchableProps } from './Touchable';
 import { type RNTypes } from '@/types';
 
 type Props = TouchableProps & {
-  color?: string,
-  size?: { height: number, width: number },
+  size: { height: number, width: number },
+  color: string,
   optimized?: bool,
   rounded?: 'fully' | 'little',
   light?: bool,
-  dynamicWidth?: bool,
+  dynamicSize?: bool,
+  children: React$Element<any>,
 };
 
 class Button extends React.Component<Props> {
@@ -25,7 +26,7 @@ class Button extends React.Component<Props> {
     light: false,
     rounded: 'little',
     optimized: false,
-    dynamicWidth: false,
+    dynamicSize: false,
     size: {
       width: SIZES.DEFAULT_BUTTON_WIDTH,
       height: SIZES.DEFAULT_BUTTON_HEIGHT,
@@ -39,7 +40,7 @@ class Button extends React.Component<Props> {
       width: PropTypes.number.isRequired,
     }),
     color: PropTypes.string,
-    rounder: PropTypes.oneOf(['fully', 'little']),
+    rounded: PropTypes.oneOf(['fully', 'little']),
     light: PropTypes.bool,
     style: PropTypes.any,
     id: PropTypes.string,
@@ -55,9 +56,9 @@ class Button extends React.Component<Props> {
   }
 
   getPropsSize() {
-    const { optimized, dynamicWidth, size } = this.props;
+    const { optimized, dynamicSize, size } = this.props;
 
-    if (optimized || dynamicWidth) {
+    if (optimized || dynamicSize) {
       return { size };
     }
     return {
@@ -73,7 +74,7 @@ class Button extends React.Component<Props> {
       rounded,
       color,
       light,
-      dynamicWidth,
+      dynamicSize,
     } = this.props;
 
     const borderRadius = (rounded === 'fully'
@@ -85,12 +86,12 @@ class Button extends React.Component<Props> {
       styles.wrapper,
       style,
       {
-        height: size.height,
         backgroundColor: !light ? color : 'transparent',
         borderColor: !light ? 'transparent' : color,
         borderRadius,
       },
-      !dynamicWidth && {
+      !dynamicSize && {
+        height: size.height,
         width: size.width,
       },
     ];
@@ -99,10 +100,10 @@ class Button extends React.Component<Props> {
   }
 
   render() {
-    const { optimized, dynamicWidth, ...props } = this.props;
+    const { optimized, dynamicSize, ...props } = this.props;
     const propsSize = this.getPropsSize();
     const style = this.computeStyle();
-    const Button = (optimized || dynamicWidth
+    const Button = (optimized || dynamicSize
       ? StaticButton
       : AnimatedButton
     );

@@ -19,8 +19,8 @@ type Props = {
   progress: number,
   color?: string,
   light?: bool,
-  size?: 'm',
-  text?: string | (progress: number) => React.Component | null,
+  size: 'm',
+  text?: string | (progress: number) => React$Element<any> | null,
 };
 
 class VerticalProgress extends React.Component<Props> {
@@ -50,7 +50,6 @@ class VerticalProgress extends React.Component<Props> {
     || nextProps.progress !== progress);
   }
 
-  @Memoize.shouldUpdate('color')
   computeStyle(props: Props) {
     const { size, color, light } = props;
     const selectedStyle = STYLE_BY_SIZES[size];
@@ -87,7 +86,7 @@ class VerticalProgress extends React.Component<Props> {
     };
   }
 
-  renderText(style) {
+  renderText(style: RNTypes.StylesheetType) {
     const { text, size, progress } = this.props;
 
     if (!text) return null;

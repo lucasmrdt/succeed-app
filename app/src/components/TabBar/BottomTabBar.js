@@ -8,6 +8,7 @@ import { STYLES, SIZES, COLORS } from '@/constants';
 
 import { RNTypes } from '@/types';
 import {
+  // $FlowFixMe
   type TabBarBottomProps,
   type NavigationRoute,
 } from 'react-navigation';
@@ -99,7 +100,7 @@ const styles = createStyleSheet({
     flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
-    height: SIZES.TAB_BAR_HEIGHT,
+    height: SIZES.BOTTOM_TAB_BAR_HEIGHT,
   },
   icon: {
     ...STYLES.CENTER_CHILDS,

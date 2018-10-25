@@ -3,7 +3,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-class LoadScreen extends React.Component {
+class LoadScreen extends React.Component<void> {
   shouldComponentUpdate = () => false;
 
   render() {

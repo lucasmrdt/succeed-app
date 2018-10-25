@@ -2,6 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Animated } from 'react-native';
 import AnimatedComponent from '../AnimatedComponent';
 import Touchable from './Touchable';
 import { createStyleSheet } from '@/utils';

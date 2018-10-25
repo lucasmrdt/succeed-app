@@ -1,6 +1,5 @@
 // @flow
 
-import React from 'react';
 import { connect } from 'react-redux';
 import FilterOverlay from '@/components/FilterOverlay';
 import { changeFilter } from '@/actions/homeActions';
@@ -10,7 +9,7 @@ import {
   type DataTypes,
 } from '@/types';
 
-const mapStateToProps = (state: StateType) => ({
+const mapStateToProps = (state: ReduxTypes.StateType) => ({
   selectedFilter: state.home.selectedFilter,
 });
 

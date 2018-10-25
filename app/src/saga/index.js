@@ -3,7 +3,7 @@
 import { all } from 'redux-saga/effects'
 import testSagas from './testSaga'
 
-function* saga() {
+function* saga(): Generator<*, *, *> {
     yield all([
         ...testSagas,
     ])

@@ -5,7 +5,6 @@ import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import ProgressBar from './ProgressBar';
 import { createStyleSheet } from '@/utils';
-import { Memoize } from '@/helpers';
 import { SIZES, COLORS } from '@/constants';
 import { RNTypes } from '@/types';
 
@@ -19,10 +18,10 @@ const STYLE_BY_SIZES = {
 
 type Props = {
   progress: number,
+  size: 's' | 'm' | 'l',
   color?: string,
   light?: bool,
-  size?: 's' | 'm' | 'l',
-  text?: string | (progress: number) => React.Component | null,
+  text?: string | (progress: number) => React$Element<any> | null,
 };
 
 class HorizontalProgress extends React.Component<Props> {
@@ -52,7 +51,6 @@ class HorizontalProgress extends React.Component<Props> {
     || nextProps.progress !== progress);
   }
 
-  @Memoize.shouldUpdate('color')
   computeStyle(props: Props) {
     const { size, color, light } = props;
     const selectedStyle = STYLE_BY_SIZES[size];
@@ -86,7 +84,7 @@ class HorizontalProgress extends React.Component<Props> {
     };
   }
 
-  renderText(style) {
+  renderText(style: RNTypes.StylesheetType) {
     const { text, size } = this.props;
     const selectedStyle = STYLE_BY_SIZES[size];
 

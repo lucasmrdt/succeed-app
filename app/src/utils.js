@@ -21,7 +21,7 @@ export const createStyleSheet = (styles: CreateStyleSheetParam) => (
 
 export const getIcon = (
   icon: DataTypes.IconTypes,
-) : null | React.ComponentType<IconPropsType> => {
+) : null | React$Component<DataTypes.IconPropsType> => {
   if (!icon) {
     return null;
   }

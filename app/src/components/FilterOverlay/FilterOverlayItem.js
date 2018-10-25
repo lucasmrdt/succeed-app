@@ -1,16 +1,13 @@
 // @flow
 
 import React from 'react';
-import { onlyUpdateForKeys } from 'recompose';
 import { View } from 'react-native';
+import { onlyUpdateForKeys } from 'recompose';
 import { StylisedText } from '@/components/fragments';
-import { DATA, STYLES, COLORS, SIZES } from '@/constants';
-import { createStyleSheet, getIcon } from '@/utils';
+import { COLORS, DATA, SIZES, STYLES } from '@/constants';
+import { DataTypes } from '@/types';
+import { createStyleSheet } from '@/utils';
 
-import {
-  type DataTypes,
-  type RNTypes,
-} from '@/types';
 
 type Props = {
   selectedFilter: DataTypes.FilterType,
@@ -84,4 +81,4 @@ const styles = createStyleSheet({
   },
 });
 
-export default onlyUpdateForKeys(['selectedFilter'])(FilterOverlayItem);
+export default FilterOverlayItem;

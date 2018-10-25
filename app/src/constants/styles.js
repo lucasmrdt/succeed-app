@@ -1,11 +1,9 @@
 // @flow
 
-import * as Colors from './colors';
-import * as Sizes from './sizes';
-
+import * as COLORS from './colors';
+import * as SIZES from './sizes';
 
 import { type RNTypes } from '@/types';
-import * as COLORS from './colors';
 
 export const CENTER_CHILDS: RNTypes.StylesheetType = {
   justifyContent: 'center',
@@ -37,4 +35,18 @@ export const BUTTON: RNTypes.StylesheetType = {
   position: 'relative',
   flexDirection: 'row',
   borderWidth: 1,
+};
+
+export const HEADER_PADDING = 20;
+export const HEADER: RNTypes.StylesheetType = {
+  position: 'absolute',
+  top: HEADER_PADDING + SIZES.STATUS_BAR_HEIGHT,
+};
+export const HEADER_LEFT: RNTypes.StylesheetType = {
+  ...HEADER,
+  left: HEADER_PADDING,
+};
+export const HEADER_RIGHT: RNTypes.StylesheetType = {
+  ...HEADER,
+  right: HEADER_PADDING,
 };

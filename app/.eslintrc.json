@@ -1,7 +1,7 @@
 {
-    "extends": "airbnb",
-    "parser": "babel-eslint",
-    "plugins": [
-      "flowtype"
-    ]
+  "parser": "babel-eslint",
+  "rules": {
+    "no-unused-vars": 1,
+    "semi": "warn"
+  }
 }

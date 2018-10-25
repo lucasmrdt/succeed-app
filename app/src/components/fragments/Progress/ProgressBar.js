@@ -10,12 +10,13 @@ import { RNTypes } from '@/types';
 const TEXT_CHILD_WIDTH = 100;
 
 type Props = {
-  animatedProgress: number,
+  animatedProgress?: number,
+  progress?: Animated.Value,
   size: {
     width: number,
     height: number,
   },
-  renderText?: (progress: number) => React.Component | null,
+  renderText?: (progress: number) => React$Element<any> | null,
   style?: {
     wrapper?: RNTypes.StylesheetType,
     progress?: RNTypes.StylesheetType,
@@ -32,14 +33,14 @@ class ProgressBar extends AnimatedComponent<Props, State> {
   static defaultProps = {
     animationOptions: Constants.ANIMATIONS.DEFAULT_ANIMATIONS_OPTIONS,
     animateAtMount: true,
-    text: null,
+    renderText: null,
     style: {},
   };
 
   shouldComponentUpdate(nextProps: Props) {
-    const { text, style } = this.props;
+    const { renderText, style } = this.props;
 
-    return (nextProps.text !== text
+    return (nextProps.renderText !== renderText
     || nextProps.style !== style);
   }
 
@@ -49,7 +50,11 @@ class ProgressBar extends AnimatedComponent<Props, State> {
       size,
       style: propStyle,
     } = this.props;
-    const { animatedProgress: progress } = this.state;
+    let { animatedProgress: progress } = this.state;
+
+    if (!progress) {
+      progress = this.props.progress;
+    }
 
     const wrapperStyle: Array<RNTypes.StylesheetType> = [
       styles.wrapper,

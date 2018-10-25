@@ -27,7 +27,7 @@ class AnimatedComponent<RefProps, RefState> extends React.Component<Props> {
 
   static defaultProps = {
     animationOptions: DEFAULT_ANIMATIONS_OPTIONS,
-    animateAtMount: false,
+    animateAtMount: true,
   };
 
   static getDerivedStateFromProps(nextProps: Props, prevState: RefState) {
@@ -51,7 +51,11 @@ class AnimatedComponent<RefProps, RefState> extends React.Component<Props> {
     Animated.parallel(
       _.map(animatedProps, (value, key) => Animated.timing(
         state[key],
-        { toValue: nextProps[key], ...options },
+        {
+          toValue: nextProps[key],
+          // delay: isFirstOccurence ? 1000 : 0, // Wait X ms before animating.
+          ...options,
+        },
       ))
     ).start();
 

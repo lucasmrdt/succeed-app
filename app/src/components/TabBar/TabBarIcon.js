@@ -9,7 +9,7 @@ import { type RNTypes } from '@/types';
 
 type Props = {
   colorisedIconOpacity: Animated.Value,
-  icon: React.Component,
+  icon: React$Element<*>,
 };
 
 class TabBarIcon extends React.Component<Props> {
@@ -34,9 +34,11 @@ class TabBarIcon extends React.Component<Props> {
     return (
       <React.Fragment>
         <View style={styles.icon}>
+          {/* $FlowFixMe don't understand... */}
           <Icon color={COLORS.WHITE} size={SIZES.TAB_BAR_ICON_SIZE}/>
         </View>
         <Animated.View style={colorisedIconStyle}>
+          {/* $FlowFixMe don't understand... */}
           <Icon color={COLORS.PURPLE} size={SIZES.TAB_BAR_ICON_SIZE}/>
         </Animated.View>
       </React.Fragment>

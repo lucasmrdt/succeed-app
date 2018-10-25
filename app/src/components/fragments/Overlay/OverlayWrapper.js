@@ -1,20 +1,20 @@
 // @flow
 
 import React from 'react';
-import { Animated, View, Text, TouchableWithoutFeedback } from 'react-native';
+import { Animated, View, TouchableWithoutFeedback } from 'react-native';
 import { Touchable, ButtonWithIcon } from '../Buttons';
 import OverlayItem from './OverlayItem';
 import OverlayBackground from './OverlayBackground';
+import OverlayButton from './OverlayButton';
 import { DownArrow } from '@/assets/icons';
 import { createStyleSheet } from '@/utils';
-import { ANIMATIONS, COLORS, SIZES } from '@/constants';
+import { ANIMATIONS, COLORS, SIZES, STYLES } from '@/constants';
 
 import {
   type RNTypes,
   type DataTypes,
 } from '@/types';
 
-const TEXT_BUTTON_PADDING = 20;
 const ICON_SIZE = SIZES.ICON_SIZE_S;
 const WRAPPER_PADDING_TOP = 100;
 const ANIMATION_OPTIONS = {
@@ -24,10 +24,11 @@ const ANIMATION_OPTIONS = {
 };
 
 type Props = {
-  onSelectItem: (index: any) => void,
+  onSelectItem: (index: number) => void,
   buttonText: string,
   buttonIcon: DataTypes.IconTypes,
-  height?: number,
+  children: React$Element<any>,
+  height: number,
 };
 
 type State = {
@@ -46,10 +47,6 @@ class OverlayWrapper extends React.PureComponent<Props, State> {
 
   static defaultProps = {
     height: SIZES.HEIGHT / 2,
-  }
-
-  componentDidMount() {
-    this.toggle();
   }
 
   switchColor() {
@@ -92,9 +89,9 @@ class OverlayWrapper extends React.PureComponent<Props, State> {
     }
   }
 
-  onPressItem = (id) => {
+  onPressItem = (index: number) => {
     const { onSelectItem } = this.props;
-    onSelectItem(id);
+    onSelectItem(index);
     this.toggle();
   }
 
@@ -102,7 +99,7 @@ class OverlayWrapper extends React.PureComponent<Props, State> {
     const { children } = this.props;
 
     return (React.Children.map(children, (child, index) => (
-      <OverlayItem id={index} onPress={this.onPressItem}>
+      <OverlayItem index={index} onPress={this.onPressItem}>
         {child}
       </OverlayItem>
     )));
@@ -144,43 +141,16 @@ class OverlayWrapper extends React.PureComponent<Props, State> {
     );
   }
 
-  renderArrow = (color) => {
-    const rotate = this.animation.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['0deg', '180deg'],
-    });
-
-    const style: RNTypes.StylesheetType = {
-      transform: [ {rotate} ],
-    };
-
-    return (
-      <Animated.View style={style}>
-        <DownArrow color={color} size={ICON_SIZE} />
-      </Animated.View>
-    );
-  }
-
   renderButton() {
     const { color } = this.state;
-    const { buttonIcon, buttonText } = this.props;
 
     return (
-      <ButtonWithIcon
-        leftIcon={buttonIcon}
-        rightIcon={this.renderArrow}
-        iconSize={ICON_SIZE}
-        onPress={this.toggle}
-        style={styles.button}
+      <OverlayButton
+        {...this.props}
         color={color}
-        textStyle={styles.textButton}
-        fontSize='xl'
-        justify='space-between'
-        light
-        dynamicWidth
-      >
-        {buttonText.toUpperCase()}
-      </ButtonWithIcon>
+        onPress={this.toggle}
+        progress={this.animation}
+      />
     );
   }
 
@@ -212,17 +182,6 @@ const styles = createStyleSheet({
     alignItems: 'center',
     justifyContent: 'space-around',
     width: '100%',
-  },
-  textButton: {
-    paddingLeft: TEXT_BUTTON_PADDING,
-    paddingRight: TEXT_BUTTON_PADDING,
-  },
-  button: {
-    zIndex: 3,
-    position: 'absolute',
-    top: 30,
-    left: 10,
-    borderWidth: 0,
   },
 });
 

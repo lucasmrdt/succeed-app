@@ -1,14 +1,13 @@
 // @flow
 
 import React from 'react';
-import { Ionicons } from '@expo/vector-icons';
 import { Animated } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 import { ANIMATIONS, SIZES, COLORS } from '@/constants';
 import { Rocket, Profile, Bell } from '@/assets/icons';
 
 import { BottomTabBar, TabBarIcon } from '@/components/TabBar';
-import Home from '@/components/Home';
+import { Home } from '@/screens';
 import Screen1 from '@/components/Test/Screen1';
 import Screen2 from '@/components/Test/Screen2';
 import Screen3 from '@/components/Test/Screen3';

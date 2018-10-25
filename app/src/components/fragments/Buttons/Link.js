@@ -37,6 +37,7 @@ class Link extends React.PureComponent<Props> {
   }
 }
 
-const LinkWithNavigation: React.ComponentType<Props> = withNavigation(Link);
+// $FlowFixMe Weird ... Thank's flow-typed ....
+const LinkWithNavigation: React$Element<Props> = withNavigation(Link);
 
 export default LinkWithNavigation;
