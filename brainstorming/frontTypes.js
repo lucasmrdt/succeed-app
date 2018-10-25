@@ -41,8 +41,8 @@ type UserState = {
   username?: string,
   level: {
     value: number,
-    current: number,
-    max: number,
+    progress: number,
+    limit: number,
   },
   globalStats: {
     goals: {
