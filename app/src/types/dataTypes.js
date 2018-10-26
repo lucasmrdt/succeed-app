@@ -43,9 +43,17 @@ export type IconTypes = 'RightArrow'
   | 'Tick'
   | 'Bell'
   | 'RedoArrow'
-  | React$Element<any>;
+  | React$Element<any>
+  | Function
+  | any;
 
 export type FilterType = {
   label: string,
-  icon: React$Element<IconPropsType>,
+  icon: React$Component<IconPropsType>,
+};
+
+export type LevelType = {
+  score: number,
+  progress: number,
+  limit: number,
 };

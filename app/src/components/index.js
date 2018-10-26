@@ -1,11 +1,11 @@
 import TabBar from './TabBar';
-import FilterOverlay from './FilterOverlay';
+import Filter from './Filter';
 import LoadScreen from './LoadScreen';
 import Level from './Level';
 
 export {
   TabBar,
-  FilterOverlay,
+  Filter,
   LoadScreen,
   Level,
 };

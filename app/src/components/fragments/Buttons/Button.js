@@ -8,15 +8,15 @@ import { createStyleSheet } from '@/utils';
 import { SIZES, COLORS, STYLES } from '@/constants';
 
 import { type TouchableProps } from './Touchable';
-import { type RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
 
 type Props = TouchableProps & {
   size: { height: number, width: number },
   color: string,
-  optimized?: bool,
-  rounded?: 'fully' | 'little',
-  light?: bool,
-  dynamicSize?: bool,
+  optimized: bool,
+  rounded: 'fully' | 'little',
+  light: bool,
+  dynamicSize: bool,
   children: React$Element<any>,
 };
 
@@ -52,7 +52,7 @@ class Button extends React.Component<Props> {
     return (nextProps.size.height !== size.height
     || nextProps.size.width !== size.width
     || nextProps.color !== color
-    || nextProps.light !== light)
+    || nextProps.light !== light);
   }
 
   getPropsSize() {
@@ -82,7 +82,7 @@ class Button extends React.Component<Props> {
       : STYLES.LITTLE_ROUNDED_BORDER_RADIUS
     );
 
-    const computedStyle: Array<RNTypes.StylesheetType> = [
+    const computedStyle: Array<StylesheetType> = [
       styles.wrapper,
       style,
       {
@@ -90,6 +90,7 @@ class Button extends React.Component<Props> {
         borderColor: !light ? 'transparent' : color,
         borderRadius,
       },
+      // $FlowFixMe
       !dynamicSize && {
         height: size.height,
         width: size.width,

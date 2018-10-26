@@ -1156,7 +1156,7 @@ declare module 'react-navigation' {
   };
   declare export var TabBarTop: React$ComponentType<_TabBarTopProps>;
 
-  declare type _TabBarBottomProps = {
+  declare export type _TabBarBottomProps = {
     activeTintColor: string,
     activeBackgroundColor: string,
     adaptive?: boolean,

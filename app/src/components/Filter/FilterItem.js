@@ -2,24 +2,22 @@
 
 import React from 'react';
 import { View } from 'react-native';
-import { onlyUpdateForKeys } from 'recompose';
 import { StylisedText } from '@/components/fragments';
-import { COLORS, DATA, SIZES, STYLES } from '@/constants';
-import { DataTypes } from '@/types';
+import { COLORS, SIZES, STYLES } from '@/constants';
 import { createStyleSheet } from '@/utils';
 
+import { type FilterType } from '@/types/dataTypes';
 
 type Props = {
-  selectedFilter: DataTypes.FilterType,
+  selectedFilter: FilterType,
   index: number,
-  filter: DataTypes.FilterType,
+  filter: FilterType,
 };
 
-class FilterOverlayItem extends React.PureComponent<Props> {
+class FilterItem extends React.PureComponent<Props> {
   render() {
-    const { selectedFilter, index, filter } = this.props;
+    const { selectedFilter, filter } = this.props;
     const isSelected = (selectedFilter.label === filter.label);
-    const nbFilters = DATA.FILTERS.length;
     const Icon = filter.icon;
     const label = filter.label.toUpperCase();
 
@@ -35,6 +33,7 @@ class FilterOverlayItem extends React.PureComponent<Props> {
     return (
       <View style={wrapperStyle}>
         <View style={iconStyle}>
+          {/* $FlowFixMe */}
           <Icon
             color={COLORS.PURPLE}
             size={SIZES.ICON_SIZE_S}
@@ -81,4 +80,4 @@ const styles = createStyleSheet({
   },
 });
 
-export default FilterOverlayItem;
+export default FilterItem;

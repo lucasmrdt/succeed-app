@@ -5,7 +5,7 @@ import { Animated, View } from 'react-native';
 import { createStyleSheet } from '@/utils';
 import { COLORS, SIZES } from '@/constants';
 
-import { type RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
 
 type Props = {
   colorisedIconOpacity: Animated.Value,
@@ -24,7 +24,7 @@ class TabBarIcon extends React.Component<Props> {
       icon: Icon,
     } = this.props;
 
-    const colorisedIconStyle: Array<RNTypes.StylesheetType> = [
+    const colorisedIconStyle: Array<StylesheetType> = [
       styles.icon,
       {
         opacity: colorisedIconOpacity,

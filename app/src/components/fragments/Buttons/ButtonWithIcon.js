@@ -1,31 +1,28 @@
 // @flow
 
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import Button from './Button';
 import { StylisedText } from '../Text';
-import * as Icons from '@/assets/icons';
 import { STYLES, COLORS, SIZES } from '@/constants';
 import { getIcon, createStyleSheet, isReactComponent } from '@/utils';
 
-import {
-  type RNTypes,
-  type DataTypes,
-} from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
+import { type IconTypes } from '@/types/dataTypes';
 import { type ButtonProps } from './Button';
 
 const LETTER_SPACING = 1;
-const MARGIN_BETWEEN_TEXT_ICON = 5;
 
 type Props = ButtonProps & {
   iconSize: number,
   color: string,
-  leftIcon?: DataTypes.IconTypes,
-  rightIcon?: DataTypes.IconTypes,
-  fontSize?: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl',
-  justify?: 'left' | 'space-between',
-  light?: bool,
-  textStyle?: RNTypes.StylesheetType,
+  leftIcon: IconTypes,
+  rightIcon: IconTypes,
+  fontSize: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl',
+  fontType: 'normal' | 'bold' | 'light',
+  justify: 'left' | 'space-between',
+  light: bool,
+  textStyle: StylesheetType,
 };
 
 class ButtonWithIcon extends React.PureComponent<Props> {
@@ -35,6 +32,7 @@ class ButtonWithIcon extends React.PureComponent<Props> {
     rightIcon: null,
     iconSize: SIZES.ICON_SIZE_M,
     light: false,
+    fontType: 'normal',
     color: COLORS.GREEN,
     icon: null,
     fontSize: 'm',
@@ -42,7 +40,7 @@ class ButtonWithIcon extends React.PureComponent<Props> {
     justify: 'left',
   };
 
-  renderIcon(color: string, renderIcon: DataTypes.IconTypes) {
+  renderIcon(color: string, renderIcon: IconTypes) {
     const { justify, iconSize, dynamicSize } = this.props;
     const Icon = getIcon(renderIcon);
 
@@ -63,7 +61,7 @@ class ButtonWithIcon extends React.PureComponent<Props> {
         {isReactComponent(Icon)
           // $FlowFixMe don't understand...
           ? <Icon size={iconSize} color={color} />
-          : renderIcon(color)
+          : (typeof renderIcon === 'function') && renderIcon(color)
         }
       </View>
     );
@@ -77,6 +75,7 @@ class ButtonWithIcon extends React.PureComponent<Props> {
       style,
       textStyle,
       fontSize,
+      fontType,
       light,
       justify,
       color,
@@ -84,7 +83,7 @@ class ButtonWithIcon extends React.PureComponent<Props> {
     } = this.props;
     const childColor = (light ? color : COLORS.WHITE);
 
-    const computedStyle: Array<RNTypes.StylesheetType> = [
+    const computedStyle: Array<StylesheetType> = [
       styles.wrapper,
       style,
       {
@@ -104,6 +103,7 @@ class ButtonWithIcon extends React.PureComponent<Props> {
       >
         {this.renderIcon(childColor, leftIcon)}
         <StylisedText
+          type={fontType}
           size={fontSize}
           style={textStyle}
           color={childColor}

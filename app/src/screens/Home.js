@@ -2,14 +2,15 @@
 
 import React from 'react';
 import { View, Text } from 'react-native';
-import { FilterOverlay } from '@/containers';
-import { Link, Overlay, StylisedText } from '@/components/fragments';
-import { Level, Header } from '@/components';
-import { type RNTypes } from '@/types';
-import { STYLES, SIZES, COLORS } from '@/constants';
+import { Filter } from '@/containers';
+import { Link } from '@/components/fragments';
+import { Level } from '@/components';
+import { STYLES, COLORS } from '@/constants';
 import { createStyleSheet } from '@/utils';
 
-type Props = RNTypes.NavigationType;
+import { type NavigationType } from '@/types/rnTypes';
+
+type Props = NavigationType;
 
 class Home extends React.Component<Props> {
   shouldComponentUpdate = () => false;
@@ -17,7 +18,7 @@ class Home extends React.Component<Props> {
   render() {
     return (
       <View style={styles.wrapper}>
-        <FilterOverlay />
+        <Filter light />
         <Level
           style={STYLES.HEADER_RIGHT}
           score={12}

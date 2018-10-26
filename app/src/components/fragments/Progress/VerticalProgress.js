@@ -4,10 +4,11 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import ProgressBar from './ProgressBar';
-import { Memoize, Converter } from '@/helpers';
+import { Converter } from '@/helpers';
 import { createStyleSheet } from '@/utils';
-import { SIZES, COLORS, STYLES, ANIMATIONS } from '@/constants';
-import { RNTypes } from '@/types';
+import { COLORS, STYLES, ANIMATIONS } from '@/constants';
+
+import { type StylesheetType } from '@/types/rnTypes';
 
 const ANIMATION_OPTIONS = ANIMATIONS.PROGRESS_ANIMATION_OPTIONS;
 const BACKGROUND_OPACITY = .11;
@@ -54,7 +55,7 @@ class VerticalProgress extends React.Component<Props> {
     const { size, color, light } = props;
     const selectedStyle = STYLE_BY_SIZES[size];
 
-    const wrapperStyle: Array<RNTypes.StylesheetType> = [
+    const wrapperStyle: Array<StylesheetType> = [
       styles.progressWrapper,
       {
         backgroundColor: (!light
@@ -64,14 +65,14 @@ class VerticalProgress extends React.Component<Props> {
       },
     ];
 
-    const progressStyle: Array<RNTypes.StylesheetType> = [
+    const progressStyle: Array<StylesheetType> = [
       styles.progress,
       {
         backgroundColor: !light ? color : COLORS.WHITE,
       },
     ];
 
-    const textStyle: Array<RNTypes.StylesheetType> = [
+    const textStyle: Array<StylesheetType> = [
       styles.text,
       {
         color: !light ? color : COLORS.WHITE,
@@ -86,8 +87,8 @@ class VerticalProgress extends React.Component<Props> {
     };
   }
 
-  renderText(style: RNTypes.StylesheetType) {
-    const { text, size, progress } = this.props;
+  renderText(style: Array<StylesheetType>) {
+    const { text, progress } = this.props;
 
     if (!text) return null;
 
@@ -96,11 +97,11 @@ class VerticalProgress extends React.Component<Props> {
     }
     return (
       <Text style={style}>{text}</Text>
-    )
+    );
   }
 
   render() {
-    const { text, size, progress } = this.props;
+    const { size, progress } = this.props;
     const computedStyle = this.computeStyle(this.props);
     const selectedStyle = STYLE_BY_SIZES[size];
 

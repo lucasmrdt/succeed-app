@@ -1,5 +1,5 @@
-import FilterOverlay from './ConnectedFilterOverlay';
+import Filter from './ConnectedFilter';
 
 export {
-  FilterOverlay,
+  Filter,
 };

@@ -3,13 +3,11 @@
 import { FILTERS } from '@/constants/data';
 import { CHANGE_FILTER } from '@/actions/homeActions';
 
-import {
-  type ReduxTypes,
-  type DataTypes,
-} from '@/types';
+import { type ActionType } from '@/types/reduxTypes';
+import { type FilterType } from '@/types/dataTypes';
 
 export type StateType = {
-  selectedFilter: DataTypes.FilterType,
+  selectedFilter: FilterType,
 };
 
 const initState: StateType = {
@@ -18,10 +16,10 @@ const initState: StateType = {
 
 const reducer = (
   state: StateType = initState,
-  action: ReduxTypes.ActionType
+  action: ActionType
 ): StateType => {
   switch (action.type) {
-    case 'CHANGE_FILTER':
+    case CHANGE_FILTER:
       return {
         ...state,
         selectedFilter: action.payload,

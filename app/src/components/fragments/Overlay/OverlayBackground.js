@@ -5,7 +5,7 @@ import { Animated, TouchableWithoutFeedback } from 'react-native';
 import { createStyleSheet } from '@/utils';
 import { COLORS } from '@/constants';
 
-import { type RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
 
 const BACKGROUND_OPACITY = .3;
 
@@ -30,7 +30,7 @@ class OverlayBackground extends React.Component<Props> {
       return null;
     }
 
-    const style: Array<RNTypes.StylesheetType> = [
+    const style: Array<StylesheetType> = [
       styles.wrapper,
       {
         opacity: progress.interpolate({

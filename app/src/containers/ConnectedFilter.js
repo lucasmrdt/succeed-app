@@ -1,20 +1,18 @@
 // @flow
 
 import { connect } from 'react-redux';
-import FilterOverlay from '@/components/FilterOverlay';
+import Filter from '@/components/Filter';
 import { changeFilter } from '@/actions/homeActions';
 
-import {
-  type ReduxTypes,
-  type DataTypes,
-} from '@/types';
+import { type StateType } from '@/types/reduxTypes';
+import { type FilterType } from '@/types/dataTypes';
 
-const mapStateToProps = (state: ReduxTypes.StateType) => ({
+const mapStateToProps = (state: StateType) => ({
   selectedFilter: state.home.selectedFilter,
 });
 
 const mapDispatchToProps = {
-  onSelectFilter: (filter: DataTypes.FilterType) => (
+  onSelectFilter: (filter: FilterType) => (
     changeFilter(filter)
   ),
 };
@@ -22,4 +20,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(FilterOverlay);
+)(Filter);

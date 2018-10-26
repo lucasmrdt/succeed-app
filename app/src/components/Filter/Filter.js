@@ -1,29 +1,20 @@
 // @flow
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Overlay } from '@/components/fragments';
-import FilterOverlayItem from './FilterOverlayItem';
+import FilterItem from './FilterItem';
 import { DATA } from '@/constants';
 
-import { type DataTypes } from '@/types';
+import { type FilterType } from '@/types/dataTypes';
 
 const OVERLAY_HEIGHT = 330;
 
 type Props = {
-  selectedFilter: DataTypes.FilterType,
-  onSelectFilter: (filter: DataTypes.FilterType) => void,
+  selectedFilter: FilterType,
+  onSelectFilter: (filter: FilterType) => void,
 };
 
-class FilterOverlay extends React.PureComponent<Props> {
-
-  static propTypes = {
-    selectedFilter: PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      icon: PropTypes.any.isRequired,
-    }).isRequired,
-    onSelectFilter: PropTypes.func.isRequired,
-  }
+class Filter extends React.PureComponent<Props> {
 
   onSelectFilter = (index: number) => {
     const { selectedFilter, onSelectFilter } = this.props;
@@ -44,9 +35,10 @@ class FilterOverlay extends React.PureComponent<Props> {
         buttonText={selectedFilter.label}
         onSelectItem={this.onSelectFilter}
         height={OVERLAY_HEIGHT}
+        light
       >
         {DATA.FILTERS.map((filter, index) => (
-          <FilterOverlayItem
+          <FilterItem
             key={`filter_${index}`}
             index={index}
             filter={filter}
@@ -59,4 +51,4 @@ class FilterOverlay extends React.PureComponent<Props> {
 
 }
 
-export default FilterOverlay;
+export default Filter;

@@ -1,29 +1,29 @@
 // @flow
 
 import React from 'react';
-import { View, Animated } from 'react-native';
+import { View } from 'react-native';
 import { HorizontalProgress, StylisedText } from './fragments';
-import { COLORS, STYLES, ANIMATIONS } from '@/constants';
+import { COLORS } from '@/constants';
 import { createStyleSheet } from '@/utils';
 
-import { type RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
+import { type LevelType } from '@/types/dataTypes';
 
-const ANIMATION_OPTION = {
-  ...ANIMATIONS.DEFAULT_ANIMATIONS_OPTIONS,
-};
 
 type Props = {
   score: number,
   progress: number,
   limit: number,
+  updateLevel: (level: LevelType) => void,
   size?: 's' | 'l',
-  style?: RNTypes.StylesheetType,
+  style?: StylesheetType,
 };
 
 class Level extends React.PureComponent<Props> {
 
   static defaultProps = {
     size: 's',
+    style: null,
   }
 
   renderText = () => {

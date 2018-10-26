@@ -2,9 +2,6 @@
 
 import React from 'react';
 import { Touchable } from '../Buttons';
-import { STYLES } from '@/constants';
-
-import { type RNTypes } from '@/types';
 
 type Props = {
   onPress: (index: number) => void,

@@ -6,7 +6,7 @@ import { Transition } from 'react-navigation-fluid-transitions';
 import {
   HorizontalProgress, VerticalProgress, Link,
 } from '@/components/fragments';
-import { type RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
 import * as Constants from '@/constants';
 import { createStyleSheet } from '@/utils';
 

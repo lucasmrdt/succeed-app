@@ -3,19 +3,19 @@
 import * as COLORS from './colors';
 import * as SIZES from './sizes';
 
-import { type RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
 
-export const CENTER_CHILDS: RNTypes.StylesheetType = {
+export const CENTER_CHILDS: StylesheetType = {
   justifyContent: 'center',
   alignItems: 'center',
 };
 
-export const SPACE_BETWEEN: RNTypes.StylesheetType = {
+export const SPACE_BETWEEN: StylesheetType = {
   justifyContent: 'space-between',
   alignItems: 'center',
 };
 
-export const SHADOW: RNTypes.StylesheetType = {
+export const SHADOW: StylesheetType = {
   flexDirection: 'row',
   shadowOpacity: 1,
   shadowOffset: {
@@ -29,7 +29,7 @@ export const SHADOW: RNTypes.StylesheetType = {
 export const FULLY_ROUNDED_BORDER_RADIUS = 100;
 export const LITTLE_ROUNDED_BORDER_RADIUS = 6;
 
-export const BUTTON: RNTypes.StylesheetType = {
+export const BUTTON: StylesheetType = {
   ...CENTER_CHILDS,
   ...SHADOW,
   position: 'relative',
@@ -38,15 +38,15 @@ export const BUTTON: RNTypes.StylesheetType = {
 };
 
 export const HEADER_PADDING = 20;
-export const HEADER: RNTypes.StylesheetType = {
+export const HEADER: StylesheetType = {
   position: 'absolute',
   top: HEADER_PADDING + SIZES.STATUS_BAR_HEIGHT,
 };
-export const HEADER_LEFT: RNTypes.StylesheetType = {
+export const HEADER_LEFT: StylesheetType = {
   ...HEADER,
   left: HEADER_PADDING,
 };
-export const HEADER_RIGHT: RNTypes.StylesheetType = {
+export const HEADER_RIGHT: StylesheetType = {
   ...HEADER,
   right: HEADER_PADDING,
 };

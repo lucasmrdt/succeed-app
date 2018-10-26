@@ -2,17 +2,13 @@
 
 import React from 'react';
 import { Animated, Platform } from 'react-native';
-import { Touchable, ButtonWithIcon } from '../Buttons';
-import OverlayItem from './OverlayItem';
-import OverlayBackground from './OverlayBackground';
+import { ButtonWithIcon } from '../Buttons';
 import { DownArrow } from '@/assets/icons';
 import { createStyleSheet } from '@/utils';
-import { ANIMATIONS, COLORS, SIZES, STYLES } from '@/constants';
+import { SIZES, STYLES } from '@/constants';
 
-import {
-  type RNTypes,
-  type DataTypes,
-} from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
+import { type IconTypes } from '@/types/dataTypes';
 
 const TEXT_BUTTON_PADDING = 20;
 const ICON_SIZE = SIZES.ICON_SIZE_S;
@@ -20,7 +16,7 @@ const ICON_SIZE = SIZES.ICON_SIZE_S;
 type Props = {
   color: string,
   buttonText: string,
-  buttonIcon: DataTypes.IconTypes,
+  buttonIcon: IconTypes,
   progress: Animated.Value,
   onPress: () => void,
 };
@@ -34,7 +30,7 @@ class OverlayButton extends React.PureComponent<Props> {
       outputRange: ['0deg', '180deg'],
     });
 
-    const style: RNTypes.StylesheetType = {
+    const style: StylesheetType = {
       transform: [ {rotate} ],
     };
 
@@ -58,6 +54,7 @@ class OverlayButton extends React.PureComponent<Props> {
         textStyle={styles.textButton}
         fontSize='xl'
         justify='space-between'
+        fontType='light'
         light
         dynamicSize
       >

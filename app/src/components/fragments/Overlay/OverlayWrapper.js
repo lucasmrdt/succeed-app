@@ -1,21 +1,16 @@
 // @flow
 
 import React from 'react';
-import { Animated, View, TouchableWithoutFeedback } from 'react-native';
-import { Touchable, ButtonWithIcon } from '../Buttons';
+import { Animated, TouchableWithoutFeedback } from 'react-native';
 import OverlayItem from './OverlayItem';
 import OverlayBackground from './OverlayBackground';
 import OverlayButton from './OverlayButton';
-import { DownArrow } from '@/assets/icons';
 import { createStyleSheet } from '@/utils';
-import { ANIMATIONS, COLORS, SIZES, STYLES } from '@/constants';
+import { ANIMATIONS, COLORS, SIZES } from '@/constants';
 
-import {
-  type RNTypes,
-  type DataTypes,
-} from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
+import { type IconTypes } from '@/types/dataTypes';
 
-const ICON_SIZE = SIZES.ICON_SIZE_S;
 const WRAPPER_PADDING_TOP = 100;
 const ANIMATION_OPTIONS = {
   easing: ANIMATIONS.EASING_EXP,
@@ -26,8 +21,9 @@ const ANIMATION_OPTIONS = {
 type Props = {
   onSelectItem: (index: number) => void,
   buttonText: string,
-  buttonIcon: DataTypes.IconTypes,
+  buttonIcon: IconTypes,
   children: React$Element<any>,
+  light: bool,
   height: number,
 };
 
@@ -39,18 +35,29 @@ type State = {
 class OverlayWrapper extends React.PureComponent<Props, State> {
 
   animation = new Animated.Value(0)
+  state: State
 
-  state: State = {
-    status: 'close',
-    color: COLORS.WHITE,
+  constructor(props: Props) {
+    console.log(props)
+    super(props);
+    const { light } = props;
+    this.state = {
+      status: 'close',
+      color: light ? COLORS.WHITE : COLORS.PURPLE,
+    };
   }
 
   static defaultProps = {
+    light: false,
     height: SIZES.HEIGHT / 2,
   }
 
   switchColor() {
     const { color } = this.state;
+    const { light } = this.props;
+
+    if (!light) return;
+
     if (color === COLORS.WHITE) {
       this.setState({ color: COLORS.PURPLE });
     } else {
@@ -106,15 +113,16 @@ class OverlayWrapper extends React.PureComponent<Props, State> {
   }
 
   renderOverlay() {
-    const { height } = this.props;
+    const { height, light } = this.props;
     const translateY = this.animation.interpolate({
       inputRange: [0, 1],
       outputRange: [-height, 0],
     });
 
-    const style: Array<RNTypes.StylesheetType> = [
+    const style: Array<StylesheetType> = [
       styles.overlay,
       {
+        backgroundColor: COLORS.WHITE,
         transform: [{ translateY }],
         height,
       },
@@ -177,7 +185,6 @@ const styles = createStyleSheet({
     top: 0,
     paddingTop: WRAPPER_PADDING_TOP,
     position: 'absolute',
-    backgroundColor: COLORS.WHITE,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-around',

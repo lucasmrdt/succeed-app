@@ -1,30 +1,31 @@
 // @flow
 
-import { FILTERS } from '@/constants/data';
-import { CHANGE_FILTER } from '@/actions/homeActions';
+import { UPDATE_LEVEL } from '@/actions/userActions';
 
-import {
-  type ReduxTypes,
-  type DataTypes,
-} from '@/types';
+import { type ActionType } from '@/types/reduxTypes';
+import { type LevelType } from '@/types/dataTypes';
 
 export type StateType = {
-  selectedFilter: DataTypes.FilterType,
+  level: LevelType,
 };
 
 const initState: StateType = {
-  selectedFilter: FILTERS[0],
+  level: {
+    limit: 1,
+    progress: 0,
+    score: 0,
+  },
 };
 
 const reducer = (
   state: StateType = initState,
-  action: ReduxTypes.ActionType
+  action: ActionType
 ): StateType => {
   switch (action.type) {
-    case 'CHANGE_FILTER':
+    case UPDATE_LEVEL:
       return {
         ...state,
-        selectedFilter: action.payload,
+        score: action.payload,
       };
 
     default:

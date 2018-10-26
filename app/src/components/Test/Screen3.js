@@ -8,9 +8,10 @@ import {
   IconButton,
   LightButton,
 } from '@/components/fragments';
+import { Filter } from '@/containers';
 import Level from '../Level';
 import { Clock } from '@/assets/icons';
-import { type RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
 import * as Constants from '@/constants';
 import { createStyleSheet } from '@/utils';
 
@@ -19,13 +20,6 @@ const DATA = [...Array(16)].map((_, i) => `this is the ${i}`);
 type Props = RNTypes.NavigationType;
 
 class Test extends React.Component<Props> {
-  state = {
-    progress: .2,
-  }
-
-  componentDidMount() {
-  }
-
   onPress = (buttonId) => {
     this.props.navigation.push('Screen2');
   }
@@ -33,12 +27,9 @@ class Test extends React.Component<Props> {
   render() {
     return (
       <View style={styles.wrapper}>
-        <Level
-          size='l'
-          score={12}
-          limit={20}
-          progress={17}
-        />
+        <View style={{ position: 'absolute', top: '50%', width: '100%', height: '50%', overflow: 'hidden', backgroundColor: 'white' }}>
+          <Filter />
+        </View>
       </View>
     );
   }

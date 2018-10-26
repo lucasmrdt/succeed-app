@@ -1,7 +1,6 @@
 // @flow
 
-// $FlowFixMe
-import { type NavigationInjectedProps } from 'react-navigation';
+import { type NavigationScreenProp } from 'react-navigation';
 
 export type StylesheetType = {
   backfaceVisibility?: 'visible' | 'hidden',
@@ -120,4 +119,4 @@ export type StylesheetType = {
   shadowRadius?: number,
 };
 
-export type NavigationType = NavigationInjectedProps;
+export type NavigationType = NavigationScreenProp<{}>;
