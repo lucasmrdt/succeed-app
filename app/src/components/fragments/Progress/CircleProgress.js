@@ -4,7 +4,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import { converters } from '@/utils';
+import { Converter } from '@/helpers';
 import { ANIMATIONS, COLORS, SIZES } from '@/constants';
 
 const ANIMATION_OPTIONS = ANIMATIONS.PROGRESS_ANIMATION_OPTIONS;
@@ -17,11 +17,11 @@ type Props = {
   progress: number,
   color?: string,
   light?: bool,
-  size?: 'm',
-  text?: (progress: number) => React.Component,
+  size: 'm',
+  text?: (progress: number) => React$Element<any>,
 };
 
-class CircleProgress extends React.Component<Props, State> {
+class CircleProgress extends React.Component<Props> {
   circularProgress = null;
 
   static propTypes = {
@@ -50,7 +50,7 @@ class CircleProgress extends React.Component<Props, State> {
     const selectedStyle = STYLE_BY_SIZES[size];
     const computedColor = (!light ? color : COLORS.WHITE);
     const backgroundColor = (!light
-      ? converters.rgbWithOpacity(color, BACKGROUND_OPACITY)
+      ? Converter.rgbWithOpacity(color, BACKGROUND_OPACITY)
       : COLORS.TRANSPARENT_WHITE
     );
 

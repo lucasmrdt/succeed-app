@@ -8,8 +8,10 @@ import {
   IconButton,
   LightButton,
 } from '@/components/fragments';
+import { Filter } from '@/containers';
+import Level from '../Level';
 import { Clock } from '@/assets/icons';
-import { type RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
 import * as Constants from '@/constants';
 import { createStyleSheet } from '@/utils';
 
@@ -18,13 +20,6 @@ const DATA = [...Array(16)].map((_, i) => `this is the ${i}`);
 type Props = RNTypes.NavigationType;
 
 class Test extends React.Component<Props> {
-  state = {
-    progress: .2,
-  }
-
-  componentDidMount() {
-  }
-
   onPress = (buttonId) => {
     this.props.navigation.push('Screen2');
   }
@@ -32,55 +27,9 @@ class Test extends React.Component<Props> {
   render() {
     return (
       <View style={styles.wrapper}>
-        <LightButton onPress={this.onPress}>void lightButton</LightButton>
-        <LightButton
-          onPress={this.onPress}
-          color={Constants.COLORS.GREEN}
-          justify='left'
-          leftIcon='Tick'
-        >
-          next
-        </LightButton>
-        <LightButton
-          onPress={this.onPress}
-          color={Constants.COLORS.YELLOW}
-          justify='left'
-          leftIcon='Danger'
-          disable
-        >
-          warning
-        </LightButton>
-        <ButtonWithIcon
-          onPress={this.onPress}
-        >
-          time
-        </ButtonWithIcon>
-        <ButtonWithIcon
-          onPress={this.onPress}
-          selected
-          justify='left'
-          leftIcon='Scales'
-        >
-          distance
-        </ButtonWithIcon>
-        <ButtonWithIcon
-          onPress={this.onPress}
-          selected
-          justify='left'
-          leftIcon={Clock}
-        >
-          time
-        </ButtonWithIcon>
-        <ButtonWithIcon
-          onPress={this.onPress}
-          selected
-          color={Constants.COLORS.PURPLE}
-          disable
-          justify='left'
-          leftIcon={Clock}
-        >
-          time
-        </ButtonWithIcon>
+        <View style={{ position: 'absolute', top: '50%', width: '100%', height: '50%', overflow: 'hidden', backgroundColor: 'white' }}>
+          <Filter />
+        </View>
       </View>
     );
   }

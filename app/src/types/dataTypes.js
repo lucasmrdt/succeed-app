@@ -1,7 +1,5 @@
 // @flow
 
-import { type ComponentType } from 'react';
-
 export type IconPropsType = {
   size: number,
   color: string,
@@ -45,9 +43,17 @@ export type IconTypes = 'RightArrow'
   | 'Tick'
   | 'Bell'
   | 'RedoArrow'
-  | Component;
+  | React$Element<any>
+  | Function
+  | any;
 
 export type FilterType = {
   label: string,
-  icon: ComponentType<IconPropsType>,
+  icon: React$Component<IconPropsType>,
+};
+
+export type LevelType = {
+  score: number,
+  progress: number,
+  limit: number,
 };

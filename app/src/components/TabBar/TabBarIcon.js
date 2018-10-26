@@ -5,11 +5,11 @@ import { Animated, View } from 'react-native';
 import { createStyleSheet } from '@/utils';
 import { COLORS, SIZES } from '@/constants';
 
-import { type RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
 
 type Props = {
   colorisedIconOpacity: Animated.Value,
-  icon: React.Component,
+  icon: React$Element<*>,
 };
 
 class TabBarIcon extends React.Component<Props> {
@@ -24,7 +24,7 @@ class TabBarIcon extends React.Component<Props> {
       icon: Icon,
     } = this.props;
 
-    const colorisedIconStyle: Array<RNTypes.StylesheetType> = [
+    const colorisedIconStyle: Array<StylesheetType> = [
       styles.icon,
       {
         opacity: colorisedIconOpacity,
@@ -34,9 +34,11 @@ class TabBarIcon extends React.Component<Props> {
     return (
       <React.Fragment>
         <View style={styles.icon}>
+          {/* $FlowFixMe don't understand... */}
           <Icon color={COLORS.WHITE} size={SIZES.TAB_BAR_ICON_SIZE}/>
         </View>
         <Animated.View style={colorisedIconStyle}>
+          {/* $FlowFixMe don't understand... */}
           <Icon color={COLORS.PURPLE} size={SIZES.TAB_BAR_ICON_SIZE}/>
         </Animated.View>
       </React.Fragment>

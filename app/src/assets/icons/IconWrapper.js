@@ -4,9 +4,9 @@ import React from 'react';
 import { DEFAULT_ICON_SIZE } from '@/constants/sizes';
 import { WHITE } from '@/constants/colors';
 
-import { type DataTypes } from '@/types';
+import { type IconPropsType } from '@/types/dataTypes';
 
-type Props = DataTypes.IconPropsType;
+type Props = IconPropsType;
 
 class IconWrapper extends React.Component<Props> {
 

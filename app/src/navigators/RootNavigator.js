@@ -17,7 +17,6 @@ const routes = {
 const RootNavigator = createStackNavigator(
   routes,
   {
-    gesturesEnabled: true,
     mode: 'modal',
     initialRouteName: 'App',
     headerMode: 'none',

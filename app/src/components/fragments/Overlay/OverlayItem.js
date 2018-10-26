@@ -2,25 +2,18 @@
 
 import React from 'react';
 import { Touchable } from '../Buttons';
-import { createStyleSheet } from '@/utils';
-import { STYLES } from '@/constants';
-
-import { type RNTypes } from '@/types';
 
 type Props = {
-  onPress: (id: string) => void,
-  id: string,
-  childCount: number,
+  onPress: (index: number) => void,
+  index: number,
+  children: React$Element<any>,
 };
 
 class OverlayItem extends React.PureComponent<Props> {
-  static defaultProps = {
-    onPressOut: null,
-  }
 
   onPress = () => {
-    const { id, onPress } = this.props;
-    onPress(id);
+    const { index, onPress } = this.props;
+    onPress(index);
   }
 
   render() {
@@ -32,6 +25,7 @@ class OverlayItem extends React.PureComponent<Props> {
       </Touchable>
     );
   }
+
 }
 
 export default OverlayItem;

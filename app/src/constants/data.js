@@ -1,7 +1,7 @@
 // @flow
 
 import { getIcon } from '@/utils';
-import { DataTypes } from '@/types';
+import { type FilterType } from '@/types/dataTypes';
 
 export const FILTERS: Array<FilterType> = [
   { label: 'Today', icon: getIcon('Mark') },

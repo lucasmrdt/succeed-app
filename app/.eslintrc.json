@@ -1,7 +1,10 @@
 {
-    "extends": "airbnb",
-    "parser": "babel-eslint",
-    "plugins": [
-      "flowtype"
-    ]
+  "extends": [
+    "plugin:react/recommended"
+  ],
+  "parser": "babel-eslint",
+  "rules": {
+    "no-unused-vars": 1,
+    "semi": "warn"
+  }
 }

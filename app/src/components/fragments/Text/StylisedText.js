@@ -5,14 +5,15 @@ import { Text, Platform } from 'react-native';
 import { COLORS, SIZES, STYLES } from '@/constants';
 import { createStyleSheet } from '@/utils';
 
-import { type RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
 
 type Props = {
-  style?: RNTypes.StylesheetType,
-  size?: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl',
-  type?: 'normal' | 'bold' | 'light',
-  letterSpacing?: number,
-  color?: string,
+  children: React$Element<any>,
+  style: StylesheetType,
+  size: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl',
+  type: 'normal' | 'bold' | 'light',
+  letterSpacing: number,
+  color: string,
 };
 
 class StylisedText extends React.PureComponent<Props> {
@@ -43,7 +44,7 @@ class StylisedText extends React.PureComponent<Props> {
     const lineHeight = SIZES.LINE_TEXT_HEIGHTS[size];
     const fontSize = SIZES.TEXT_SIZES[size];
 
-    const wrapperStyle: Array<RNTypes.StylesheetType> = [
+    const wrapperStyle: Array<StylesheetType> = [
       {
         fontSize,
         fontFamily,
@@ -53,7 +54,7 @@ class StylisedText extends React.PureComponent<Props> {
             lineHeight,
           },
         }),
-        // letterSpacing,
+        letterSpacing,
       },
       styles.wrapper,
       style,

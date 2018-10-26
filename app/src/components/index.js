@@ -1,13 +1,11 @@
-import App from './App';
-import Home from './Home';
 import TabBar from './TabBar';
-import FilterOverlay from './FilterOverlay';
+import Filter from './Filter';
 import LoadScreen from './LoadScreen';
+import Level from './Level';
 
 export {
-  App,
-  Home,
   TabBar,
-  FilterOverlay,
+  Filter,
   LoadScreen,
+  Level,
 };

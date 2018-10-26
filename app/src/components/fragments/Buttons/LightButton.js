@@ -1,14 +1,12 @@
 // @flow
 
 import React from 'react';
-import { View, Text } from 'react-native';
 import Touchable from './Touchable';
 import { StylisedText } from '../Text';
-import * as Icons from '@/assets/icons';
-import { STYLES, COLORS } from '@/constants';
+import { COLORS } from '@/constants';
 import { getIcon, createStyleSheet } from '@/utils';
 
-import { type RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
 import { type TouchableProps } from './Touchable';
 
 const LETTER_SPACING = 1;
@@ -16,9 +14,9 @@ const MARGIN_BETWEEN_TEXT_ICON = 10;
 const ICON_SIZE = 15;
 
 type Props = TouchableProps & {
-  icon?: string,
-  color?: string,
-  textStyle?: RNTypes.StylesheetType,
+  icon: string,
+  color: string,
+  textStyle: StylesheetType,
 };
 
 class LightButton extends React.PureComponent<Props> {
@@ -49,7 +47,8 @@ class LightButton extends React.PureComponent<Props> {
         >
           {children}
         </StylisedText>
-        {icon && <Icon size={ICON_SIZE} color={color}/>}
+        {/* $FlowFixMe don't understand... */}
+        {Icon && <Icon size={ICON_SIZE} color={color}/>}
       </Touchable>
     );
   }

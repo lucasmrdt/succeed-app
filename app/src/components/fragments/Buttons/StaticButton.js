@@ -3,9 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Touchable from './Touchable';
-import { createStyleSheet } from '@/utils';
 
-import { type RNTypes } from '@/types';
 import { type TouchableProps } from './Touchable';
 
 type Props = TouchableProps;
@@ -23,7 +21,6 @@ class StaticButton extends React.PureComponent<Props> {
 
   render() {
     const { children, ...props } = this.props;
-    // console.log(`Render ${this.constructor.name}.`);
 
     return (
       <Touchable {...props}>

@@ -5,21 +5,28 @@ import PropTypes from 'prop-types';
 import { Animated, TouchableWithoutFeedback } from 'react-native';
 import { ANIMATIONS } from '@/constants';
 
-import { type RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
 
 const SCALE_ONPRESS = 1.08;
+const PRESS_RETENTION_OFFSET = {
+  top: 15,
+  bottom: 15,
+  left: 15,
+  right: 15,
+};
 
 type Props = {
+  children: any,
   onPress: (id: string) => void,
-  onPressOut?: () => void,
-  onPressIn?: () => void,
-  disable?: bool,
-  id?: string,
-  scale?: {
+  id: string,
+  onPressOut: () => void,
+  onPressIn: () => void,
+  disable: bool,
+  scale: {
     x?: Animated.Value,
     y?: Animated.Value,
   },
-  style?: RNTypes.StylesheetType,
+  style: any,
 };
 
 class Touchable extends React.Component<Props> {
@@ -89,7 +96,7 @@ class Touchable extends React.Component<Props> {
   computeStyle() {
     const { style, scale } = this.props;
 
-    const computedStyle: Array<RNTypes.StylesheetType> = [
+    const computedStyle: Array<StylesheetType> = [
       style,
       {
         transform: [
@@ -130,6 +137,7 @@ class Touchable extends React.Component<Props> {
         onPressIn={this.onPressIn}
         onPress={this.onPress}
         onPressOut={this.onPressOut}
+        pressRetentionOffset={PRESS_RETENTION_OFFSET}
       >
         {this.renderChildren()}
       </TouchableWithoutFeedback>

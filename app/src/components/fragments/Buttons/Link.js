@@ -5,11 +5,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
 import Button, { type ButtonProps } from './Button';
-import { COLORS, ANIMATIONS, SIZES } from '@/constants';
+import { ANIMATIONS } from '@/constants';
 
-import { type RNTypes } from '@/types';
+import { type NavigationType } from '@/types/rnTypes';
 
-type Props = RNTypes.NavigationType & ButtonProps & {
+type Props = ButtonProps & {
+  navigation: NavigationType,
   to: string,
 };
 
@@ -37,6 +38,7 @@ class Link extends React.PureComponent<Props> {
   }
 }
 
-const LinkWithNavigation: React.ComponentType<Props> = withNavigation(Link);
+// $FlowFixMe Weird ... Thank's flow-typed ....
+const LinkWithNavigation: React$Element<Props> = withNavigation(Link);
 
 export default LinkWithNavigation;

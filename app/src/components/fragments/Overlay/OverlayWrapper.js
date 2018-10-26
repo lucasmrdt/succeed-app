@@ -1,21 +1,16 @@
 // @flow
 
 import React from 'react';
-import { Animated, View, Text, TouchableWithoutFeedback } from 'react-native';
-import { Touchable, ButtonWithIcon } from '../Buttons';
+import { Animated, TouchableWithoutFeedback } from 'react-native';
 import OverlayItem from './OverlayItem';
 import OverlayBackground from './OverlayBackground';
-import { DownArrow } from '@/assets/icons';
+import OverlayButton from './OverlayButton';
 import { createStyleSheet } from '@/utils';
 import { ANIMATIONS, COLORS, SIZES } from '@/constants';
 
-import {
-  type RNTypes,
-  type DataTypes,
-} from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
+import { type IconTypes } from '@/types/dataTypes';
 
-const TEXT_BUTTON_PADDING = 20;
-const ICON_SIZE = SIZES.ICON_SIZE_S;
 const WRAPPER_PADDING_TOP = 100;
 const ANIMATION_OPTIONS = {
   easing: ANIMATIONS.EASING_EXP,
@@ -24,10 +19,12 @@ const ANIMATION_OPTIONS = {
 };
 
 type Props = {
-  onSelectItem: (index: any) => void,
+  onSelectItem: (index: number) => void,
   buttonText: string,
-  buttonIcon: DataTypes.IconTypes,
-  height?: number,
+  buttonIcon: IconTypes,
+  children: React$Element<any>,
+  light: bool,
+  height: number,
 };
 
 type State = {
@@ -38,22 +35,29 @@ type State = {
 class OverlayWrapper extends React.PureComponent<Props, State> {
 
   animation = new Animated.Value(0)
+  state: State
 
-  state: State = {
-    status: 'close',
-    color: COLORS.WHITE,
+  constructor(props: Props) {
+    console.log(props)
+    super(props);
+    const { light } = props;
+    this.state = {
+      status: 'close',
+      color: light ? COLORS.WHITE : COLORS.PURPLE,
+    };
   }
 
   static defaultProps = {
+    light: false,
     height: SIZES.HEIGHT / 2,
-  }
-
-  componentDidMount() {
-    this.toggle();
   }
 
   switchColor() {
     const { color } = this.state;
+    const { light } = this.props;
+
+    if (!light) return;
+
     if (color === COLORS.WHITE) {
       this.setState({ color: COLORS.PURPLE });
     } else {
@@ -92,9 +96,9 @@ class OverlayWrapper extends React.PureComponent<Props, State> {
     }
   }
 
-  onPressItem = (id) => {
+  onPressItem = (index: number) => {
     const { onSelectItem } = this.props;
-    onSelectItem(id);
+    onSelectItem(index);
     this.toggle();
   }
 
@@ -102,22 +106,23 @@ class OverlayWrapper extends React.PureComponent<Props, State> {
     const { children } = this.props;
 
     return (React.Children.map(children, (child, index) => (
-      <OverlayItem id={index} onPress={this.onPressItem}>
+      <OverlayItem index={index} onPress={this.onPressItem}>
         {child}
       </OverlayItem>
     )));
   }
 
   renderOverlay() {
-    const { height } = this.props;
+    const { height, light } = this.props;
     const translateY = this.animation.interpolate({
       inputRange: [0, 1],
       outputRange: [-height, 0],
     });
 
-    const style: Array<RNTypes.StylesheetType> = [
+    const style: Array<StylesheetType> = [
       styles.overlay,
       {
+        backgroundColor: COLORS.WHITE,
         transform: [{ translateY }],
         height,
       },
@@ -144,43 +149,16 @@ class OverlayWrapper extends React.PureComponent<Props, State> {
     );
   }
 
-  renderArrow = (color) => {
-    const rotate = this.animation.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['0deg', '180deg'],
-    });
-
-    const style: RNTypes.StylesheetType = {
-      transform: [ {rotate} ],
-    };
-
-    return (
-      <Animated.View style={style}>
-        <DownArrow color={color} size={ICON_SIZE} />
-      </Animated.View>
-    );
-  }
-
   renderButton() {
     const { color } = this.state;
-    const { buttonIcon, buttonText } = this.props;
 
     return (
-      <ButtonWithIcon
-        leftIcon={buttonIcon}
-        rightIcon={this.renderArrow}
-        iconSize={ICON_SIZE}
-        onPress={this.toggle}
-        style={styles.button}
+      <OverlayButton
+        {...this.props}
         color={color}
-        textStyle={styles.textButton}
-        fontSize='xl'
-        justify='space-between'
-        light
-        dynamicWidth
-      >
-        {buttonText.toUpperCase()}
-      </ButtonWithIcon>
+        onPress={this.toggle}
+        progress={this.animation}
+      />
     );
   }
 
@@ -207,22 +185,10 @@ const styles = createStyleSheet({
     top: 0,
     paddingTop: WRAPPER_PADDING_TOP,
     position: 'absolute',
-    backgroundColor: COLORS.WHITE,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-around',
     width: '100%',
-  },
-  textButton: {
-    paddingLeft: TEXT_BUTTON_PADDING,
-    paddingRight: TEXT_BUTTON_PADDING,
-  },
-  button: {
-    zIndex: 3,
-    position: 'absolute',
-    top: 30,
-    left: 10,
-    borderWidth: 0,
   },
 });
 

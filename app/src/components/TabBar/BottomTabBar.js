@@ -1,14 +1,14 @@
 // @flow
 
 import React from 'react';
-import { TouchableWithoutFeedback, View, Animated } from 'react-native';
+import { View } from 'react-native';
 import { Touchable } from '@/components/fragments';
 import { createStyleSheet } from '@/utils';
-import { STYLES, SIZES, COLORS } from '@/constants';
+import { STYLES, SIZES } from '@/constants';
 
-import { RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
 import {
-  type TabBarBottomProps,
+  type _TabBarBottomProps,
   type NavigationRoute,
 } from 'react-navigation';
 
@@ -17,7 +17,7 @@ const SELECTED_ICON_SCALE = 1.2;
 const SELECTED_ICON_OPACITY = 1;
 const COLORISED_ROUTES_INDEX = [0];
 
-type Props = TabBarBottomProps;
+type Props = _TabBarBottomProps;
 
 class BottomTabBar extends React.Component<Props> {
   shouldComponentUpdate() {
@@ -28,8 +28,6 @@ class BottomTabBar extends React.Component<Props> {
 
   renderTabBarButton = (route: NavigationRoute, index: number) => {
     const {
-      activeTintColor,
-      inactiveTintColor,
       navigation,
       renderIcon,
       position,
@@ -61,7 +59,7 @@ class BottomTabBar extends React.Component<Props> {
       outputRange: outputTintOpacityRange,
     });
 
-    const style: Array<RNTypes.StylesheetType> = [
+    const style: Array<StylesheetType> = [
       styles.icon,
       {
         opacity,
@@ -99,7 +97,7 @@ const styles = createStyleSheet({
     flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
-    height: SIZES.TAB_BAR_HEIGHT,
+    height: SIZES.BOTTOM_TAB_BAR_HEIGHT,
   },
   icon: {
     ...STYLES.CENTER_CHILDS,

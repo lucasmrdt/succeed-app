@@ -1,6 +1,6 @@
 // @flow
 
-import { type NavigationInjectedProps } from 'react-navigation';
+import { type NavigationScreenProp } from 'react-navigation';
 
 export type StylesheetType = {
   backfaceVisibility?: 'visible' | 'hidden',
@@ -46,7 +46,7 @@ export type StylesheetType = {
   textShadowRadius?: number,
   alignContent?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around',
   alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around',
-  alignSelf?: 'auto' | FlexAlignType,
+  alignSelf?: 'auto',
   aspectRatio?: number,
   borderBottomWidth?: number,
   borderEndWidth?: number | string,
@@ -119,4 +119,4 @@ export type StylesheetType = {
   shadowRadius?: number,
 };
 
-export type NavigationType = NavigationInjectedProps;
+export type NavigationType = NavigationScreenProp<{}>;

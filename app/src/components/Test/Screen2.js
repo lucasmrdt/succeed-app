@@ -6,7 +6,6 @@ import { Transition } from 'react-navigation-fluid-transitions';
 import { Button } from '@/components/fragments';
 import { createStyleSheet } from '@/utils';
 import * as Constants from '@/constants';
-import { RNTypes } from '@/types';
 
 type Props = RNTypes.NavigationInjectedProps;
 

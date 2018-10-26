@@ -8,15 +8,16 @@ import { createStyleSheet } from '@/utils';
 import { SIZES, COLORS, STYLES } from '@/constants';
 
 import { type TouchableProps } from './Touchable';
-import { type RNTypes } from '@/types';
+import { type StylesheetType } from '@/types/rnTypes';
 
 type Props = TouchableProps & {
-  color?: string,
-  size?: { height: number, width: number },
-  optimized?: bool,
-  rounded?: 'fully' | 'little',
-  light?: bool,
-  dynamicWidth?: bool,
+  size: { height: number, width: number },
+  color: string,
+  optimized: bool,
+  rounded: 'fully' | 'little',
+  light: bool,
+  dynamicSize: bool,
+  children: React$Element<any>,
 };
 
 class Button extends React.Component<Props> {
@@ -25,7 +26,7 @@ class Button extends React.Component<Props> {
     light: false,
     rounded: 'little',
     optimized: false,
-    dynamicWidth: false,
+    dynamicSize: false,
     size: {
       width: SIZES.DEFAULT_BUTTON_WIDTH,
       height: SIZES.DEFAULT_BUTTON_HEIGHT,
@@ -39,7 +40,7 @@ class Button extends React.Component<Props> {
       width: PropTypes.number.isRequired,
     }),
     color: PropTypes.string,
-    rounder: PropTypes.oneOf(['fully', 'little']),
+    rounded: PropTypes.oneOf(['fully', 'little']),
     light: PropTypes.bool,
     style: PropTypes.any,
     id: PropTypes.string,
@@ -51,13 +52,13 @@ class Button extends React.Component<Props> {
     return (nextProps.size.height !== size.height
     || nextProps.size.width !== size.width
     || nextProps.color !== color
-    || nextProps.light !== light)
+    || nextProps.light !== light);
   }
 
   getPropsSize() {
-    const { optimized, dynamicWidth, size } = this.props;
+    const { optimized, dynamicSize, size } = this.props;
 
-    if (optimized || dynamicWidth) {
+    if (optimized || dynamicSize) {
       return { size };
     }
     return {
@@ -73,7 +74,7 @@ class Button extends React.Component<Props> {
       rounded,
       color,
       light,
-      dynamicWidth,
+      dynamicSize,
     } = this.props;
 
     const borderRadius = (rounded === 'fully'
@@ -81,16 +82,17 @@ class Button extends React.Component<Props> {
       : STYLES.LITTLE_ROUNDED_BORDER_RADIUS
     );
 
-    const computedStyle: Array<RNTypes.StylesheetType> = [
+    const computedStyle: Array<StylesheetType> = [
       styles.wrapper,
       style,
       {
-        height: size.height,
         backgroundColor: !light ? color : 'transparent',
         borderColor: !light ? 'transparent' : color,
         borderRadius,
       },
-      !dynamicWidth && {
+      // $FlowFixMe
+      !dynamicSize && {
+        height: size.height,
         width: size.width,
       },
     ];
@@ -99,10 +101,10 @@ class Button extends React.Component<Props> {
   }
 
   render() {
-    const { optimized, dynamicWidth, ...props } = this.props;
+    const { optimized, dynamicSize, ...props } = this.props;
     const propsSize = this.getPropsSize();
     const style = this.computeStyle();
-    const Button = (optimized || dynamicWidth
+    const Button = (optimized || dynamicSize
       ? StaticButton
       : AnimatedButton
     );

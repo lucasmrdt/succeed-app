@@ -1,24 +1,26 @@
 // @flow
 
 import React from 'react';
-import { Animated, View, StyleSheet, Text } from 'react-native';
+import { Animated, View, StyleSheet } from 'react-native';
 import AnimatedComponent from '../AnimatedComponent';
 import * as Constants from '@/constants';
 import { createStyleSheet } from '@/utils';
-import { RNTypes } from '@/types';
+
+import { type StylesheetType } from '@/types/rnTypes';
 
 const TEXT_CHILD_WIDTH = 100;
 
 type Props = {
   animatedProgress: number,
+  progress: Animated.Value,
   size: {
     width: number,
     height: number,
   },
-  renderText?: (progress: number) => React.Component | null,
-  style?: {
-    wrapper?: RNTypes.StylesheetType,
-    progress?: RNTypes.StylesheetType,
+  renderText: (progress: number) => React$Element<any> | null,
+  style: {
+    wrapper?: StylesheetType,
+    progress?: StylesheetType,
   },
 };
 
@@ -32,26 +34,29 @@ class ProgressBar extends AnimatedComponent<Props, State> {
   static defaultProps = {
     animationOptions: Constants.ANIMATIONS.DEFAULT_ANIMATIONS_OPTIONS,
     animateAtMount: true,
-    text: null,
+    renderText: null,
     style: {},
   };
 
   shouldComponentUpdate(nextProps: Props) {
-    const { text, style } = this.props;
+    const { renderText, style } = this.props;
 
-    return (nextProps.text !== text
+    return (nextProps.renderText !== renderText
     || nextProps.style !== style);
   }
 
   computeStyle() {
     const {
-      direction,
       size,
       style: propStyle,
     } = this.props;
-    const { animatedProgress: progress } = this.state;
+    let { animatedProgress: progress } = this.state;
 
-    const wrapperStyle: Array<RNTypes.StylesheetType> = [
+    if (!progress) {
+      progress = this.props.progress;
+    }
+
+    const wrapperStyle: Array<StylesheetType> = [
       styles.wrapper,
       propStyle.wrapper,
       {
@@ -60,7 +65,7 @@ class ProgressBar extends AnimatedComponent<Props, State> {
       },
     ];
 
-    const progressStyle: Array<RNTypes.StylesheetType> = [
+    const progressStyle: Array<StylesheetType> = [
       styles.progress,
       propStyle.progress,
       {
@@ -77,7 +82,7 @@ class ProgressBar extends AnimatedComponent<Props, State> {
       },
     ];
 
-    const textWrapperStyle: Array<RNTypes.StylesheetType> = [
+    const textWrapperStyle: Array<StylesheetType> = [
       styles.textWrapper,
       {
         transform: [
@@ -96,7 +101,7 @@ class ProgressBar extends AnimatedComponent<Props, State> {
     };
   }
 
-  renderText(style: RNTypes.StylesheetType) {
+  renderText(style: Array<StylesheetType>) {
     const { renderText } = this.props;
     const { animatedProgress: targetProgress } = this.props;
 

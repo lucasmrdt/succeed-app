@@ -40,7 +40,7 @@ const styles = createStyleSheet({
 });
 
 // Never update!
-const OptimizedTextValue: React.ComponentType<Props> = (
+const OptimizedTextValue: React$Element<Props> = (
   onlyUpdateForKeys(['value'])(TextValue)
 );
 export default OptimizedTextValue;
