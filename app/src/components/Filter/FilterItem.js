@@ -15,6 +15,7 @@ type Props = {
 };
 
 class FilterItem extends React.PureComponent<Props> {
+
   render() {
     const { selectedFilter, filter } = this.props;
     const isSelected = (selectedFilter.label === filter.label);
@@ -48,6 +49,7 @@ class FilterItem extends React.PureComponent<Props> {
       </View>
     );
   }
+
 }
 
 const inheritanceStyle = {
@@ -69,11 +71,11 @@ const styles = createStyleSheet({
   },
   unselectedItem: {
     ...inheritanceStyle.item,
-    opacity: .7,
+    opacity: .8,
   },
   selectedIcon: {
     ...inheritanceStyle.icon,
-    transform: [{ scale: 1.2 }],
+    transform: [{ scale: 1.3 }],
   },
   unselectedIcon: {
     ...inheritanceStyle.icon,

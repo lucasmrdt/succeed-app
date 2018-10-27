@@ -5,23 +5,30 @@ import { Animated, Platform } from 'react-native';
 import { ButtonWithIcon } from '../Buttons';
 import { DownArrow } from '@/assets/icons';
 import { createStyleSheet } from '@/utils';
-import { SIZES, STYLES } from '@/constants';
+import { SIZES, STYLES, COLORS } from '@/constants';
 
+
+import { type ContextType } from './OverlayContext';
 import { type StylesheetType } from '@/types/rnTypes';
 import { type IconTypes } from '@/types/dataTypes';
 
 const TEXT_BUTTON_PADDING = 20;
 const ICON_SIZE = SIZES.ICON_SIZE_S;
 
-type Props = {
+type Props = ContextType & {
   color: string,
-  buttonText: string,
-  buttonIcon: IconTypes,
-  progress: Animated.Value,
-  onPress: () => void,
+  text: string,
+  icon: IconTypes,
 };
 
 class OverlayButton extends React.PureComponent<Props> {
+
+  // TODO: Use this in next update of react >16.6.0
+  // static contextType = Context;
+
+  static defaultProps = {
+    color: COLORS.PURPLE,
+  }
 
   renderArrow = (color: string) => {
     const { progress } = this.props;
@@ -42,12 +49,21 @@ class OverlayButton extends React.PureComponent<Props> {
   }
 
   render() {
-    const { buttonIcon, buttonText, ...props } = this.props;
+    const {
+      icon,
+      text,
+      color,
+      light,
+      toggle,
+      ...props
+    } = this.props;
 
     return (
       <ButtonWithIcon
         {...props}
-        leftIcon={buttonIcon}
+        color={light ? COLORS.WHITE : color}
+        onPress={toggle}
+        leftIcon={icon}
         rightIcon={this.renderArrow}
         iconSize={ICON_SIZE}
         style={styles.button}
@@ -58,7 +74,7 @@ class OverlayButton extends React.PureComponent<Props> {
         light
         dynamicSize
       >
-        {buttonText.toUpperCase()}
+        {text.toUpperCase()}
       </ButtonWithIcon>
     );
   }

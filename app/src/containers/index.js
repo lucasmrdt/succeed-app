@@ -1,5 +1,6 @@
-import Filter from './ConnectedFilter';
+import Level from './ConnectedLevel';
 
+export * from './ConnectedFilter';
 export {
-  Filter,
+  Level,
 };

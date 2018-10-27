@@ -1,7 +1,10 @@
 // @flow
 
 import { connect } from 'react-redux';
-import Filter from '@/components/Filter';
+import {
+  FilterOverlay as Overlay,
+  FilterButton as Button,
+} from '@/components';
 import { changeFilter } from '@/actions/homeActions';
 
 import { type StateType } from '@/types/reduxTypes';
@@ -17,7 +20,19 @@ const mapDispatchToProps = {
   ),
 };
 
-export default connect(
+const FilterOverlay = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Filter);
+)(Overlay);
+
+const FilterButton = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  null,
+  { pure: false },
+)(Button);
+
+export {
+  FilterOverlay,
+  FilterButton,
+};

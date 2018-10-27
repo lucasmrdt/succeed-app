@@ -20,7 +20,7 @@ type Props = TouchableProps & {
   children: React$Element<any>,
 };
 
-class Button extends React.Component<Props> {
+class Button extends React.PureComponent<Props> {
   static defaultProps = {
     color: COLORS.GREEN,
     light: false,
@@ -46,14 +46,15 @@ class Button extends React.Component<Props> {
     id: PropTypes.string,
   }
 
-  shouldComponentUpdate(nextProps: Props) {
-    const { size, color, light } = this.props;
+  // TODO: Remove it!
+  // shouldComponentUpdate(nextProps: Props) {
+  //   const { size, color, light, ch } = this.props;
 
-    return (nextProps.size.height !== size.height
-    || nextProps.size.width !== size.width
-    || nextProps.color !== color
-    || nextProps.light !== light);
-  }
+  //   return (nextProps.size.height !== size.height
+  //   || nextProps.size.width !== size.width
+  //   || nextProps.color !== color
+  //   || nextProps.light !== light);
+  // }
 
   getPropsSize() {
     const { optimized, dynamicSize, size } = this.props;

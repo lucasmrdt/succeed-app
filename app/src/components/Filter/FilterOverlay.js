@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'react';
-import { Overlay } from '@/components/fragments';
 import FilterItem from './FilterItem';
-import { DATA } from '@/constants';
+import { Overlay, OverlayProvider } from '@/components/fragments';
+import { DATA, COLORS } from '@/constants';
 
 import { type FilterType } from '@/types/dataTypes';
 
@@ -12,9 +12,10 @@ const OVERLAY_HEIGHT = 330;
 type Props = {
   selectedFilter: FilterType,
   onSelectFilter: (filter: FilterType) => void,
+  children: any,
 };
 
-class Filter extends React.PureComponent<Props> {
+class FilterOverlay extends React.PureComponent<Props> {
 
   onSelectFilter = (index: number) => {
     const { selectedFilter, onSelectFilter } = this.props;
@@ -26,16 +27,14 @@ class Filter extends React.PureComponent<Props> {
     onSelectFilter(requestedFilter);
   }
 
-  render() {
+  renderOverlay() {
     const { selectedFilter } = this.props;
 
     return (
       <Overlay
-        buttonIcon={selectedFilter.icon}
-        buttonText={selectedFilter.label}
         onSelectItem={this.onSelectFilter}
         height={OVERLAY_HEIGHT}
-        light
+        backgroundColor={COLORS.WHITE}
       >
         {DATA.FILTERS.map((filter, index) => (
           <FilterItem
@@ -49,6 +48,17 @@ class Filter extends React.PureComponent<Props> {
     );
   }
 
+  render() {
+    const { children } = this.props;
+
+    return (
+      <OverlayProvider>
+        {this.renderOverlay()}
+        {children}
+      </OverlayProvider>
+    );
+  }
+
 }
 
-export default Filter;
+export default FilterOverlay;

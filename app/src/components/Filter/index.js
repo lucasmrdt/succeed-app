@@ -1,3 +1,7 @@
-import Filter from './Filter';
+import FilterOverlay from './FilterOverlay';
+import FilterButton from './FilterButton';
 
-export default Filter;
+export {
+  FilterButton,
+  FilterOverlay,
+};
