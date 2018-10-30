@@ -25,7 +25,7 @@ type Props = ButtonProps & {
   textStyle: StylesheetType,
 };
 
-class ButtonWithIcon extends React.PureComponent<Props> {
+class StylisedButton extends React.PureComponent<Props> {
 
   static defaultProps = {
     leftIcon: null,
@@ -102,15 +102,17 @@ class ButtonWithIcon extends React.PureComponent<Props> {
         {...props}
       >
         {this.renderIcon(childColor, leftIcon)}
-        <StylisedText
-          type={fontType}
-          size={fontSize}
-          style={textStyle}
-          color={childColor}
-          letterSpacing={LETTER_SPACING}
-        >
-          {children}
-        </StylisedText>
+        {children && (
+          <StylisedText
+            type={fontType}
+            size={fontSize}
+            style={textStyle}
+            color={childColor}
+            letterSpacing={LETTER_SPACING}
+          >
+            {children}
+          </StylisedText>
+        )}
         {this.renderIcon(childColor, rightIcon)}
       </Button>
     );
@@ -130,4 +132,4 @@ const styles = createStyleSheet({
   },
 });
 
-export default ButtonWithIcon;
+export default StylisedButton;

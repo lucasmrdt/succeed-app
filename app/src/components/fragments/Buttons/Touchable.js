@@ -8,11 +8,12 @@ import { ANIMATIONS } from '@/constants';
 import { type StylesheetType } from '@/types/rnTypes';
 
 const SCALE_ONPRESS = 1.08;
+const PRESS_RETENTION = 50;
 const PRESS_RETENTION_OFFSET = {
-  top: 15,
-  bottom: 15,
-  left: 15,
-  right: 15,
+  top: PRESS_RETENTION,
+  bottom: PRESS_RETENTION,
+  left: PRESS_RETENTION,
+  right: PRESS_RETENTION,
 };
 
 type Props = {

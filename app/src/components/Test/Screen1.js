@@ -4,7 +4,7 @@ import React from 'react';
 import { Text, View, Animated, FlatList, TouchableWithoutFeedback } from 'react-native';
 import { Transition } from 'react-navigation-fluid-transitions';
 import {
-  HorizontalProgress, VerticalProgress, Link,
+  HorizontalProgress, VerticalProgress, Link, StylisedButton,
 } from '@/components/fragments';
 import { type StylesheetType } from '@/types/rnTypes';
 import * as Constants from '@/constants';
@@ -40,9 +40,11 @@ class Test extends React.Component<Props> {
             <Text>OK</Text>
           </View>
         </TouchableWithoutFeedback> */}
-        <Link to='Screen2' rounded='fully' style={{ position: 'absolute', bottom: 100 }} size={{ height: 50, width: this.state.progress > .5 ? 300 : 100 }}>
-          <Text>LINK</Text>
-        </Link>
+        <StylisedButton
+          onPress={() => this.props.navigation.goBack()}
+        >
+          BACK!
+        </StylisedButton>
         {/* <HorizontalProgress
           progress={this.state.progress}
           color={this.state.progress > .5 ? Constants.COLORS.GREEN : Constants.COLORS.BLACK}

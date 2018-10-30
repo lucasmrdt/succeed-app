@@ -1,41 +1,39 @@
 // @flow
 
 import React from 'react';
-import { Animated } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 import { ANIMATIONS, SIZES, COLORS } from '@/constants';
-import { Rocket, Profile, Bell } from '@/assets/icons';
+import * as Icons from '@/assets/icons';
 
-import { BottomTabBar, TabBarIcon } from '@/components/TabBar';
+import BottomTabBar from '@/components/BottomTabBar';
 import { Home } from '@/screens';
 import Screen1 from '@/components/Test/Screen1';
 import Screen2 from '@/components/Test/Screen2';
 import Screen3 from '@/components/Test/Screen3';
 import IconsScreen from '@/components/Test/IconsScreen';
 
+const ICON_PROPS = {
+  size: SIZES.TAB_BAR_ICON_SIZE,
+  color: COLORS.PURPLE,
+};
+
 const routes = {
   Home: {
     screen: Home,
     navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <TabBarIcon colorisedIconOpacity={tintColor} icon={Rocket} />
-      ),
+      tabBarIcon: () => <Icons.Rocket {...ICON_PROPS} />,
     },
   },
   Profile: {
     screen: Screen3,
     navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <TabBarIcon colorisedIconOpacity={tintColor} icon={Profile} />
-      ),
+      tabBarIcon: () => <Icons.Profile {...ICON_PROPS} />,
     },
   },
   Notification: {
     screen: IconsScreen,
     navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <TabBarIcon colorisedIconOpacity={tintColor} icon={Bell} />
-      ),
+      tabBarIcon: () => <Icons.Bell {...ICON_PROPS} />,
     },
   },
 };
@@ -43,6 +41,7 @@ const routes = {
 const AppNavigator = createMaterialTopTabNavigator(
   routes,
   {
+    useNativeDriver: true,
     initialRouteName: 'Home',
     animationEnabled: false,
     tabBarComponent: BottomTabBar,

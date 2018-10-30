@@ -3,7 +3,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { FilterOverlay, FilterButton, Level } from '@/containers';
-import { Link, Header } from '@/components/fragments';
+import { Link, Header, StylisedButton } from '@/components/fragments';
 // import { Level } from '@/components';
 import { STYLES, COLORS } from '@/constants';
 import { createStyleSheet } from '@/utils';
@@ -27,9 +27,11 @@ class Home extends React.Component<Props> {
         </Header>
 
         <View style={styles.wrapper}>
-          <Link to='Screen2' rounded='fully' style={styles.button} color={COLORS.WHITE}>
-            <Text>LINK</Text>
-          </Link>
+          <StylisedButton
+            onPress={() => this.props.navigation.push('Screen2')}
+          >
+            LINK
+          </StylisedButton>
         </View>
       </View>
     );
@@ -41,7 +43,7 @@ const styles = createStyleSheet({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'gray',
+    backgroundColor: 'white',
   },
   button: {
     position: 'absolute',

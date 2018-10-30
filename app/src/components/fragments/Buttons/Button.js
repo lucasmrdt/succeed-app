@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AnimatedButton from './AnimatedButton';
-import StaticButton from './StaticButton';
+import Touchable from './Touchable';
 import { createStyleSheet } from '@/utils';
 import { SIZES, COLORS, STYLES } from '@/constants';
 
@@ -106,7 +106,7 @@ class Button extends React.PureComponent<Props> {
     const propsSize = this.getPropsSize();
     const style = this.computeStyle();
     const Button = (optimized || dynamicSize
-      ? StaticButton
+      ? Touchable
       : AnimatedButton
     );
 

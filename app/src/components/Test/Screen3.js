@@ -4,7 +4,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Transition } from 'react-navigation-fluid-transitions';
 import {
-  ButtonWithIcon,
+  StylisedButton,
   IconButton,
   LightButton,
 } from '@/components/fragments';
