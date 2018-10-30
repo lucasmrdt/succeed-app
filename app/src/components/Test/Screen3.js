@@ -28,7 +28,7 @@ class Test extends React.Component<Props> {
     return (
       <View style={styles.wrapper}>
         <View style={{ position: 'absolute', top: '50%', width: '100%', height: '50%', overflow: 'hidden', backgroundColor: 'white' }}>
-          <Filter />
+          {/* <Filter /> */}
         </View>
       </View>
     );

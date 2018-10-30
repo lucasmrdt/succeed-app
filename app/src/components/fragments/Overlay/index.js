@@ -1,2 +1,7 @@
-import Overlay from './OverlayWrapper';
-export default Overlay;
+import Overlay from './Overlay';
+import OverlayButton from './OverlayButton';
+
+export {
+  Overlay,
+  OverlayButton,
+};

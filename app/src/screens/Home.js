@@ -2,15 +2,17 @@
 
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Filter } from '@/containers';
-import { Link } from '@/components/fragments';
-import { Level } from '@/components';
+import { FilterOverlay, FilterButton, Level } from '@/containers';
+import { Link, Header } from '@/components/fragments';
+// import { Level } from '@/components';
 import { STYLES, COLORS } from '@/constants';
 import { createStyleSheet } from '@/utils';
 
 import { type NavigationType } from '@/types/rnTypes';
 
-type Props = NavigationType;
+type Props = {
+  navigation: NavigationType
+};
 
 class Home extends React.Component<Props> {
   shouldComponentUpdate = () => false;
@@ -18,16 +20,17 @@ class Home extends React.Component<Props> {
   render() {
     return (
       <View style={styles.wrapper}>
-        <Filter light />
-        <Level
-          style={STYLES.HEADER_RIGHT}
-          score={12}
-          limit={20}
-          progress={17}
-        />
-        <Link to='Screen2' rounded='fully' style={styles.button} color={COLORS.WHITE}>
-          <Text>LINK</Text>
-        </Link>
+        <FilterOverlay />
+        <Header>
+          <FilterButton />
+          <Level />
+        </Header>
+
+        <View style={styles.wrapper}>
+          <Link to='Screen2' rounded='fully' style={styles.button} color={COLORS.WHITE}>
+            <Text>LINK</Text>
+          </Link>
+        </View>
       </View>
     );
   }
@@ -38,7 +41,7 @@ const styles = createStyleSheet({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLORS.PURPLE,
+    backgroundColor: 'gray',
   },
   button: {
     position: 'absolute',

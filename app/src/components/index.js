@@ -1,11 +1,10 @@
 import TabBar from './TabBar';
-import Filter from './Filter';
 import LoadScreen from './LoadScreen';
 import Level from './Level';
 
+export * from './Filter';
 export {
   TabBar,
-  Filter,
   LoadScreen,
   Level,
 };

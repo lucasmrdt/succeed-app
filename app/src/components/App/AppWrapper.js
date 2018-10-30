@@ -24,6 +24,7 @@ class AppWrapper extends React.PureComponent<void, State> {
     const { isLoaded } = this.state;
 
     if (!isLoaded) {
+      console.log('here!')
       return <LoadScreen />;
     }
     return (
