@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Animated, Platform } from 'react-native';
-import { ButtonWithIcon } from '../Buttons';
+import { StylisedButton } from '../Buttons';
 import { DownArrow } from '@/assets/icons';
 import { createStyleSheet } from '@/utils';
 import { SIZES, STYLES, COLORS } from '@/constants';
@@ -58,7 +58,7 @@ class OverlayButton extends React.PureComponent<Props> {
     } = this.props;
 
     return (
-      <ButtonWithIcon
+      <StylisedButton
         {...props}
         color={color}
         onPress={toggle}
@@ -74,7 +74,7 @@ class OverlayButton extends React.PureComponent<Props> {
         dynamicSize
       >
         {text.toUpperCase()}
-      </ButtonWithIcon>
+      </StylisedButton>
     );
   }
 

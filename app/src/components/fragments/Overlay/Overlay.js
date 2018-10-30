@@ -9,7 +9,7 @@ import { COLORS, SIZES } from '@/constants';
 import { type OverlayContextType } from '@/types/contextType';
 import { type StylesheetType } from '@/types/rnTypes';
 
-const BACKGROUND_OPACITY = .3;
+const BACKGROUND_OPACITY = .1;
 const WRAPPER_PADDING_TOP = 100;
 
 type Props = OverlayContextType & {

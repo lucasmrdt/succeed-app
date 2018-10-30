@@ -13,9 +13,8 @@ import {
 } from 'react-navigation';
 
 const ICON_OPACITY = .5;
-const SELECTED_ICON_SCALE = 1.2;
+const SELECTED_ICON_SCALE = 1.3;
 const SELECTED_ICON_OPACITY = 1;
-const COLORISED_ROUTES_INDEX = [0];
 
 type Props = _TabBarBottomProps;
 
@@ -42,9 +41,6 @@ class BottomTabBar extends React.Component<Props> {
     const outputOpacityRange = [...inputRange.map(i =>
       i === index ? SELECTED_ICON_OPACITY : ICON_OPACITY
     )];
-    const outputTintOpacityRange = [...inputRange.map(i =>
-      COLORISED_ROUTES_INDEX.includes(i) ? 0 : 1
-    )];
 
     const scale = position.interpolate({
       inputRange,
@@ -53,10 +49,6 @@ class BottomTabBar extends React.Component<Props> {
     const opacity = position.interpolate({
       inputRange,
       outputRange: outputOpacityRange,
-    });
-    const tintOpacity = position.interpolate({
-      inputRange,
-      outputRange: outputTintOpacityRange,
     });
 
     const style: Array<StylesheetType> = [
@@ -74,7 +66,7 @@ class BottomTabBar extends React.Component<Props> {
         onPress={() => navigation.navigate(route.routeName)}
         key={route.routeName}
       >
-        {renderIcon({ route, tintColor: tintOpacity, focused, index })}
+        {renderIcon({ route, focused, index })}
       </Touchable>
     );
   }
