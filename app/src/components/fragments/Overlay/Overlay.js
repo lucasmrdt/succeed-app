@@ -3,8 +3,6 @@
 import React from 'react';
 import { Animated, TouchableWithoutFeedback } from 'react-native';
 import { Touchable } from '../Buttons';
-import { Context } from './OverlayContext';
-import { withContext } from '@/hoc';
 import { createStyleSheet } from '@/utils';
 import { COLORS, SIZES } from '@/constants';
 
@@ -21,7 +19,7 @@ type Props = OverlayContextType & {
   height: number,
 };
 
-class Overlay extends React.PureComponent<Props, State> {
+class Overlay extends React.Component<Props, State> {
 
   // TODO: Use this in next update of react >16.6.0
   // static contextType = Context;
@@ -29,7 +27,13 @@ class Overlay extends React.PureComponent<Props, State> {
   static defaultProps = {
     backgroundColor: COLORS.WHITE,
     height: SIZES.HEIGHT / 2,
-  };
+  }
+
+  shouldComponentUpdate(prevProps: Props) {
+    const { status } = this.props;
+    return (prevProps.status !== status
+    && (prevProps.status === 'close' || status === 'close'));
+  }
 
   onPressItem = (index: number) => {
     const { onSelectItem, toggle } = this.props;
@@ -49,12 +53,17 @@ class Overlay extends React.PureComponent<Props, State> {
   }
 
   renderOverlayWrapper() {
-    const { height, backgroundColor, animationProgress } = this.props;
+    const {
+      height,
+      backgroundColor,
+      animationProgress,
+      toggle,
+    } = this.props;
+
     const translateY = animationProgress.interpolate({
       inputRange: [  0,      1],
       outputRange: [-height, 0],
     });
-
     const style: Array<StylesheetType> = [
       styles.overlay,
       {
@@ -65,7 +74,7 @@ class Overlay extends React.PureComponent<Props, State> {
     ];
 
     return (
-      <TouchableWithoutFeedback onPressOut={this.toggle}>
+      <TouchableWithoutFeedback onPressOut={toggle}>
         <Animated.View style={style}>
           {this.renderOverlayChilds()}
         </Animated.View>
@@ -74,24 +83,23 @@ class Overlay extends React.PureComponent<Props, State> {
   }
 
   renderOverlayBackground() {
-    const { context } = this.props;
+    const { animationProgress, status, toggle } = this.props;
 
-    if (context.status === 'close') {
+    if (status === 'close') {
       return null;
     }
 
-    const opacity = context.progress.interpolate({
+    const opacity = animationProgress.interpolate({
       inputRange: [ 0, 1],
       outputRange: [0, BACKGROUND_OPACITY],
     });
-
     const style: Array<StylesheetType> = [
       styles.overlayBackground,
       { opacity },
     ];
 
     return (
-      <TouchableWithoutFeedback onPressIn={context.toggle}>
+      <TouchableWithoutFeedback onPressIn={toggle}>
         <Animated.View style={style}/>
       </TouchableWithoutFeedback>
     );

@@ -19,7 +19,8 @@ class Home extends React.Component<Props> {
 
   render() {
     return (
-      <FilterOverlay>
+      <View style={styles.wrapper}>
+        <FilterOverlay />
         <Header>
           <FilterButton />
           <Level />
@@ -30,7 +31,7 @@ class Home extends React.Component<Props> {
             <Text>LINK</Text>
           </Link>
         </View>
-      </FilterOverlay>
+      </View>
     );
   }
 }
@@ -40,7 +41,7 @@ const styles = createStyleSheet({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLORS.PURPLE,
+    backgroundColor: 'gray',
   },
   button: {
     position: 'absolute',

@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import Context from './FilterContext';
 import { OverlayButton } from '@/components/fragments';
 import { COLORS } from '@/constants';
 
@@ -10,18 +11,23 @@ type Props = {
   selectedFilter: FilterType,
 };
 
-class FilterButton extends React.Component<Props> {
+const OverlayButtonWithContext = Context.withContext(null)(OverlayButton);
+
+class FilterButton extends React.PureComponent<Props> {
+
   render() {
-    const { selectedFilter } = this.props;
+    const { selectedFilter, ...contextProps } = this.props;
 
     return (
-      <OverlayButton
+      <OverlayButtonWithContext
+        {...contextProps}
         color={COLORS.PURPLE}
         text={selectedFilter.label}
         icon={selectedFilter.icon}
       />
     );
   }
+
 }
 
 export default FilterButton;

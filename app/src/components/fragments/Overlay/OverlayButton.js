@@ -8,14 +8,14 @@ import { createStyleSheet } from '@/utils';
 import { SIZES, STYLES, COLORS } from '@/constants';
 
 
-import { type ContextType } from './OverlayContext';
+import { type OverlayContextType } from '@/types/contextType';
 import { type StylesheetType } from '@/types/rnTypes';
 import { type IconTypes } from '@/types/dataTypes';
 
 const TEXT_BUTTON_PADDING = 20;
 const ICON_SIZE = SIZES.ICON_SIZE_S;
 
-type Props = ContextType & {
+type Props = OverlayContextType & {
   color: string,
   text: string,
   icon: IconTypes,
@@ -31,8 +31,8 @@ class OverlayButton extends React.PureComponent<Props> {
   }
 
   renderArrow = (color: string) => {
-    const { progress } = this.props;
-    const rotate = progress.interpolate({
+    const { animationProgress } = this.props;
+    const rotate = animationProgress.interpolate({
       inputRange: [0, 1],
       outputRange: ['0deg', '180deg'],
     });
@@ -53,7 +53,6 @@ class OverlayButton extends React.PureComponent<Props> {
       icon,
       text,
       color,
-      light,
       toggle,
       ...props
     } = this.props;
@@ -61,7 +60,7 @@ class OverlayButton extends React.PureComponent<Props> {
     return (
       <ButtonWithIcon
         {...props}
-        color={light ? COLORS.WHITE : color}
+        color={color}
         onPress={toggle}
         leftIcon={icon}
         rightIcon={this.renderArrow}
@@ -94,7 +93,7 @@ const styles = createStyleSheet({
     }),
   },
   button: {
-    ...STYLES.HEADER_LEFT,
+    // ...STYLES.HEADER_LEFT,
     ...Platform.select({
       ios: {
         // Fix the height of the button on ios

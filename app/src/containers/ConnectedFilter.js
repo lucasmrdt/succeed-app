@@ -13,26 +13,21 @@ import { type FilterType } from '@/types/dataTypes';
 const mapStateToProps = (state: StateType) => ({
   selectedFilter: state.home.selectedFilter,
 });
-
 const mapDispatchToProps = {
   onSelectFilter: (filter: FilterType) => (
     changeFilter(filter)
   ),
 };
 
-const FilterOverlay = connect(
+const ConnectedOverlay = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Overlay);
 
-const FilterButton = connect(
+const ConnectedButton = connect(
   mapStateToProps,
   mapDispatchToProps,
-  null,
-  { pure: false },
 )(Button);
 
-export {
-  FilterOverlay,
-  FilterButton,
-};
+export const FilterOverlay = ConnectedOverlay;
+export const FilterButton = ConnectedButton;

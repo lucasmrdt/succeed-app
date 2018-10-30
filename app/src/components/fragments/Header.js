@@ -13,9 +13,9 @@ type Props = {
   children: React$Element<any>,
 };
 
-const Header = (props: Props) => (
+const Header = ({ children }: Props) => (
   <View style={styles.wrapper}>
-    {props.children}
+    {children}
   </View>
 );
 
