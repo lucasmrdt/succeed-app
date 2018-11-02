@@ -42,6 +42,8 @@
     "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.82.0",
     "react-native-svg-transformer": "^0.11.0",
+    "reactotron-react-native": "^2.1.0",
+    "reactotron-redux": "^2.1.0",
     "why-did-you-update": "^0.1.1"
   }
 }

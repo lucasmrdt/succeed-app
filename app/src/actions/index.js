@@ -1,5 +1,5 @@
-import * as homeActions from './homeActions';
+import * as taskActions from './taskActions';
 
 export {
-  homeActions,
+  taskActions,
 };

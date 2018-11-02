@@ -2,6 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { LinearGradient } from 'expo';
 import AnimatedButton from './AnimatedButton';
 import Touchable from './Touchable';
 import { createStyleSheet } from '@/utils';
@@ -16,17 +17,23 @@ type Props = TouchableProps & {
   optimized: bool,
   rounded: 'fully' | 'little',
   light: bool,
+  gradient: bool,
   dynamicSize: bool,
   children: React$Element<any>,
+  background: React$Element<any>,
+  attractive: bool,
 };
 
 class Button extends React.PureComponent<Props> {
   static defaultProps = {
+    attractive: false,
     color: COLORS.GREEN,
     light: false,
     rounded: 'little',
     optimized: false,
+    gradient: false,
     dynamicSize: false,
+    background: null,
     size: {
       width: SIZES.DEFAULT_BUTTON_WIDTH,
       height: SIZES.DEFAULT_BUTTON_HEIGHT,
@@ -101,8 +108,19 @@ class Button extends React.PureComponent<Props> {
     return computedStyle;
   }
 
+  renderGradient() {
+    return (
+      <LinearGradient
+        style={styles.gradient}
+        start={{ x: 0, y: .5 }}
+        end={{ x: 1, y: .5 }}
+        colors={['rgba(0, 0, 0, .06)', 'rgba(255, 255, 255, .06)']}
+      />
+    );
+  }
+
   render() {
-    const { optimized, dynamicSize, ...props } = this.props;
+    const { optimized, dynamicSize, gradient, ...props } = this.props;
     const propsSize = this.getPropsSize();
     const style = this.computeStyle();
     const Button = (optimized || dynamicSize
@@ -114,6 +132,7 @@ class Button extends React.PureComponent<Props> {
       <Button
         {...props}
         {...propsSize}
+        background={gradient && this.renderGradient()}
         style={style}
       />
     );
@@ -122,6 +141,17 @@ class Button extends React.PureComponent<Props> {
 
 const styles = createStyleSheet({
   wrapper: STYLES.BUTTON,
+  gradient: {
+    position: 'absolute',
+    // usually wrapped in View with padding
+    // eg. View with padding of 10 give 100% - 20.
+    // so not really 100%.
+    // TODO: Find less tricky fix.
+    width: '200%',
+    height: '200%',
+    left: '-5%',
+    top: '-5%',
+  },
 });
 
 export type ButtonProps = Props;

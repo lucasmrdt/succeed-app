@@ -11,9 +11,9 @@ export type StateType = {
 
 const initState: StateType = {
   level: {
-    limit: 1,
-    progress: 0,
-    score: 0,
+    limit: 10,
+    progress: 5,
+    score: 3,
   },
 };
 

@@ -43,11 +43,11 @@ const AppNavigator = createMaterialTopTabNavigator(
   {
     useNativeDriver: true,
     initialRouteName: 'Home',
-    animationEnabled: false,
+    // animationEnabled: false,
     tabBarComponent: BottomTabBar,
     tabBarPosition: 'bottom',
     tabBarOptions: {
-      style: { backgroundColor: 'rgba(0, 0, 0, 0)' },
+      style: { backgroundColor: 'rgb(255, 255, 255)' },
       showIcon: true,
       pressOpacity: 0,
       pressColor: 'rgba(0, 0, 0, 0)',

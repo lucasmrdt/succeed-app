@@ -1,6 +1,7 @@
 // @flow
 
-import { createStore, applyMiddleware } from 'redux';
+import Reactotron from './ReactotronConfig';
+import { applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 // $FlowFixMe flox-typed don't know redux-persist yet.
@@ -18,7 +19,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
-const store = createStore(
+const store = Reactotron.createStore(
     persistedReducer,
     applyMiddleware(sagaMiddleware),
 );

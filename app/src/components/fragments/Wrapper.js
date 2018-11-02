@@ -8,14 +8,12 @@ import { createStyleSheet } from '@/utils';
 
 import { type StylesheetType } from '@/types/rnTypes';
 
-const PADDING = 20;
-
 type Props = {
   children: React$Element<any>,
   style: StylesheetType,
 };
 
-const Header = ({ children, style }: Props) => (
+const Wrapper = ({ children, style }: Props) => (
   <View style={StyleSheet.flatten(styles.wrapper, style)}>
     {children}
   </View>
@@ -23,16 +21,14 @@ const Header = ({ children, style }: Props) => (
 
 const styles = createStyleSheet({
   wrapper: {
-    zIndex: 2,
-    height: SIZES.STATUS_BAR_HEIGHT,
-    width: '100%',
-    backgroundColor: 'transparent',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flex: 1,
+    flexDirection: 'column',
     alignItems: 'center',
-    paddingLeft: PADDING,
-    paddingRight: PADDING,
+    justifyContent: 'space-between',
+    paddingBottom: SIZES.BOTTOM_TAB_BAR_HEIGHT,
+    paddingTop: SIZES.STATUS_BAR_PADDING,
+    backgroundColor: COLORS.WHITE,
   },
 });
 
-export default pure(Header);
+export default pure(Wrapper);

@@ -27,11 +27,12 @@ export const SHADOW: StylesheetType = {
 };
 
 export const FULLY_ROUNDED_BORDER_RADIUS = 100;
-export const LITTLE_ROUNDED_BORDER_RADIUS = 6;
+export const LITTLE_ROUNDED_BORDER_RADIUS = 11;
 
 export const BUTTON: StylesheetType = {
   ...CENTER_CHILDS,
   ...SHADOW,
+  overflow: 'hidden',
   position: 'relative',
   flexDirection: 'row',
   borderWidth: 1,

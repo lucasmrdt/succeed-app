@@ -8,16 +8,17 @@ import { STYLES, COLORS, SIZES } from '@/constants';
 import { getIcon, createStyleSheet, isReactComponent } from '@/utils';
 
 import { type StylesheetType } from '@/types/rnTypes';
-import { type IconTypes } from '@/types/dataTypes';
+import { type IconType } from '@/types/dataTypes';
 import { type ButtonProps } from './Button';
 
 const LETTER_SPACING = 1;
 
 type Props = ButtonProps & {
   iconSize: number,
-  color: string,
-  leftIcon: IconTypes,
-  rightIcon: IconTypes,
+  primaryColor: string,
+  secondaryColor: string,
+  leftIcon: IconType,
+  rightIcon: IconType,
   fontSize: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl',
   fontType: 'normal' | 'bold' | 'light',
   justify: 'left' | 'space-between',
@@ -33,14 +34,15 @@ class StylisedButton extends React.PureComponent<Props> {
     iconSize: SIZES.ICON_SIZE_M,
     light: false,
     fontType: 'normal',
-    color: COLORS.GREEN,
+    primaryColor: COLORS.GREEN,
+    secondaryColor: COLORS.WHITE,
     icon: null,
     fontSize: 'm',
     textStyle: STYLES.TEXT,
     justify: 'left',
   };
 
-  renderIcon(color: string, renderIcon: IconTypes) {
+  renderIcon(color: string, renderIcon: IconType) {
     const { justify, iconSize, dynamicSize } = this.props;
     const Icon = getIcon(renderIcon);
 
@@ -78,10 +80,11 @@ class StylisedButton extends React.PureComponent<Props> {
       fontType,
       light,
       justify,
-      color,
+      secondaryColor,
+      primaryColor,
       ...props
     } = this.props;
-    const childColor = (light ? color : COLORS.WHITE);
+    const childColor = (light ? primaryColor : secondaryColor);
 
     const computedStyle: Array<StylesheetType> = [
       styles.wrapper,
@@ -96,7 +99,7 @@ class StylisedButton extends React.PureComponent<Props> {
 
     return (
       <Button
-        color={color}
+        color={primaryColor}
         light={light}
         style={computedStyle}
         {...props}

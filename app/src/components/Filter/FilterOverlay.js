@@ -86,23 +86,27 @@ class FilterOverlay extends Context.Provider<Props, State> {
     onSelectFilter(requestedFilter);
   }
 
-  renderOverlay() {
+  renderOverlayChild = (filter, index) => {
     const { selectedFilter } = this.props;
 
+    return (
+      <FilterItem
+        key={`filter_${index}`}
+        index={index}
+        filter={filter}
+        selectedFilter={selectedFilter}
+      />
+    );
+  }
+
+  renderOverlay() {
     return (
       <OverlayWithContext
         onSelectItem={this.onSelectFilter}
         height={OVERLAY_HEIGHT}
         backgroundColor={COLORS.WHITE}
       >
-        {DATA.FILTERS.map((filter, index) => (
-          <FilterItem
-            key={`filter_${index}`}
-            index={index}
-            filter={filter}
-            selectedFilter={selectedFilter}
-          />)
-        )}
+        {DATA.FILTERS.map(this.renderOverlayChild)}
       </OverlayWithContext>
     );
   }

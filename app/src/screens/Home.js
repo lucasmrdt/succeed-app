@@ -1,12 +1,26 @@
 // @flow
 
 import React from 'react';
-import { View, Text } from 'react-native';
-import { FilterOverlay, FilterButton, Level } from '@/containers';
-import { Link, Header, StylisedButton } from '@/components/fragments';
-// import { Level } from '@/components';
-import { STYLES, COLORS } from '@/constants';
+import {
+  FilterOverlay,
+  FilterButton,
+  Level,
+  TaskList,
+} from '@/containers';
+import {
+  Header,
+  StylisedButton,
+  Wrapper,
+  Body,
+  Touchable,
+} from '@/components/fragments';
+import { COLORS } from '@/constants';
 import { createStyleSheet } from '@/utils';
+
+const BUTTON_SIZE = {
+  width: 100,
+  height: 45,
+};
 
 import { type NavigationType } from '@/types/rnTypes';
 
@@ -17,23 +31,48 @@ type Props = {
 class Home extends React.Component<Props> {
   shouldComponentUpdate = () => false;
 
+  onPressNew = () => {
+    this.props.navigation.navigate('Screen2');
+  }
+
+  onPressLevel = () => {
+    this.props.navigation.navigate('Profile');
+  }
+
+  renderButton() {
+    return (
+      <StylisedButton
+        rightIcon='Add'
+        justify='space-between'
+        iconSize={15}
+        style={styles.button}
+        primaryColor={COLORS.PURPLE}
+        rounded='fully'
+        size={BUTTON_SIZE}
+        onPress={this.onPressNew}
+        gradient
+        attractive
+      >
+        NEW
+      </StylisedButton>
+    );
+  }
+
   render() {
     return (
-      <View style={styles.wrapper}>
+      <Wrapper>
         <FilterOverlay />
         <Header>
           <FilterButton />
-          <Level />
+          <Touchable onPress={this.onPressLevel}>
+            <Level />
+          </Touchable>
         </Header>
-
-        <View style={styles.wrapper}>
-          <StylisedButton
-            onPress={() => this.props.navigation.push('Screen2')}
-          >
-            LINK
-          </StylisedButton>
-        </View>
-      </View>
+        <Body>
+          <TaskList />
+          {this.renderButton()}
+        </Body>
+      </Wrapper>
     );
   }
 }
@@ -41,16 +80,15 @@ class Home extends React.Component<Props> {
 const styles = createStyleSheet({
   wrapper: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
     backgroundColor: 'white',
   },
   button: {
     position: 'absolute',
-    bottom: 100,
-    width: 100,
-    height: 25,
-    backgroundColor: COLORS.WHITE,
+    bottom: 20,
+    paddingLeft: 15,
+    paddingRight: 15,
   },
 });
 
