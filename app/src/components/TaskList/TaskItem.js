@@ -17,6 +17,10 @@ const ITEM_SIZE = {
   width: ITEM_WIDTH,
   height: ITEM_HEIGHT,
 };
+const SUCCESS_ITEM_SIZE = {
+  width: ITEM_WIDTH,
+  height: ITEM_HEIGHT * .7,
+};
 
 type Props = {
   task: TaskType
@@ -31,11 +35,11 @@ class TaskItem extends React.PureComponent<Props> {
     let secondaryColor = COLORS.DARK_GRAY;
 
     if (statut === STATUS.SUCCESS_STATUS) {
-      primaryColor = COLORS.GREEN_PASTAL;
-      secondaryColor = COLORS.GREEN_PASTAL;
+      primaryColor = 'transparent';
+      secondaryColor = COLORS.GREEN_PASTEL;
     } else if (statut === STATUS.FAIL_STATUS) {
-      primaryColor = COLORS.RED_PASTAL;
-      secondaryColor = COLORS.RED_PASTAL;
+      primaryColor = COLORS.LIGHT_RED;
+      secondaryColor = COLORS.WHITE;
     }
 
     return {
@@ -66,21 +70,21 @@ class TaskItem extends React.PureComponent<Props> {
     const { task } = this.props;
 
     if (task.statut === STATUS.SUCCESS_STATUS) {
-      return <Tick color={COLORS.GREEN_PASTAL} size={13}/>;
+      return <Tick color={color} size={13}/>;
     }
     return this.renderTaskIndicator(color);
   }
 
-  renderLeftIcon = () => {
+  renderLeftIcon = (color) => {
     const { task } = this.props;
     const Icon = getIcon(task.icon);
     const size = (task.statut === STATUS.TODO_STATUS ? 30 : 20);
-    const color = (task.statut === STATUS.TODO_STATUS
+    const computedColor = (task.statut === STATUS.TODO_STATUS
       ? task.color
-      : this.getColor().secondary
+      : color
     );
 
-    return <Icon size={size} color={color}/>;
+    return <Icon size={size} color={computedColor}/>;
   }
 
   render() {
@@ -91,11 +95,13 @@ class TaskItem extends React.PureComponent<Props> {
       <StylisedButton
         leftIcon={this.renderLeftIcon}
         rightIcon={this.renderRightIcon}
-        size={ITEM_SIZE}
+        size={task.statut === STATUS.SUCCESS_STATUS
+          ? SUCCESS_ITEM_SIZE
+          : ITEM_SIZE
+        }
         justify='space-between'
         secondaryColor={secondary}
         primaryColor={primary}
-        light={task.statut !== STATUS.TODO_STATUS}
         style={styles.item}
         onPress={() => console.log('press')}
         optimized

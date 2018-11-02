@@ -73,7 +73,7 @@ class OverlayButton extends React.PureComponent<Props> {
         light
         dynamicSize
       >
-        {text.toUpperCase()}
+        {text}
       </StylisedButton>
     );
   }

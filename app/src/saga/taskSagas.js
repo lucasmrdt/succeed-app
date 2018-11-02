@@ -2,7 +2,7 @@
 
 import { takeLatest, select, put, call } from 'redux-saga/effects';
 import { taskActions } from '@/actions';
-import * as Api from '@/services/api';
+import * as Services from '@/services';
 
 import { StateType } from '@/types/reduxTypes';
 
@@ -11,7 +11,7 @@ const getTaskFilter = (state: StateType) => state.goal.selectedFilter.label;
 function* loadTasks() {
   try {
     const filter = select(getTaskFilter);
-    const tasks = yield call(Api.getTasks, filter);
+    const tasks = yield call(Services.getTasks, filter);
     yield put(taskActions.successLoadTasks(tasks));
   } catch(e) {
     yield put(taskActions.failLoadTasks(e));

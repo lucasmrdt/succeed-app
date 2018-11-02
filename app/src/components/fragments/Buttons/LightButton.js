@@ -17,12 +17,14 @@ type Props = TouchableProps & {
   icon: string,
   color: string,
   textStyle: StylesheetType,
+  background: React.ComponentType<any>,
 };
 
 class LightButton extends React.PureComponent<Props> {
   static defaultProps = {
     color: COLORS.GREEN,
     icon: null,
+    background: null,
     textStyle: null,
     style: null,
   };
@@ -33,6 +35,7 @@ class LightButton extends React.PureComponent<Props> {
       icon,
       style,
       color,
+      background,
       textStyle,
       ...props
     } = this.props;
@@ -49,6 +52,7 @@ class LightButton extends React.PureComponent<Props> {
         </StylisedText>
         {/* $FlowFixMe don't understand... */}
         {Icon && <Icon size={ICON_SIZE} color={color}/>}
+        {background}
       </Touchable>
     );
   }

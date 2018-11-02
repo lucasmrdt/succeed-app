@@ -27,6 +27,10 @@ class TaskList extends React.PureComponent<Props> {
     return <View style={styles.header} />;
   }
 
+  renderFooter() {
+    return <View style={styles.footer} />;
+  }
+
   renderItem = ({ item }: { item: TaskType }) => (
     <TaskItem task={item} />
   );
@@ -61,6 +65,7 @@ class TaskList extends React.PureComponent<Props> {
         keyExtractor={({ id }) => id}
         renderItem={this.renderItem}
         ListHeaderComponent={this.renderHeader}
+        ListFooterComponent={this.renderFooter}
         onRefresh={refreshTasks}
         refreshing={status === 'refreshing'}
         style={styles.wrapper}
@@ -77,6 +82,10 @@ const styles = createStyleSheet({
   },
   header: {
     height: 40,
+    width: '100%',
+  },
+  footer: {
+    height: 60,
     width: '100%',
   },
 });

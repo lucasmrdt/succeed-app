@@ -21,8 +21,10 @@ class FilterItem extends React.PureComponent<Props> {
   render() {
     const { selectedFilter, filter } = this.props;
     const isSelected = (selectedFilter.label === filter.label);
-    const Icon = filter.icon;
-    const label = filter.label.toUpperCase();
+    const {
+      label,
+      icon: Icon,
+    } = filter;
 
     const wrapperStyle = (isSelected
       ? styles.selectedItem

@@ -10,7 +10,7 @@ import { type StylesheetType } from '@/types/rnTypes';
 import { type LevelType } from '@/types/dataTypes';
 
 const SMALL_COLOR = COLORS.DARK_GRAY;
-const LARGE_COLOR = COLORS.GREEN_PASTAL;
+const LARGE_COLOR = COLORS.GREEN_PASTEL;
 
 type Props = {
   score: number,

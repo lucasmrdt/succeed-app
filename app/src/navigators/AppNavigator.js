@@ -43,7 +43,7 @@ const AppNavigator = createMaterialTopTabNavigator(
   {
     useNativeDriver: true,
     initialRouteName: 'Home',
-    animationEnabled: false,
+    // animationEnabled: false,
     tabBarComponent: BottomTabBar,
     tabBarPosition: 'bottom',
     tabBarOptions: {
