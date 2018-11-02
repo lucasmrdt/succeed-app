@@ -3,19 +3,17 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { pure } from 'recompose';
-import { SIZES, COLORS } from '@/constants';
+import { SIZES } from '@/constants';
 import { createStyleSheet } from '@/utils';
 
 import { type StylesheetType } from '@/types/rnTypes';
-
-const PADDING = 20;
 
 type Props = {
   children: React$Element<any>,
   style: StylesheetType,
 };
 
-const Header = ({ children, style }: Props) => (
+const Footer = ({ children, style }: Props) => (
   <View style={StyleSheet.flatten(styles.wrapper, style)}>
     {children}
   </View>
@@ -23,16 +21,15 @@ const Header = ({ children, style }: Props) => (
 
 const styles = createStyleSheet({
   wrapper: {
-    zIndex: 2,
-    height: SIZES.STATUS_BAR_HEIGHT,
+    position: 'absolute',
+    bottom: 0,
+    height: SIZES.BOTTOM_TAB_BAR_HEIGHT,
     width: '100%',
     backgroundColor: 'transparent',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingLeft: PADDING,
-    paddingRight: PADDING,
   },
 });
 
-export default pure(Header);
+export default pure(Footer);

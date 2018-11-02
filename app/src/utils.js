@@ -6,7 +6,7 @@ import * as Icons from '@/assets/icons';
 import { type StylesheetType } from '@/types/rnTypes';
 import {
   type IconPropsType,
-  type IconTypes,
+  type IconType,
 } from '@/types/dataTypes';
 
 /**
@@ -20,7 +20,7 @@ export const createStyleSheet = (styles: CreateStyleSheetParam) => (
 );
 
 export const getIcon = (
-  icon: IconTypes,
+  icon: IconType,
 ) : null | React$Component<IconPropsType> | any => {
   if (!icon) {
     return null;

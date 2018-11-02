@@ -10,7 +10,7 @@ import { SIZES, STYLES, COLORS } from '@/constants';
 
 import { type OverlayContextType } from '@/types/contextType';
 import { type StylesheetType } from '@/types/rnTypes';
-import { type IconTypes } from '@/types/dataTypes';
+import { type IconType } from '@/types/dataTypes';
 
 const TEXT_BUTTON_PADDING = 20;
 const ICON_SIZE = SIZES.ICON_SIZE_S;
@@ -18,7 +18,7 @@ const ICON_SIZE = SIZES.ICON_SIZE_S;
 type Props = OverlayContextType & {
   color: string,
   text: string,
-  icon: IconTypes,
+  icon: IconType,
 };
 
 class OverlayButton extends React.PureComponent<Props> {
@@ -60,10 +60,10 @@ class OverlayButton extends React.PureComponent<Props> {
     return (
       <StylisedButton
         {...props}
-        color={color}
-        onPress={toggle}
         leftIcon={icon}
         rightIcon={this.renderArrow}
+        primaryColor={color}
+        onPress={toggle}
         iconSize={ICON_SIZE}
         style={styles.button}
         textStyle={styles.textButton}
@@ -104,7 +104,7 @@ const styles = createStyleSheet({
       },
     }),
     padding: 0,
-    zIndex: 3,
+    zIndex: 1,
     borderWidth: 0,
   },
 });

@@ -9,6 +9,7 @@ import Clipboard from './Clipboard';
 import Clock from './Clock';
 import Cross from './Cross';
 import DownArrow from './DownArrow';
+import Danger from './Danger';
 import Dot from './Dot';
 import EmojiLove from './EmojiLove';
 import EmojiSad from './EmojiSad';
@@ -35,6 +36,7 @@ export {
   Cross,
   DownArrow,
   Dot,
+  Danger,
   EmojiLove,
   EmojiSad,
   Flag,

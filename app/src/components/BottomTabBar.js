@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { View } from 'react-native';
-import { Touchable } from '@/components/fragments';
+import { Touchable, Footer } from '@/components/fragments';
 import { createStyleSheet } from '@/utils';
 import { STYLES, SIZES } from '@/constants';
 
@@ -76,9 +76,9 @@ class BottomTabBar extends React.Component<Props> {
     const tabBarButtons = navigation.state.routes.map(this.renderTabBarButton);
 
     return (
-      <View style={[ style, styles.wrapper ]}>
+      <Footer style={style}>
         {tabBarButtons}
-      </View>
+      </Footer>
     );
   }
 }
@@ -89,6 +89,7 @@ const styles = createStyleSheet({
     flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
+    overflow: 'hidden',
     height: SIZES.BOTTOM_TAB_BAR_HEIGHT,
   },
   icon: {

@@ -21,7 +21,7 @@ class FilterButton extends React.PureComponent<Props> {
     return (
       <OverlayButtonWithContext
         {...contextProps}
-        color={COLORS.PURPLE}
+        color={COLORS.DARK_GRAY}
         text={selectedFilter.label}
         icon={selectedFilter.icon}
       />

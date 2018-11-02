@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { View, Text } from 'react-native';
-import { FilterOverlay, FilterButton, Level } from '@/containers';
-import { Link, Header, StylisedButton } from '@/components/fragments';
+import { FilterOverlay, FilterButton, Level, TaskList } from '@/containers';
+import { Link, Header, StylisedButton, Wrapper, Body } from '@/components/fragments';
 // import { Level } from '@/components';
 import { STYLES, COLORS } from '@/constants';
 import { createStyleSheet } from '@/utils';
@@ -19,21 +19,16 @@ class Home extends React.Component<Props> {
 
   render() {
     return (
-      <View style={styles.wrapper}>
+      <Wrapper>
         <FilterOverlay />
         <Header>
           <FilterButton />
           <Level />
         </Header>
-
-        <View style={styles.wrapper}>
-          <StylisedButton
-            onPress={() => this.props.navigation.push('Screen2')}
-          >
-            LINK
-          </StylisedButton>
-        </View>
-      </View>
+        <Body>
+          <TaskList />
+        </Body>
+      </Wrapper>
     );
   }
 }
@@ -41,8 +36,8 @@ class Home extends React.Component<Props> {
 const styles = createStyleSheet({
   wrapper: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
     backgroundColor: 'white',
   },
   button: {

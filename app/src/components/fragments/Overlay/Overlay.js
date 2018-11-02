@@ -9,8 +9,8 @@ import { COLORS, SIZES } from '@/constants';
 import { type OverlayContextType } from '@/types/contextType';
 import { type StylesheetType } from '@/types/rnTypes';
 
-const BACKGROUND_OPACITY = .1;
-const WRAPPER_PADDING_TOP = 100;
+const BACKGROUND_OPACITY = .05;
+const WRAPPER_PADDING_TOP = SIZES.STATUS_BAR_HEIGHT + SIZES.STATUS_BAR_PADDING;
 
 type Props = OverlayContextType & {
   onSelectItem: (index: number) => void,
@@ -126,7 +126,7 @@ const styles = createStyleSheet({
     zIndex: 1,
     backgroundColor: COLORS.BLACK,
     position: 'absolute',
-    height: '100%',
+    height: SIZES.HEIGHT,
     width: '100%',
     top: 0,
     left: 0,

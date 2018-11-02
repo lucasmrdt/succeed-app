@@ -1,12 +1,12 @@
 // @flow
 
-import { all } from 'redux-saga/effects'
-import testSagas from './testSaga'
+import { all } from 'redux-saga/effects';
+import taskSagas from './taskSagas';
 
 function* saga(): Generator<*, *, *> {
-    yield all([
-        ...testSagas,
-    ])
+  yield all([
+    ...taskSagas,
+  ]);
 }
 
-export default saga
+export default saga;

@@ -8,6 +8,8 @@ import { createStyleSheet } from '@/utils';
 
 import { type FilterType } from '@/types/dataTypes';
 
+const COLOR = COLORS.PURPLE;
+
 type Props = {
   selectedFilter: FilterType,
   index: number,
@@ -36,12 +38,12 @@ class FilterItem extends React.PureComponent<Props> {
         <View style={iconStyle}>
           {/* $FlowFixMe */}
           <Icon
-            color={COLORS.PURPLE}
+            color={COLOR}
             size={SIZES.ICON_SIZE_S}
           />
         </View>
         <StylisedText
-          color={COLORS.PURPLE}
+          color={COLOR}
           size={isSelected ? 'l' : 'm'}
         >
           {label}

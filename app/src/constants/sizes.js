@@ -15,9 +15,11 @@ export const ICON_SIZE_M = 20;
 export const ICON_SIZE_L = 30;
 export const DEFAULT_ICON_SIZE = ICON_SIZE_L;
 
-export const TAB_BAR_ICON_SIZE = 25;
-export const BOTTOM_TAB_BAR_HEIGHT = 60;
-export const STATUS_BAR_HEIGHT = 20;
+export const TAB_BAR_ICON_SIZE = 23;
+export const BOTTOM_TAB_BAR_HEIGHT = 50;
+
+export const STATUS_BAR_PADDING = 20;
+export const STATUS_BAR_HEIGHT = 60;
 
 export const TEXT_SIZES = {
   xs: 12,
@@ -31,7 +33,7 @@ export const TEXT_SIZES = {
 export const LINE_TEXT_HEIGHTS = {
   xs: 22,
   s: 23,
-  m: 23,
+  m: 32,
   l: 28,
   xl: 37,
   xxl: 37,

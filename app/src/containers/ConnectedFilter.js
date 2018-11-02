@@ -5,13 +5,13 @@ import {
   FilterOverlay as Overlay,
   FilterButton as Button,
 } from '@/components';
-import { changeFilter } from '@/actions/homeActions';
+import { changeFilter } from '@/actions/taskActions';
 
 import { type StateType } from '@/types/reduxTypes';
 import { type FilterType } from '@/types/dataTypes';
 
 const mapStateToProps = (state: StateType) => ({
-  selectedFilter: state.home.selectedFilter,
+  selectedFilter: state.task.selectedFilter,
 });
 const mapDispatchToProps = {
   onSelectFilter: (filter: FilterType) => (

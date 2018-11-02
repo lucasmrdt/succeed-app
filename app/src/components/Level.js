@@ -9,6 +9,8 @@ import { createStyleSheet } from '@/utils';
 import { type StylesheetType } from '@/types/rnTypes';
 import { type LevelType } from '@/types/dataTypes';
 
+const SMALL_COLOR = COLORS.DARK_GRAY;
+const LARGE_COLOR = COLORS.GREEN_PASTAL;
 
 type Props = {
   score: number,
@@ -26,13 +28,19 @@ class Level extends React.PureComponent<Props> {
     style: null,
   }
 
+  getColor() {
+    const { size } = this.props;
+
+    return size === 's' ? SMALL_COLOR : LARGE_COLOR;
+  }
+
   renderText = () => {
     const { progress, limit } = this.props;
     const text = `${progress}/${limit}`;
 
     return (
       <StylisedText
-        color={COLORS.WHITE}
+        color={LARGE_COLOR}
         size='s'
         letterSpacing={5}
       >
@@ -51,26 +59,22 @@ class Level extends React.PureComponent<Props> {
       ...props
     } = this.props;
     const percent = progress / limit;
+    const color = this.getColor();
 
     return (
       <View style={[ styles.wrapper, style ]}>
         {size === 's'
         && (
-          <StylisedText
-            size='l'
-            color={COLORS.WHITE}
-            style={styles.score}
-          >
+          <StylisedText size='l' color={color} style={styles.score}>
             {score}
           </StylisedText>
         )}
         <HorizontalProgress
           {...props}
-          light={size === 's'}
           progress={percent}
           size={size}
-          color={COLORS.GREEN}
-          text={size === 'l' ? this.renderText : null}
+          color={color}
+          text={size === 'l' && this.renderText}
         />
       </View>
     );
