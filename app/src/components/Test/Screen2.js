@@ -3,6 +3,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Transition } from 'react-navigation-fluid-transitions';
+import RangeInput from '@/components/fragments/Input/RangeInput';
 import { Button } from '@/components/fragments';
 import { createStyleSheet } from '@/utils';
 import * as Constants from '@/constants';
@@ -22,7 +23,7 @@ class Screen2 extends React.Component<Props> {
             <View style={styles.background}/>
           </Transition>
           <Transition anchor={buttonId}> */}
-            <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+            {/* <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
               <Text>screen2</Text>
               <Button
                 onPress={() => this.props.navigation.goBack()}
@@ -30,7 +31,13 @@ class Screen2 extends React.Component<Props> {
               >
                 <Text>BACK!</Text>
               </Button>
-            </View>
+            </View> */}
+          <RangeInput
+            // onChangeValue={console.log}
+            dailyGoal={13}
+            valueMax={100}
+            valueMin={0}
+          />
           {/* </Transition> */}
         </View>
       </Transition>
@@ -48,7 +55,7 @@ const styles  = createStyleSheet({
   },
   wrapper: {
     ...Constants.STYLES.CENTER_CHILDS,
-    backgroundColor: Constants.COLORS.GREEN,
+    backgroundColor: Constants.COLORS.WHITE,
     flexDirection: 'column',
     justifyContent: 'space-around',
     height: Constants.SIZES.HEIGHT,

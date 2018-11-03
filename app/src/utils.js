@@ -36,3 +36,7 @@ export const isReactComponent = (component: any): bool => (
   typeof component === 'function'
   && component.prototype.isReactComponent
 );
+
+export const interpolate = (begin, end, curr, max) => (
+  begin + (curr / max) * (end - begin)
+);
