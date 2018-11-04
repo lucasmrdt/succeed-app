@@ -8,11 +8,15 @@ import { createStyleSheet } from '@/utils';
 import { type TaskType } from '@/types/dataTypes';
 import { type StatusType } from '@/types/globalTypes';
 
-export type Props = {
+export type ReduxProps = {
   tasks: Array<TaskType>,
   loadTasks: Function,
   refreshTasks: Function,
   status: StatusType,
+};
+
+type Props =  ReduxProps & {
+  onItemPress: (id: string) => void,
 };
 
 class TaskList extends React.PureComponent<Props> {
@@ -31,9 +35,10 @@ class TaskList extends React.PureComponent<Props> {
     return <View style={styles.footer} />;
   }
 
-  renderItem = ({ item }: { item: TaskType }) => (
-    <TaskItem task={item} />
-  );
+  renderItem = ({ item }: { item: TaskType }) => {
+    const { onItemPress } = this.props;
+    return <TaskItem task={item} onPress={onItemPress} />;
+  }
 
   renderFailScreen() {
     // TODO: Make fail screen

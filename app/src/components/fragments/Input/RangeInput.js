@@ -1,11 +1,15 @@
 // @flow
 
 import React from 'react';
-import { View, PanResponder, Animated, StyleSheet } from 'react-native';
+import { PanGestureHandler } from 'react-native-gesture-handler';
+import { View, PanResponder, Animated, StyleSheet, Text } from 'react-native';
 import DashedLine from '../Svg/DashedLine';
 import { COLORS } from '@/constants';
 import { Converter } from '@/helpers';
 import { createStyleSheet, interpolate } from '@/utils';
+import Context from '@/helpers/context';
+
+const context = new Context({});
 
 const DEFAULT_SIZE = {
   height: 450,
@@ -34,24 +38,32 @@ type State = {
   graduation: number,
 };
 
-class RangeInput extends React.PureComponent<Props> {
+@context.withContext('value')
+class Value extends React.PureComponent {
+  render() {
+    const { value, ...props } = this.props;
+    return (
+      <Animated.Text {...props}>{value}</Animated.Text>
+    );
+  }
+}
+
+class RangeInput extends context.Provider<Props> {
 
   static defaultProps = {
     color: COLORS.GREEN_PASTEL,
     size: DEFAULT_SIZE,
   }
 
-  state: State = {};
-
   constructor(props: Props) {
     super(props);
-    this.state = this.initState(props);
-    this.initPositionY = new Animated.Value(props.size.height / 2);
-    this.initPositionY.addListener(this.onInitValueChange);
-    this.animatedY.addListener(this.onAnimatedValueChange);
+    this.initState(props);
+    // this.initPositionY = new Animated.Value(props.size.height / 2);
+    // this.initPositionY.addListener(this.onInitValueChange);
+    // this.animatedY.addListener(this.onAnimatedValueChange);
   }
 
-  initPositionY: Animated.Value;
+  // initPositionY: Animated.Value;
   animatedY = new Animated.Value(0);
   animatedScale = new Animated.Value(1);
 
@@ -61,55 +73,59 @@ class RangeInput extends React.PureComponent<Props> {
     onStartShouldSetPanResponder: () => true,
     onPanResponderEnd: (...args) => this.onEnd(...args),
     onPanResponderStart: (...args) => this.onStart(...args),
-    onPanResponderMove: Animated.event([null, { dy: this.animatedY }]),
+    onPanResponderMove: (...args) => this.onMove(...args),
+    //Animated.event([null, { dy: this.animatedY }]),
   });
 
-  get yPosition() {
-    return Animated.add(this.initPositionY, this.animatedY);
-  }
+  // get yPosition() {
+  //   return Animated.add(this.initPositionY, this.animatedY);
+  // }
 
   initState(props: Props) {
-    return {
-      graduation: .02 * (props.valueMax - props.valueMin),
-      value: Math.round((props.valueMax - props.valueMin) / 2),
-    };
+    this.state.graduation = .02 * (props.valueMax - props.valueMin);
+    this.state.value = Math.round((props.valueMax - props.valueMin) / 2);
   }
 
-  onInitValueChange = ({ value }) => {
-    this.onValueChange(value);
-  }
+  // onInitValueChange = ({ value }) => {
+  //   this.onValueChange(value);
+  // }
 
-  onAnimatedValueChange = ({ value }) => {
-    const finalValue = this.initPositionY.__getValue() + value;
-    this.onValueChange(finalValue);
-  }
+  // onAnimatedValueChange = ({ value }) => {
+  //   const finalValue = this.initPositionY.__getValue() + value;
+  //   this.onValueChange(finalValue);
+  // }
 
-  onValueChange = (value) => {
-    const { size, valueMin, valueMax } = this.props;
-    const { graduation } = this.state;
-    const interpolatedValue = interpolate(
-      valueMin,
-      valueMax,
-      size.height - value, // reverse value because it's natively reversed.
-      size.height,
-    );
+  // onValueChange = (value) => {
+  //   const { size, valueMin, valueMax } = this.props;
+  //   const { graduation } = this.state;
+  //   const interpolatedValue = interpolate(
+  //     valueMin,
+  //     valueMax,
+  //     size.height - value, // reverse value because it's natively reversed.
+  //     size.height,
+  //   );
 
-    const nextValue = Math.round(
-      Math.round(interpolatedValue / graduation) * graduation * 100,
-    ) / 100;
-    this.setState((state: State) => {
-      if (state.value === nextValue) return null;
-      return { value: nextValue };
-    });
-  }
+  //   const nextValue = Math.round(
+  //     Math.round(interpolatedValue / graduation) * graduation * 100,
+  //   ) / 100;
+  //   this.setState((state: State) => {
+  //     if (state.value === nextValue) return null;
+  //     return { value: nextValue };
+  //   });
+  // }
 
   onStart = ({ nativeEvent }) => {
-    this.animatedY.setValue(0);
-    this.initPositionY.setValue(nativeEvent.locationY);
+    // this.animatedY.setValue(0);
+    // this.initPositionY.setValue(nativeEvent.locationY);
     Animated.spring(this.animatedScale, {
       speed: 100,
       toValue: SCALE_MAX,
     }).start();
+  }
+
+  onMove = ({ nativeEvent }) => {
+    this.animatedY.setValue(nativeEvent.locationY);
+    this.setValue(nativeEvent.locationY);
   }
 
   onEnd = ({ nativeEvent }) => {
@@ -123,11 +139,31 @@ class RangeInput extends React.PureComponent<Props> {
     }).start();
   }
 
+  setValue(value) {
+    return;
+    const { size, valueMin, valueMax } = this.props;
+    const { graduation } = this.state;
+    const interpolatedValue = interpolate(
+      valueMin,
+      valueMax,
+      size.height - value, // reverse value because it's natively reversed.
+      size.height,
+    );
+
+    const nextValue = Math.round(
+      Math.round(interpolatedValue / graduation) * graduation * 1000,
+    ) / 1000;
+    this.setState((state: State) => {
+      if (state.value === nextValue) return null;
+      return { value: nextValue };
+    });
+  }
+
   renderLineIndicator() {
     const { dailyGoal, size, color } = this.props;
     const lineWidth = size.width * .25;
-    const animatedColor = this.yPosition.interpolate({
-      inputRange: [0, size.height / 2, size.height / 2 + 10, size.height],
+    const animatedColor = this.animatedY.interpolate({
+      inputRange: [0, size.height / 2, size.height / 2 + 1, size.height],
       outputRange: [COLORS.WHITE, COLORS.WHITE, color, color],
     });
 
@@ -152,7 +188,7 @@ class RangeInput extends React.PureComponent<Props> {
 
   renderIndicator() {
     const { color, size } = this.props;
-    const translateY = this.yPosition.interpolate({
+    const translateY = this.animatedY.interpolate({
       inputRange: [0, size.height],
       outputRange: [0, size.height],
       extrapolate: 'clamp',
@@ -175,17 +211,16 @@ class RangeInput extends React.PureComponent<Props> {
   }
 
   renderText() {
-    const { value } = this.state;
     const { color, size } = this.props;
     const topPosition = size.height * .25 - TEXT_HEIGHT / 2;
     const bottomPosition = size.height * .75 - TEXT_HEIGHT / 2;
-    const animatedColor = this.yPosition.interpolate({
-      inputRange: [0, size.height / 2, size.height / 2 + 10, size.height],
+    const animatedColor = this.animatedY.interpolate({
+      inputRange: [0, size.height / 2, size.height / 2 + 1, size.height],
       outputRange: [COLORS.WHITE, COLORS.WHITE, color, color],
       extrapolate: 'clamp',
     });
-    const translateY = this.yPosition.interpolate({
-      inputRange: [0, size.height / 2, size.height / 2 + 10, size.height],
+    const translateY = this.animatedY.interpolate({
+      inputRange: [0, size.height / 2, size.height / 2 + 1, size.height],
       outputRange: [bottomPosition, bottomPosition, topPosition, topPosition],
       extrapolate: 'clamp',
     });
@@ -199,9 +234,7 @@ class RangeInput extends React.PureComponent<Props> {
     ]);
 
     return (
-      <Animated.Text style={style} pointerEvents='none'>
-        {value}
-      </Animated.Text>
+      <Value style={style} pointerEvents='none' />
     );
   }
 
@@ -218,11 +251,13 @@ class RangeInput extends React.PureComponent<Props> {
       },
     ]);
 
+    console.log('okk')
+
     return (
       <Animated.View {...this.panResponder.panHandlers} style={style}>
         {this.renderLineIndicator()}
         {this.renderIndicator()}
-        {this.renderText()}
+        {/* {this.renderText()} */}
       </Animated.View>
     );
   }

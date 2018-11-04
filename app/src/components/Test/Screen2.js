@@ -35,7 +35,7 @@ class Screen2 extends React.Component<Props> {
           <RangeInput
             // onChangeValue={console.log}
             dailyGoal={13}
-            valueMax={100}
+            valueMax={10}
             valueMin={0}
           />
           {/* </Transition> */}

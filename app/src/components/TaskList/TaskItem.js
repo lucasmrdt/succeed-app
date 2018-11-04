@@ -23,7 +23,8 @@ const SUCCESS_ITEM_SIZE = {
 };
 
 type Props = {
-  task: TaskType
+  task: TaskType,
+  onPress: (id: string) => void,
 };
 
 class TaskItem extends React.PureComponent<Props> {
@@ -88,7 +89,7 @@ class TaskItem extends React.PureComponent<Props> {
   }
 
   render() {
-    const { task } = this.props;
+    const { task, onPress } = this.props;
     const { primary, secondary } = this.getColor();
 
     return (
@@ -103,7 +104,8 @@ class TaskItem extends React.PureComponent<Props> {
         secondaryColor={secondary}
         primaryColor={primary}
         style={styles.item}
-        onPress={() => console.log('press')}
+        onPress={onPress}
+        id={task.id}
         optimized
       >
         {task.label}

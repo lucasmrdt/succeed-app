@@ -31,7 +31,7 @@ type Props = {
 class Home extends React.Component<Props> {
   shouldComponentUpdate = () => false;
 
-  onPressNew = () => {
+  onTaskPress = () => {
     this.props.navigation.navigate('Screen2');
   }
 
@@ -49,7 +49,7 @@ class Home extends React.Component<Props> {
         primaryColor={COLORS.PURPLE}
         rounded='fully'
         size={BUTTON_SIZE}
-        onPress={this.onPressNew}
+        onPress={() => console.log('new')}
         gradient
         attractive
       >
@@ -69,7 +69,7 @@ class Home extends React.Component<Props> {
           </Touchable>
         </Header>
         <Body>
-          <TaskList />
+          <TaskList onItemPress={this.onTaskPress}/>
           {this.renderButton()}
         </Body>
       </Wrapper>

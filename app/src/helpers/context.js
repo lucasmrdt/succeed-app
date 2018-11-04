@@ -37,7 +37,7 @@ class Context {
   }
 
   removeListenerForKey = (updater: UpdaterType, key: string) => {
-    if (typeof this.scopedListeners[key] === 'object') {
+    if (this.scopedListeners[key] instanceof Set) {
       this.scopedListeners[key].delete(updater);
     }
   };
@@ -76,6 +76,10 @@ class Context {
       state = state(this.state);
     }
 
+    if (state === null) {
+      return;
+    }
+
     Object.assign(this.state, state);
     Object.keys(state).forEach((key: string) => {
       const listenersForKey = this.scopedListeners[key];
@@ -99,11 +103,12 @@ class Context {
 
       class Consumer extends React.PureComponent {
         componentDidMount() {
-          addListener(this.forceUpdate.bind(this), keys);
+          this.forceUpdate = this.forceUpdate.bind(this);
+          addListener(this.forceUpdate, keys);
         }
 
         componentWillUnmount() {
-          removeListener(this.forceUpdate.bind(this));
+          removeListener(this.forceUpdate);
         }
 
         render() {

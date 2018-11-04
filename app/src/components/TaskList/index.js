@@ -1,6 +1,6 @@
 // @flow
 
-import TaskList, { type Props } from './TaskList';
+import TaskList, { type ReduxProps } from './TaskList';
 
-export type TaskListProps = Props;
+export type TaskListProps = ReduxProps;
 export default TaskList;
