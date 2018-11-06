@@ -18,7 +18,7 @@ const RootNavigator = createStackNavigator(
   routes,
   {
     mode: 'modal',
-    initialRouteName: 'App',
+    initialRouteName: 'Screen2',
     headerMode: 'none',
     transitionConfig: () => ({
       transitionSpec: ANIMATIONS.DEFAULT_ANIMATIONS_OPTIONS,

@@ -30,11 +30,11 @@ export const TEXT_SIZES = {
   xxl: 30,
 };
 
-export const LINE_TEXT_HEIGHTS = {
-  xs: 22,
-  s: 23,
-  m: 32,
-  l: 28,
-  xl: 37,
-  xxl: 37,
+export const TEXT_TRANSLATES = {
+  xs: 10,
+  s: 8,
+  m: 2,
+  l: 4,
+  xl: 2,
+  xxl: 0,
 };

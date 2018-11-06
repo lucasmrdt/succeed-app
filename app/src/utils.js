@@ -37,6 +37,21 @@ export const isReactComponent = (component: any): bool => (
   && component.prototype.isReactComponent
 );
 
-export const interpolate = (begin, end, curr, max) => (
-  begin + (curr / max) * (end - begin)
-);
+export const interpolate = (begin, end, curr, max) => {
+  let minVal = begin;
+  let maxVal = end;
+
+  if (minVal > maxVal) {
+    minVal = end;
+    maxVal = begin;
+  }
+  return (
+    Math.max(
+      minVal,
+      Math.min(
+        minVal + (curr / max) * (maxVal - minVal),
+        maxVal,
+      ),
+    )
+  );
+};

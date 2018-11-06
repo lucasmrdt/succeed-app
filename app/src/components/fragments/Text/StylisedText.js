@@ -41,22 +41,16 @@ class StylisedText extends React.PureComponent<Props> {
       fontFamily = 'poppins-light';
     }
 
-    const lineHeight = SIZES.LINE_TEXT_HEIGHTS[size];
     const fontSize = SIZES.TEXT_SIZES[size];
 
     const wrapperStyle: Array<StylesheetType> = [
+      styles.wrapper,
       {
         fontSize,
         fontFamily,
         color,
-        ...Platform.select({
-          ios: {
-            lineHeight,
-          },
-        }),
         letterSpacing,
       },
-      styles.wrapper,
       style,
     ];
 
@@ -68,7 +62,7 @@ class StylisedText extends React.PureComponent<Props> {
     const style = this.computeStyle();
 
     return (
-      <Text style={style}>
+      <Text style={style} allowFontScaling>
         {children}
       </Text>
     );
@@ -80,12 +74,7 @@ const styles = createStyleSheet({
     ...STYLES.CENTER_CHILDS,
     alignSelf: 'center',
     textAlign: 'center',
-    ...Platform.select({
-      android: {
-        lineHeight: 50,
-        marginTop: 4,
-      },
-    }),
+    marginTop: 2,
   },
 });
 

@@ -11,6 +11,8 @@ import * as Constants from '@/constants';
 type Props = RNTypes.NavigationInjectedProps;
 
 class Screen2 extends React.Component<Props> {
+  shouldComponentUpdate = () => false;
+
   render() {
     const { navigation } = this.props;
     const buttonId = navigation.getParam(Constants.ANIMATIONS.SHARED_BACKRGOUND_KEY, '');
@@ -34,9 +36,12 @@ class Screen2 extends React.Component<Props> {
             </View> */}
           <RangeInput
             // onChangeValue={console.log}
+            onReachBorder={() => console.log('border!')}
+            onEndReachBorder={() => console.log('end!')}
+            precision={0}
             dailyGoal={13}
-            valueMax={10}
-            valueMin={0}
+            toValue={10}
+            fromValue={1}
           />
           {/* </Transition> */}
         </View>
