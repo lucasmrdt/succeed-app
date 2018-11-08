@@ -2,12 +2,10 @@
 
 import React from 'react';
 
-type ProviderType<P, S> = React.ComponentType<P, S>;
 type UpdaterType = () => void;
 type GlobalListenersType = { [key: string]: UpdaterType };
 type ScopedListenersType = { [props: string]: Set<UpdaterType> };
 
-class ProviderComponent<P, S> extends React.PureComponent<P, S> {};
 
 /**
  * eg.
@@ -26,15 +24,14 @@ class ProviderComponent<P, S> extends React.PureComponent<P, S> {};
  *  }
  * }
  */
-class Context {
+class Context<StateType> {
   globalListeners: GlobalListenersType = {};
   scopedListeners: ScopedListenersType = {};
-
-  Provider = ProviderComponent;
+  state: StateType;
+  Provider = class ProviderComponent<P, S> extends React.PureComponent<P, S> {};
 
   constructor(state: Object) {
     this.state = state;
-
     this.Provider.prototype.setState = this.setState;
     this.Provider.prototype.state = this.state;
   }

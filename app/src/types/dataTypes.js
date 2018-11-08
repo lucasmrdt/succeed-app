@@ -55,24 +55,27 @@ export type FilterType = {
 export type TaskType = {
   id: string,
   color: string,
-  statut: number,
+  status: number,
   icon: IconType,
   label: string,
   userScore: number,
-  target: {
-    todo: number,
-    min: number,
-    max: number,
+  precision: number,
+  todo: {
+    current: number,
+    next: number,
+    prev: number,
   },
 };
 
 export type GoalType = {
   id: string,
   timestamp: number,
-  statut: 'pending' | 'done' | 'canceled',
+  status: 'pending' | 'done' | 'canceled',
+  color: string,
   icon: string,
   label: string,
   unit: string | Array<string>,
+  precision: number,
   duration: number,
   nbDaysDone: number,
 

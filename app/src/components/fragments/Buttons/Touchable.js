@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LinearGradient } from 'expo';
-import { Animated, TouchableWithoutFeedback } from 'react-native';
+import { Animated, TouchableWithoutFeedback, View } from 'react-native';
 import { ANIMATIONS } from '@/constants';
 
 import { type StylesheetType } from '@/types/rnTypes';

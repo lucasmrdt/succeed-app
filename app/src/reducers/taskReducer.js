@@ -1,12 +1,15 @@
 // @flow
 
 import { FILTERS } from '@/constants/data';
+import { FAIL_STATUS, SUCCESS_STATUS } from '@/constants/status';
 import {
   CHANGE_FILTER,
   FAIL_LOAD_TASKS,
   SUCCESS_LOAD_TASKS,
   LOAD_TASKS,
   REFRESH_TASKS,
+  SELECT_TASK,
+  COMPLETE_TASK,
 } from '@/actions/taskActions';
 
 import { type ActionType } from '@/types/reduxTypes';
@@ -33,39 +36,66 @@ const reducer = (
   action: ActionType
 ): StateType => {
   switch (action.type) {
-    case CHANGE_FILTER:
+    case CHANGE_FILTER: {
       return {
         ...state,
         selectedFilter: action.payload,
       };
+    }
 
-    case LOAD_TASKS:
+    case LOAD_TASKS: {
       return {
         ...state,
         status: 'loading',
       };
+    }
 
-    case REFRESH_TASKS:
+    case REFRESH_TASKS: {
       return {
         ...state,
         status: 'refreshing',
       };
+    }
 
-    case SUCCESS_LOAD_TASKS:
+    case SUCCESS_LOAD_TASKS: {
       return {
         ...state,
         tasks: action.payload,
         status: 'success',
       };
+    }
 
-    case FAIL_LOAD_TASKS:
+    case FAIL_LOAD_TASKS: {
       return {
         ...state,
         status: 'fail',
       };
+    }
 
-    default:
+    case COMPLETE_TASK: {
+      const { userScore, taskId } = action.payload;
+
+      const tasks = state.tasks.map(t => t.id === taskId
+        ? {
+          ...t,
+          userScore,
+          status: (userScore >= t.target.todo
+            ? SUCCESS_STATUS
+            : FAIL_STATUS
+          ),
+        }
+        : t
+      );
+
+      return {
+        ...state,
+        tasks,
+      };
+    }
+
+    default: {
       return state;
+    }
   }
 };
 

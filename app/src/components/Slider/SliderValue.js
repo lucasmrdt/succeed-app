@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Animated } from 'react-native';
-import { StylisedText } from '../Text';
+import { StylisedText } from '@/components/fragments';
 import Context from './SliderContext';
 
 import { type StateType as ContextType } from './SliderContext';
@@ -16,7 +16,7 @@ type Props = ContextType & {
 @Context.withContext('value')
 class SliderValue extends React.PureComponent<Props> {
   render() {
-    const { value, color, size, ...props } = this.props;
+    const { color, size, value, ...props } = this.props;
 
     return (
       <Animated.View {...props}>

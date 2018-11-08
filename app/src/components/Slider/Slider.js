@@ -9,8 +9,7 @@ import {
 } from 'react-native-gesture-handler';
 import SliderValue from './SliderValue';
 import Context from './SliderContext';
-import { StylisedText } from '../Text';
-import DashedLine from '../Svg/DashedLine';
+import { StylisedText, DashedLine, AnimatedColor } from '@/components/fragments';
 import { COLORS, SIZES } from '@/constants';
 import { Converter } from '@/helpers';
 import { createStyleSheet, interpolate } from '@/utils';
@@ -18,8 +17,8 @@ import { createStyleSheet, interpolate } from '@/utils';
 import { type StateType as ContextType } from './SliderContext';
 
 const DEFAULT_SIZE = {
-  height: 400,
-  width: 150,
+  height: 375,
+  width: 175,
 };
 
 const INDICATOR_HEIGHT = 40;
@@ -27,59 +26,79 @@ const INDICATOR_WIDTH = 1 / 4;
 const SLIDER_VALUE_SIZE = 'xl';
 const SLIDER_VALUE_HEIGHT = 30;
 const WRAPPER_PADDING = SLIDER_VALUE_HEIGHT / 2;
-const INIT_PROGRESS = 3 / 4;
 const MAX_VALUE_LENGTH = 4;
-const SCALE_MAX = 1.03;
+const SCALE_MAX = 1.04;
 const LEFT_TEXT_VALUE = 15;
 
 type Props = {
+  value: number,
   toValue: number,
   fromValue: number,
   precision: number,
-  onReachBorder: Function,
-  onEndReachBorder: Function,
-  onChangeValue: (value: number) => void,
+  inverted: bool,
   size: {
     height: number,
     width: number,
   },
-  color: string,
-  value: number,
 };
 
 class Slider extends Context.Provider<Props, ContextType> {
 
   _scale = new Animated.Value(1);
-  _yPosition: Animated.Value;
+  _yPosition = new Animated.Value(0);
 
-  static defaultProps = {
+  static defaultProps: Props = {
     color: COLORS.GREEN_PASTEL,
     size: DEFAULT_SIZE,
+    precision: 0,
+    inverted: false,
   }
 
   constructor(props: Props) {
     super(props);
-    const { fromValue, toValue, size } = props;
-    const sign = Math.sign(fromValue) || 1 * Math.sign(toValue) || 1;
-    const averageValue = Math.abs((toValue - fromValue) * INIT_PROGRESS) * sign;
 
-    this._yPosition = new Animated.Value(size.height * (1 - INIT_PROGRESS));
-    this._yPosition.addListener(throttle(this.onValueChange, 50));
-    this.setValue(averageValue);
-
-    // Mutate state because Provider.
-    this.state.precision = this.getPrecision();
   }
 
-  getPrecision() {
+  componentDidMount() {
+    this.setupPrecision();
+    this.setupInitValue();
+    this._yPosition.addListener(throttle(this.onChangeValue, 50));
+  }
+
+  componentWillUnmount() {
+    this._yPosition.removeAllListeners();
+  }
+
+  get inputRange() {
+    const { size } = this.props;
+    return [0, size.height];
+  }
+
+  setupInitValue() {
+    const { fromValue, toValue, value, size } = this.props;
+    let initValue = value || toValue;
+
+    const yPosition: number = interpolate(
+      0,
+      size.height,
+      toValue - initValue,
+      // Invert, yPosition === 0 where user complete 100%.
+      toValue - fromValue,
+    );
+    this._yPosition.setValue(yPosition);
+    this.setValue(initValue);
+  }
+
+  setupPrecision() {
     const { precision, toValue } = this.props;
     const nbIntegerDigits = toValue.toFixed(0).length;
     const defaultPrecision = MAX_VALUE_LENGTH - nbIntegerDigits;
+    const finalPrecision = (precision < defaultPrecision
+      ? precision
+      : defaultPrecision
+    );
 
-    if (precision < defaultPrecision) {
-      return precision;
-    }
-    return defaultPrecision;
+    this.setState({ precision: finalPrecision });
   }
 
   setValue = (value: number) => {
@@ -92,12 +111,20 @@ class Slider extends Context.Provider<Props, ContextType> {
     });
   }
 
-  onValueChange = ({ value }) => {
+  dispatchChangeValue = () => {
+    const { onChangeValue } = this.props;
+    const { value } = this.state;
+
+    onChangeValue(value);
+  };
+
+  onChangeValue = ({ value }) => {
     const { size, fromValue, toValue } = this.props;
     const interpolatedValue: number = interpolate(
       fromValue,
       toValue,
-      size.height - value, // reverse value because it's natively reversed.
+      // Invert, yPosition === 0 where user complete 100%.
+      size.height - value,
       size.height,
     );
 
@@ -109,57 +136,44 @@ class Slider extends Context.Provider<Props, ContextType> {
 
     if (state === GestureState.BEGAN) {
       Animated.spring(this._scale, {
-        speed: 10,
+        speed: 6,
         toValue: SCALE_MAX,
+        useNativeDriver: true,
       }).start();
     } else if (state === GestureState.END) {
       Animated.spring(this._scale, {
-        speed: 10,
+        speed: 6,
         toValue: 1,
+        useNativeDriver: true,
       }).start();
     }
   }
 
   renderIndicator() {
-    const { size, color } = this.props;
+    const { size } = this.props;
     const lineWidth = size.width * INDICATOR_WIDTH;
-    const opacity = this._yPosition.interpolate({
-      inputRange: [
-        0,
-        size.height / 2 - INDICATOR_HEIGHT / 2,
-        size.height / 2 + INDICATOR_HEIGHT / 2,
-        size.height,
-      ],
-      outputRange: [0, 0, 1, 1],
-    });
-    const frontStyle = StyleSheet.flatten([
-      styles.indicatorChild,
-      {
-        zIndex: 1,
-        opacity,
-      },
-    ]);
+    const inputRange = [
+      0,
+      size.height / 2 - INDICATOR_HEIGHT / 2,
+      size.height / 2 + INDICATOR_HEIGHT / 2,
+      size.height,
+    ];
 
     return (
-      <View style={styles.indicator} pointerEvents='none'>
-        {/* front layer */}
-        <Animated.View style={frontStyle}>
-          <DashedLine width={lineWidth} color={color}/>
-          <StylisedText color={color} style={styles.indicatorText}>
-            daily goal
-          </StylisedText>
-          <DashedLine width={lineWidth} color={color}/>
-        </Animated.View>
-
-        {/* back layer */}
-        <View style={styles.indicatorChild}>
-          <DashedLine width={lineWidth} color={COLORS.WHITE}/>
-          <StylisedText color={COLORS.WHITE} style={styles.indicatorText}>
-            daily goal
-          </StylisedText>
-          <DashedLine width={lineWidth} color={COLORS.WHITE}/>
-        </View>
-      </View>
+      <AnimatedColor
+        fromColor={COLORS.GRAY}
+        toColor={COLORS.WHITE}
+        animatedValue={this._yPosition}
+        inputRange={inputRange}
+        style={styles.indicator}
+        pointerEvents='none'
+      >
+        <DashedLine width={lineWidth}/>
+        <StylisedText style={styles.indicatorText}>
+          daily goal
+        </StylisedText>
+        <DashedLine width={lineWidth}/>
+      </AnimatedColor>
     );
   }
 
@@ -172,7 +186,7 @@ class Slider extends Context.Provider<Props, ContextType> {
       extrapolate: 'clamp',
     });
 
-    const style = StyleSheet.flatten([
+    const wrapperStyle = StyleSheet.flatten([
       styles.sliderValue,
       {
         right,
@@ -182,34 +196,44 @@ class Slider extends Context.Provider<Props, ContextType> {
 
     return (
       <SliderValue
-        style={style}
-        pointerEvents='none'
+        style={wrapperStyle}
+        color={COLORS.GRAY}
         size={SLIDER_VALUE_SIZE}
+        pointerEvents='none'
       />
     );
   }
 
   renderSlider() {
-    const { color, size } = this.props;
+    const { inverted } = this.props;
     const translateY = this._yPosition.interpolate({
-      inputRange: [0, size.height],
-      outputRange: [0, size.height],
+      inputRange: this.inputRange,
+      outputRange: this.inputRange,
       extrapolate: 'clamp',
     });
+    const colorInputRange = (inverted
+      ? this.inputRange.reverse()
+      : this.inputRange
+    );
 
     const style = StyleSheet.flatten([
       styles.slider,
-      {
-        backgroundColor: color,
-        transform: [{ translateY }],
-      },
+      { transform: [{ translateY }] },
     ]);
 
     return (
-      <Animated.View
+      <AnimatedColor
+        animatedValue={this._yPosition}
+        inputRange={colorInputRange}
+        fromColor={COLORS.ORANGE}
+        toColor={COLORS.GREEN}
         style={style}
+        colorKeyProp='backgroundColor'
         pointerEvents='none'
-      />
+        wrapInStylesheet
+      >
+        <View style={styles.absolute} />
+      </AnimatedColor>
     );
   }
 
@@ -235,21 +259,21 @@ class Slider extends Context.Provider<Props, ContextType> {
     ]);
 
     return (
-      <PanGestureHandler
-        onHandlerStateChange={this.onHandlerStateChange}
-        onGestureEvent={Animated.event(
-          [{nativeEvent: { y: this._yPosition }}],
-          { useNativeDriver: true },
-        )}
-      >
-        <Animated.View style={wrapperStyle}>
-          <View style={backgroundStyle}>
+      <Animated.View style={wrapperStyle}>
+        <PanGestureHandler
+          onHandlerStateChange={this.onHandlerStateChange}
+          onGestureEvent={Animated.event(
+            [{nativeEvent: { y: this._yPosition }}],
+            { useNativeDriver: true },
+          )}
+        >
+          <Animated.View style={backgroundStyle}>
             {this.renderIndicator()}
             {this.renderSlider()}
-          </View>
-          {this.renderSliderValue()}
-        </Animated.View>
-      </PanGestureHandler>
+          </Animated.View>
+        </PanGestureHandler>
+        {this.renderSliderValue()}
+      </Animated.View>
     );
   }
 
@@ -268,6 +292,13 @@ const styles = createStyleSheet({
     overflow: 'hidden',
     height: '100%',
   },
+  absolute: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+  },
   slider: {
     position: 'absolute',
     top: 0,
@@ -280,6 +311,7 @@ const styles = createStyleSheet({
   sliderValue: {
     top: WRAPPER_PADDING - SLIDER_VALUE_HEIGHT / 2,
     height: SLIDER_VALUE_HEIGHT,
+    width: 60,
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',

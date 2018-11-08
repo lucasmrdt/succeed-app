@@ -61,7 +61,7 @@ const inheritanceStyle = {
     ...STYLES.CENTER_CHILDS,
     width: SIZES.WIDTH,
     position: 'relative',
-    padding: 20,
+    padding: 30,
   },
   icon: {
     position: 'absolute',

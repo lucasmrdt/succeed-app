@@ -30,9 +30,18 @@ class ButtonIcon extends React.Component<Props> {
     return (isSelected !== nextProps.isSelected);
   }
 
-  render() {
-    const { isSelected, icon, color, ...props } = this.props;
+  renderIcon() {
+    const { icon, color } = this.props;
     const Icon = getIcon(icon);
+
+    if (typeof icon === 'object') {
+      return icon;
+    }
+    return (Icon && <Icon color={color} />);
+  }
+
+  render() {
+    const { isSelected, color, ...props } = this.props;
 
     return (
       <Button
@@ -42,8 +51,7 @@ class ButtonIcon extends React.Component<Props> {
         color={color}
         {...props}
       >
-        {/* $FlowFixMe don't understand... */}
-        {Icon && <Icon color={isSelected ? color : COLORS.WHITE} />}
+        {this.renderIcon()}
       </Button>
     );
   }
