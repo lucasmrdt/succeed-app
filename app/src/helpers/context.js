@@ -6,6 +6,7 @@ type UpdaterType = () => void;
 type GlobalListenersType = { [key: string]: UpdaterType };
 type ScopedListenersType = { [props: string]: Set<UpdaterType> };
 
+
 /**
  * eg.
  *
@@ -23,21 +24,20 @@ type ScopedListenersType = { [props: string]: Set<UpdaterType> };
  *  }
  * }
  */
-class Context {
+class Context<StateType> {
   globalListeners: GlobalListenersType = {};
   scopedListeners: ScopedListenersType = {};
-
-  Provider: React.ComponentType<any> = class extends React.PureComponent {};
+  state: StateType;
+  Provider = class ProviderComponent<P, S> extends React.PureComponent<P, S> {};
 
   constructor(state: Object) {
     this.state = state;
-
     this.Provider.prototype.setState = this.setState;
     this.Provider.prototype.state = this.state;
   }
 
   removeListenerForKey = (updater: UpdaterType, key: string) => {
-    if (typeof this.scopedListeners[key] === 'object') {
+    if (this.scopedListeners[key] instanceof Set) {
       this.scopedListeners[key].delete(updater);
     }
   };
@@ -76,6 +76,10 @@ class Context {
       state = state(this.state);
     }
 
+    if (state === null) {
+      return;
+    }
+
     Object.assign(this.state, state);
     Object.keys(state).forEach((key: string) => {
       const listenersForKey = this.scopedListeners[key];
@@ -99,11 +103,12 @@ class Context {
 
       class Consumer extends React.PureComponent {
         componentDidMount() {
-          addListener(this.forceUpdate.bind(this), keys);
+          this.forceUpdate = this.forceUpdate.bind(this);
+          addListener(this.forceUpdate, keys);
         }
 
         componentWillUnmount() {
-          removeListener(this.forceUpdate.bind(this));
+          removeListener(this.forceUpdate);
         }
 
         render() {

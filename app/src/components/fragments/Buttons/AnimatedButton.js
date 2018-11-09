@@ -77,6 +77,7 @@ class AnimatedButton extends AnimatedComponent<Props, State> {
         useNativeDriver: true,
       }),
     ]).start(() => {
+      // @todo make it iterative to avoid max recursion depth exceed.
       setTimeout(this.attractiveAnimate, ATTRACTIVE_INTERVAL);
     });
   }

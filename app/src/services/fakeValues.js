@@ -23,20 +23,32 @@ const possibleLabels = [
 ];
 
 let id = 0;
-const getRandomTask = (): TaskType => ({
-  id: `${id++}`,
-  color: chooseRandom(possibleColors),
-  icon: chooseRandom(possibleIcons),
-  label: chooseRandom(possibleLabels),
-  statut: chooseRandom(possibleStatus),
-  userScore: Math.floor(Math.random() * 15),
-  target: {
-    max: 0,
-    min: 0,
-    todo: Math.floor(Math.random() * 10 + 2),
-  }
-});
+const getRandomTask = (): TaskType => {
+  const todo = Math.floor(Math.random() * 100 + 2);
+  const diff = Math.floor(Math.random() * 30 + 1);
+  const max = todo + diff;
+  const min = todo - diff;
+  const userScore = Math.random() > .35 ? null : Math.floor(min + Math.random() * max);
+
+  return {
+    id: `${id++}`,
+    color: chooseRandom(possibleColors),
+    icon: chooseRandom(possibleIcons),
+    label: chooseRandom(possibleLabels),
+    status: userScore === null
+      ? STATUS.TODO_STATUS
+      : userScore > todo
+        ? STATUS.SUCCESS_STATUS
+        : STATUS.FAIL_STATUS,
+    userScore,
+    target: {
+      max,
+      min,
+      todo,
+    }
+  };
+};
 
 export const getRandomTasks = () => (
-  [...Array(Math.floor(Math.random() * 20 + 4))].map(getRandomTask)
+  [...Array(Math.floor(Math.random() * 20 + 2))].map(getRandomTask)
 );

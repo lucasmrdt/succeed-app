@@ -23,22 +23,28 @@ const SUCCESS_ITEM_SIZE = {
 };
 
 type Props = {
-  task: TaskType
+  task: TaskType,
+  onPress: (id: string) => void,
 };
 
-class TaskItem extends React.PureComponent<Props> {
+class TaskItem extends React.Component<Props> {
+
+  shouldComponentUpdate(prevProps: Props) {
+    const { task } = this.props;
+    return (prevProps.task.userScore !== task.userScore);
+  }
 
   getColor() {
-    const { task: { statut } } = this.props;
+    const { task: { status } } = this.props;
 
     let primaryColor = COLORS.LIGHT_GRAY;
     let secondaryColor = COLORS.DARK_GRAY;
 
-    if (statut === STATUS.SUCCESS_STATUS) {
+    if (status === STATUS.SUCCESS_STATUS) {
       primaryColor = 'transparent';
       secondaryColor = COLORS.GREEN_PASTEL;
-    } else if (statut === STATUS.FAIL_STATUS) {
-      primaryColor = COLORS.LIGHT_RED;
+    } else if (status === STATUS.FAIL_STATUS) {
+      primaryColor = COLORS.RED_PASTEL;
       secondaryColor = COLORS.WHITE;
     }
 
@@ -54,7 +60,7 @@ class TaskItem extends React.PureComponent<Props> {
     return (
       <View style={styles.indicatorWrapper}>
         <StylisedText type='bold' size='l' color={color}>
-          {task.userScore}
+          {task.userScore || 0}
         </StylisedText>
         <StylisedText color={color} style={styles.indicatorSperator}>
           {'/'}
@@ -69,7 +75,7 @@ class TaskItem extends React.PureComponent<Props> {
   renderRightIcon = (color) => {
     const { task } = this.props;
 
-    if (task.statut === STATUS.SUCCESS_STATUS) {
+    if (task.status === STATUS.SUCCESS_STATUS) {
       return <Tick color={color} size={13}/>;
     }
     return this.renderTaskIndicator(color);
@@ -78,8 +84,8 @@ class TaskItem extends React.PureComponent<Props> {
   renderLeftIcon = (color) => {
     const { task } = this.props;
     const Icon = getIcon(task.icon);
-    const size = (task.statut === STATUS.TODO_STATUS ? 30 : 20);
-    const computedColor = (task.statut === STATUS.TODO_STATUS
+    const size = (task.status === STATUS.TODO_STATUS ? 30 : 20);
+    const computedColor = (task.status === STATUS.TODO_STATUS
       ? task.color
       : color
     );
@@ -88,14 +94,17 @@ class TaskItem extends React.PureComponent<Props> {
   }
 
   render() {
-    const { task } = this.props;
+    const { task, onPress } = this.props;
     const { primary, secondary } = this.getColor();
 
     return (
       <StylisedButton
-        leftIcon={this.renderLeftIcon}
+        // Used to update right Icon when userScore is updated.
+        value={task.userScore}
         rightIcon={this.renderRightIcon}
-        size={task.statut === STATUS.SUCCESS_STATUS
+
+        leftIcon={this.renderLeftIcon}
+        size={task.status === STATUS.SUCCESS_STATUS
           ? SUCCESS_ITEM_SIZE
           : ITEM_SIZE
         }
@@ -103,7 +112,8 @@ class TaskItem extends React.PureComponent<Props> {
         secondaryColor={secondary}
         primaryColor={primary}
         style={styles.item}
-        onPress={() => console.log('press')}
+        onPress={onPress}
+        id={task.id}
         optimized
       >
         {task.label}

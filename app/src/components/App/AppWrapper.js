@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import LoadScreen from '../LoadScreen';
+import { Load } from '@/components/screens';
 import Navigator from '@/navigators';
 import { store, persistor } from '@/store';
 import setup from '@/setup';
@@ -24,12 +24,11 @@ class AppWrapper extends React.PureComponent<void, State> {
     const { isLoaded } = this.state;
 
     if (!isLoaded) {
-      console.log('here!')
-      return <LoadScreen />;
+      return <Load />;
     }
     return (
       <Provider store={store}>
-        <PersistGate loading={<LoadScreen />} persistor={persistor}>
+        <PersistGate loading={<Load />} persistor={persistor}>
           <Navigator />
         </PersistGate>
       </Provider>

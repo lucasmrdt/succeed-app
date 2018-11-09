@@ -3,6 +3,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Transition } from 'react-navigation-fluid-transitions';
+import RangeInput from '@/components/fragments/Input/RangeInput';
 import { Button } from '@/components/fragments';
 import { createStyleSheet } from '@/utils';
 import * as Constants from '@/constants';
@@ -10,6 +11,8 @@ import * as Constants from '@/constants';
 type Props = RNTypes.NavigationInjectedProps;
 
 class Screen2 extends React.Component<Props> {
+  shouldComponentUpdate = () => false;
+
   render() {
     const { navigation } = this.props;
     const buttonId = navigation.getParam(Constants.ANIMATIONS.SHARED_BACKRGOUND_KEY, '');
@@ -22,7 +25,7 @@ class Screen2 extends React.Component<Props> {
             <View style={styles.background}/>
           </Transition>
           <Transition anchor={buttonId}> */}
-            <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+            {/* <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
               <Text>screen2</Text>
               <Button
                 onPress={() => this.props.navigation.goBack()}
@@ -30,7 +33,16 @@ class Screen2 extends React.Component<Props> {
               >
                 <Text>BACK!</Text>
               </Button>
-            </View>
+            </View> */}
+          <RangeInput
+            // onChangeValue={console.log}
+            onReachBorder={() => console.log('border!')}
+            onEndReachBorder={() => console.log('end!')}
+            precision={0}
+            dailyGoal={13}
+            toValue={10}
+            fromValue={1}
+          />
           {/* </Transition> */}
         </View>
       </Transition>
@@ -48,7 +60,7 @@ const styles  = createStyleSheet({
   },
   wrapper: {
     ...Constants.STYLES.CENTER_CHILDS,
-    backgroundColor: Constants.COLORS.GREEN,
+    backgroundColor: Constants.COLORS.WHITE,
     flexDirection: 'column',
     justifyContent: 'space-around',
     height: Constants.SIZES.HEIGHT,

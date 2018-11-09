@@ -17,22 +17,33 @@ import {
 import { COLORS } from '@/constants';
 import { createStyleSheet } from '@/utils';
 
+import { type NavigationType } from '@/types/rnTypes';
+import { type TaskType } from '@/types/dataTypes';
+
 const BUTTON_SIZE = {
   width: 100,
   height: 45,
 };
 
-import { type NavigationType } from '@/types/rnTypes';
+export type ReduxProps = {
+  onSelectTask: (taskId: string) => void,
+  tasks: Array<TaskType>,
+};
 
-type Props = {
+type Props = ReduxProps & {
   navigation: NavigationType
 };
 
-class Home extends React.Component<Props> {
+class HomeScreen extends React.Component<Props> {
   shouldComponentUpdate = () => false;
 
-  onPressNew = () => {
-    this.props.navigation.navigate('Screen2');
+  onTaskPress = (selectedTaskId: string) => {
+    const { navigation, tasks } = this.props;
+
+    const selectedTask = tasks.find(({ id }) => id === selectedTaskId);
+    if (!selectedTask) return;
+
+    navigation.navigate('CompleteTask', { task: selectedTask });
   }
 
   onPressLevel = () => {
@@ -49,7 +60,7 @@ class Home extends React.Component<Props> {
         primaryColor={COLORS.PURPLE}
         rounded='fully'
         size={BUTTON_SIZE}
-        onPress={this.onPressNew}
+        onPress={() => console.log('new')}
         gradient
         attractive
       >
@@ -69,7 +80,7 @@ class Home extends React.Component<Props> {
           </Touchable>
         </Header>
         <Body>
-          <TaskList />
+          <TaskList onItemPress={this.onTaskPress} />
           {this.renderButton()}
         </Body>
       </Wrapper>
@@ -92,4 +103,4 @@ const styles = createStyleSheet({
   },
 });
 
-export default Home;
+export default HomeScreen;

@@ -1,8 +1,8 @@
 import BottomTabBar from './BottomTabBar';
-import LoadScreen from './LoadScreen';
+import Slider from './Slider';
 
 export * from './Filter';
 export {
   BottomTabBar,
-  LoadScreen,
+  Slider,
 };

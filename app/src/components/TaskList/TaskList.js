@@ -1,18 +1,30 @@
 // @flow
 
 import React from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { SectionList, Text, View } from 'react-native';
 import TaskItem from './TaskItem';
+import { StylisedText } from '@/components/fragments';
 import { createStyleSheet } from '@/utils';
+import { STATUS, COLORS } from '@/constants';
 
 import { type TaskType } from '@/types/dataTypes';
 import { type StatusType } from '@/types/globalTypes';
 
-export type Props = {
+type SectionHeaderProps = {
+  data: Array<TaskType>,
+  color: string,
+  title: string,
+};
+
+export type ReduxProps = {
   tasks: Array<TaskType>,
   loadTasks: Function,
   refreshTasks: Function,
   status: StatusType,
+};
+
+type Props =  ReduxProps & {
+  onItemPress: (id: string) => void,
 };
 
 class TaskList extends React.PureComponent<Props> {
@@ -20,6 +32,38 @@ class TaskList extends React.PureComponent<Props> {
   componentDidMount() {
     const { loadTasks } = this.props;
     loadTasks();
+  }
+
+  getSections = () => {
+    const { tasks } = this.props;
+
+    const todoTasks: SectionHeaderProps = {
+      data: [],
+      title: 'todo',
+      color: COLORS.DARK_GRAY,
+    };
+    const failedTasks: SectionHeaderProps = {
+      data: [],
+      title: 'failed',
+      color: COLORS.RED_PASTEL,
+    };
+    const succeedTasks: SectionHeaderProps = {
+      data: [],
+      title: 'done',
+      color: COLORS.GREEN_PASTEL,
+    };
+
+    tasks.forEach(task => {
+      if (task.status === STATUS.TODO_STATUS) {
+        todoTasks.data.push(task);
+      } else if (task.status === STATUS.FAIL_STATUS) {
+        failedTasks.data.push(task);
+      } else {
+        succeedTasks.data.push(task);
+      }
+    });
+
+    return [todoTasks, failedTasks, succeedTasks];
   }
 
   renderHeader() {
@@ -31,9 +75,25 @@ class TaskList extends React.PureComponent<Props> {
     return <View style={styles.footer} />;
   }
 
-  renderItem = ({ item }: { item: TaskType }) => (
-    <TaskItem task={item} />
-  );
+  renderItem = ({ item }: { item: TaskType }) => {
+    const { onItemPress } = this.props;
+    return <TaskItem task={item} onPress={onItemPress} />;
+  }
+
+  renderSectionHeader = ({ section }: { section: SectionHeaderProps }) => {
+    const { color, title, data } = section;
+
+    if (data.length === 0) {
+      return null;
+    }
+    return (
+      <View style={styles.sectionHeader}>
+        <StylisedText color={color} size='xxl' type='bold'>
+          {title}
+        </StylisedText>
+      </View>
+    );
+  }
 
   renderFailScreen() {
     // TODO: Make fail screen
@@ -46,7 +106,7 @@ class TaskList extends React.PureComponent<Props> {
   }
 
   render() {
-    const { tasks, status, refreshTasks } = this.props;
+    const { status, refreshTasks } = this.props;
 
     if (status === 'loading') {
       return this.renderLoadingScreen();
@@ -57,11 +117,13 @@ class TaskList extends React.PureComponent<Props> {
     }
 
     return (
-      <FlatList
+      <SectionList
         // We allow to keep more loaded data, because components are light.
         windowSize={41}
 
-        data={tasks}
+        stickySectionHeadersEnabled={false}
+        sections={this.getSections()}
+        renderSectionHeader={this.renderSectionHeader}
         keyExtractor={({ id }) => id}
         renderItem={this.renderItem}
         ListHeaderComponent={this.renderHeader}
@@ -81,12 +143,19 @@ const styles = createStyleSheet({
     width: '100%',
   },
   header: {
-    height: 40,
+    height: 10,
     width: '100%',
   },
   footer: {
-    height: 60,
+    height: 70,
     width: '100%',
+  },
+  sectionHeader: {
+    height: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 30,
+    paddingLeft: 60,
   },
 });
 

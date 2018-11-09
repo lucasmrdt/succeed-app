@@ -88,7 +88,7 @@ const styles = createStyleSheet({
       ios: {
         // Fix vertical align with text on ios.
         // TODO: Fix better solution.
-        transform: [{ translateY: -4 }],
+        // transform: [{ translateY: -4 }],
       },
     }),
   },
@@ -100,7 +100,7 @@ const styles = createStyleSheet({
         // because, lineHeight of text increase
         // the height of the parrent width, and so
         // position of the parent.
-        height: 25,
+        // height: 25,
       },
     }),
     padding: 0,

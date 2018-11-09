@@ -1,19 +1,17 @@
 //// @flow
 
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { pure } from 'recompose';
-import { SIZES } from '@/constants';
 import { createStyleSheet } from '@/utils';
-
-const PADDING = 20;
 
 type Props = {
   children: React$Element<any>,
+  style: any,
 };
 
-const Body = ({ children }: Props) => (
-  <View style={styles.wrapper}>
+const Body = ({ children, style }: Props) => (
+  <View style={StyleSheet.flatten([styles.wrapper, style])}>
     {children}
   </View>
 );

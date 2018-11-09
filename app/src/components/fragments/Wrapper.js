@@ -14,7 +14,7 @@ type Props = {
 };
 
 const Wrapper = ({ children, style }: Props) => (
-  <View style={StyleSheet.flatten(styles.wrapper, style)}>
+  <View style={[styles.wrapper, style]}>
     {children}
   </View>
 );

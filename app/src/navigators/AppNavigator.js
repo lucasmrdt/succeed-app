@@ -6,9 +6,8 @@ import { ANIMATIONS, SIZES, COLORS } from '@/constants';
 import * as Icons from '@/assets/icons';
 
 import BottomTabBar from '@/components/BottomTabBar';
-import { Home } from '@/screens';
+import { Home } from '@/containers/screens';
 import Screen1 from '@/components/Test/Screen1';
-import Screen2 from '@/components/Test/Screen2';
 import Screen3 from '@/components/Test/Screen3';
 import IconsScreen from '@/components/Test/IconsScreen';
 
