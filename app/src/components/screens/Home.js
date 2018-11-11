@@ -60,7 +60,7 @@ class HomeScreen extends React.Component<Props> {
         primaryColor={COLORS.PURPLE}
         rounded='fully'
         size={BUTTON_SIZE}
-        onPress={() => console.log('new')}
+        onPress={() => this.props.navigation.navigate('Screen3')}
         gradient
         attractive
       >
