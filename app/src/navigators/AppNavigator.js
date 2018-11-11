@@ -24,7 +24,7 @@ const routes = {
     },
   },
   Profile: {
-    screen: Screen3,
+    screen: IconsScreen,
     navigationOptions: {
       tabBarIcon: () => <Icons.Profile {...ICON_PROPS} />,
     },
