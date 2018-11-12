@@ -161,7 +161,7 @@ class Slider extends Context.Provider<Props, ContextType> {
 
     return (
       <AnimatedColor
-        fromColor={COLORS.GRAY}
+        fromColor={COLORS.RED_PASTEL}
         toColor={COLORS.WHITE}
         animatedValue={this._yPosition}
         inputRange={inputRange}
@@ -205,15 +205,21 @@ class Slider extends Context.Provider<Props, ContextType> {
   }
 
   renderSlider() {
-    const { inverted } = this.props;
+    const { inverted, size } = this.props;
     const translateY = this._yPosition.interpolate({
       inputRange: this.inputRange,
       outputRange: this.inputRange,
       extrapolate: 'clamp',
     });
+    const inputRange = [
+      0,
+      size.height / 2 - INDICATOR_HEIGHT / 2,
+      size.height / 2 + INDICATOR_HEIGHT / 2,
+      size.height,
+    ];
     const colorInputRange = (inverted
-      ? this.inputRange.reverse()
-      : this.inputRange
+      ? inputRange.reverse()
+      : inputRange
     );
 
     const style = StyleSheet.flatten([
@@ -225,8 +231,8 @@ class Slider extends Context.Provider<Props, ContextType> {
       <AnimatedColor
         animatedValue={this._yPosition}
         inputRange={colorInputRange}
-        fromColor={COLORS.ORANGE}
-        toColor={COLORS.GREEN}
+        fromColor={COLORS.RED_PASTEL}
+        toColor={COLORS.GREEN_PASTEL}
         style={style}
         colorKeyProp='backgroundColor'
         pointerEvents='none'

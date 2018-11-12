@@ -88,9 +88,15 @@ class TaskList extends React.PureComponent<Props> {
     }
     return (
       <View style={styles.sectionHeader}>
-        <StylisedText color={color} size='xxl' type='bold'>
-          {title}
-        </StylisedText>
+        {title === 'todo'
+          ? <React.Fragment>
+            <StylisedText color={COLORS.GRAY} size='xxl' type='bold'>t</StylisedText>
+            <StylisedText color={COLORS.RED_PASTEL} size='xxl' type='bold'>o</StylisedText>
+            <StylisedText color={COLORS.YELLOW_PASTEL} size='xxl' type='bold'>d</StylisedText>
+            <StylisedText color={COLORS.GREEN_PASTEL} size='xxl' type='bold'>o</StylisedText>
+          </React.Fragment>
+          : <StylisedText color={color} size='xxl' type='bold'>{title}</StylisedText>
+        }
       </View>
     );
   }
