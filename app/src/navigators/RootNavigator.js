@@ -4,12 +4,14 @@ import { createStackNavigator } from 'react-navigation';
 import { ANIMATIONS } from '@/constants';
 
 import App from './AppNavigator';
+import CreateGoal from './CreateGoalNavigator';
 import { CompleteTask } from '@/containers/screens';
 import Screen3 from '@/components/Test/Screen3';
 
 const routes = {
   App: { screen: App },
   CompleteTask: { screen: CompleteTask },
+  CreateGoal: { screen: CreateGoal },
   Screen3: { screen: Screen3 },
 };
 

@@ -43,7 +43,7 @@ class HomeScreen extends React.Component<Props> {
     const selectedTask = tasks.find(({ id }) => id === selectedTaskId);
     if (!selectedTask) return;
 
-    navigation.navigate('CompleteTask', { task: selectedTask });
+    navigation.navigate('CreateGoal');
   }
 
   onPressLevel = () => {
