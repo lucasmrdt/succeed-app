@@ -51,22 +51,26 @@ class CompletetTaskScreen extends React.Component<Props> {
   };
 
   renderHeader() {
+    const { navigation } = this.props;
+    const selectedTask = navigation.getParam('task', {});
+    const Icon = getIcon(selectedTask.icon);
+
     return (
       <React.Fragment>
         <View style={styles.title}>
-          <Rocket color={COLORS.DARK_GRAY} size={SIZES.ICON_SIZE_L} />
+          <Icon color={selectedTask.color} size={SIZES.ICON_SIZE_L} />
           <StylisedText
-            color={COLORS.DARK_GRAY}
+            color={selectedTask.color}
             size='xl'
             style={styles.titleText}
           >
-            DAILY GOAL
+            {selectedTask.label.toUpperCase()}
           </StylisedText>
         </View>
         <IconButton
           color='transparent'
           onPress={this.onClose}
-          icon={<Cross color={COLORS.DARK_GRAY} size={SIZES.ICON_SIZE_M} />}
+          icon={<Cross color={COLORS.PURPLE} size={SIZES.ICON_SIZE_M} />}
           dynamicSize
         />
       </React.Fragment>
@@ -74,10 +78,6 @@ class CompletetTaskScreen extends React.Component<Props> {
   }
 
   renderInstruction() {
-    const { navigation } = this.props;
-    const selectedTask: TaskType = navigation.getParam('task', {});
-    const Icon = getIcon(selectedTask.icon);
-
     return (
       <View style={styles.instruction}>
         <StylisedText
@@ -88,7 +88,6 @@ class CompletetTaskScreen extends React.Component<Props> {
         >
           How much did you do ?
         </StylisedText>
-        <Icon size={SIZES.ICON_SIZE_M} color={selectedTask.color} />
       </View>
     );
   }

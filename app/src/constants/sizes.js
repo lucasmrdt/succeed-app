@@ -12,7 +12,8 @@ export const DEFAULT_BUTTON_HEIGHT = 50;
 
 export const ICON_SIZE_S = 15;
 export const ICON_SIZE_M = 20;
-export const ICON_SIZE_L = 30;
+export const ICON_SIZE_L = 25;
+export const ICON_SIZE_XL = 30;
 export const DEFAULT_ICON_SIZE = ICON_SIZE_L;
 
 export const TAB_BAR_ICON_SIZE = 23;

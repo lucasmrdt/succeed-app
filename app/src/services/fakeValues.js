@@ -8,7 +8,7 @@ import {
   type IconType,
 } from '@/types/dataTypes';
 
-const possibleColors = [COLORS.GREEN_PASTEL, COLORS.RED_PASTEL, COLORS.YELLOW_PASTEL];
+const possibleColors = [COLORS.YELLOW_PASTEL, COLORS.BLUE_PASTEL, COLORS.PINK_PASTEL, COLORS.BROWN_PASTEL];
 const possibleIcons: Array<IconType> = ['Gamepad', 'CreditCard', 'Beer', 'Coffee', 'Cycler'];
 const possibleStatus = Object.keys(STATUS).map(k => STATUS[k]);
 const chooseRandom = arr => arr[Math.floor(Math.random() * arr.length)];
