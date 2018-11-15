@@ -5,7 +5,7 @@ import Body from './Body';
 import AnimatedColor from './AnimatedColor';
 
 export * from './Svg';
-export * from './Input';
+export * from './Inputs';
 export * from './Overlay';
 export * from './Buttons';
 export * from './Progress';

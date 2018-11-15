@@ -9,35 +9,43 @@ import { type TextInputProps } from 'react-native';
 
 type Props = {
   icon: React.ComponentType<any>,
+  label: string,
+  onStatusChange: (status: bool) => void,
   onEndInput: (value: string | number) => void,
-  onStatusChange: (isValid: bool) => void,
-  minLength: number,
+  validator: (value) => bool,
   style: any,
   inputStyle: any,
+
+  // Use in StepperForm
+  validText: string,
+  errorText: string,
 } & TextInputProps;
 
 type State = {
-  isValid: false,
   value: string | number,
+  isValid: bool,
 };
 
 class CustomTextInput extends React.PureComponent<Props, State> {
 
   static defaultProps: Props = {
+    label: '',
     icon: null,
-    inputStyle: null,
     style: null,
-    onStatusChange: () => null,
-    minLength: 1,
+    inputStyle: null,
+    validText: null,
+    errorText: null,
+    validator: () => true,
   };
 
   state: State = {
     value: null,
+    isValid: false,
   };
 
   onChange = (value: string | number) => {
-    const { minLength, onStatusChange } = this.props;
-    const isValid = `${value}`.length >= minLength;
+    const { onStatusChange, validator } = this.props;
+    const isValid = validator(value);
 
     this.setState((state: State) => {
       if (isValid !== state.isValid) {
@@ -50,6 +58,9 @@ class CustomTextInput extends React.PureComponent<Props, State> {
   onEndEditing = () => {
     const { onEndEditing } = this.props;
     const { value } = this.state;
+
+    if (value === null) return;
+
     onEndEditing(value);
   }
 
@@ -58,19 +69,20 @@ class CustomTextInput extends React.PureComponent<Props, State> {
     const { value } = this.state;
 
     return (
-      <View style={[styles.wrapper, style]}>
+      <View
+        style={[styles.wrapper, style]}
+      >
         {icon}
         <TextInput
           {...props}
+          ref={r => this.ref = r}
           value={value}
           style={[styles.input, inputStyle]}
           onEndEditing={this.onEndEditing}
-          onBlur={() => console.log('blur!')}
           onChangeText={this.onChange}
           autoCorrect={false}
           autoCapitalize='none'
           underlineColorAndroid='rgba(0, 0, 0, 0)'
-          autoFocus
           allowFontScaling
         />
       </View>

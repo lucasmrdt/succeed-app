@@ -13,10 +13,9 @@ type Props = {
   width: number,
 };
 
-const Line = (props: Props) => (
+const CustomLine = (props: Props) => (
   <Svg width={props.width} height={LINE_HEIGHT}>
     <Line
-      strokeDasharray={4}
       strokeOpacity={1}
       strokeWidth={2}
       stroke={props.color}
@@ -28,4 +27,4 @@ const Line = (props: Props) => (
   </Svg>
 );
 
-export default pure(Line);
+export default pure(CustomLine);

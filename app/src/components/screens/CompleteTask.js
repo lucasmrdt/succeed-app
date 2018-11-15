@@ -13,10 +13,9 @@ import {
 } from '@/components/fragments';
 import { createStyleSheet, getIcon } from '@/utils';
 import { COLORS, SIZES } from '@/constants';
-import { Rocket, Cross } from '@/assets/icons';
+import { Cross } from '@/assets/icons';
 
 import { type NavigationType } from '@/types/rnTypes';
-import { type TaskType } from '@/types/dataTypes';
 
 const BOTTOM_COMPLETE_BUTTON = 30;
 const COMPLETE_BUTTON_SIZE = {

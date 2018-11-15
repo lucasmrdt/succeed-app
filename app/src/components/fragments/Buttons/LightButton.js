@@ -7,6 +7,7 @@ import { COLORS } from '@/constants';
 import { getIcon, createStyleSheet } from '@/utils';
 
 import { type StylesheetType } from '@/types/rnTypes';
+import { type IconType } from '@/types/dataTypes';
 import { type TouchableProps } from './Touchable';
 
 const LETTER_SPACING = 1;
@@ -14,7 +15,7 @@ const MARGIN_BETWEEN_TEXT_ICON = 10;
 const ICON_SIZE = 15;
 
 type Props = TouchableProps & {
-  icon: string,
+  icon: IconType,
   color: string,
   textStyle: StylesheetType,
   background: React.ComponentType<any>,

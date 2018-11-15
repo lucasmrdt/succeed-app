@@ -10,6 +10,8 @@ export const {
 export const DEFAULT_BUTTON_WIDTH = 200;
 export const DEFAULT_BUTTON_HEIGHT = 50;
 
+export const ICON_SIZE_XXS = 5;
+export const ICON_SIZE_XS = 10;
 export const ICON_SIZE_S = 15;
 export const ICON_SIZE_M = 20;
 export const ICON_SIZE_L = 25;

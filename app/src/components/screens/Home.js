@@ -43,12 +43,18 @@ class HomeScreen extends React.Component<Props> {
     const selectedTask = tasks.find(({ id }) => id === selectedTaskId);
     if (!selectedTask) return;
 
-    navigation.navigate('CreateGoal');
-  }
+    navigation.navigate('CompleteTask', { task: selectedTask });
+  };
 
-  onPressLevel = () => {
+  onNewGoalPress = () => {
+    const { navigation } = this.props;
+
+    navigation.navigate('CreateGoal');
+  };
+
+  onLevelPress = () => {
     this.props.navigation.navigate('Profile');
-  }
+  };
 
   renderButton() {
     return (
@@ -60,7 +66,7 @@ class HomeScreen extends React.Component<Props> {
         primaryColor={COLORS.PURPLE}
         rounded='fully'
         size={BUTTON_SIZE}
-        onPress={() => this.props.navigation.navigate('Screen3')}
+        onPress={this.onNewGoalPress}
         gradient
         attractive
       >
@@ -75,7 +81,7 @@ class HomeScreen extends React.Component<Props> {
         <FilterOverlay />
         <Header>
           <FilterButton />
-          <Touchable onPress={this.onPressLevel}>
+          <Touchable onPress={this.onLevelPress}>
             <Level />
           </Touchable>
         </Header>

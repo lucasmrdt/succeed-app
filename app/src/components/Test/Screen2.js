@@ -3,7 +3,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Transition } from 'react-navigation-fluid-transitions';
-import RangeInput from '@/components/fragments/Input/RangeInput';
+import RangeInput from '@/components/fragments/Inputs/RangeInput';
 import { Button } from '@/components/fragments';
 import { createStyleSheet } from '@/utils';
 import * as Constants from '@/constants';

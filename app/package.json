@@ -11,19 +11,19 @@
     "eslint": "eslint ."
   },
   "dependencies": {
-    "expo": "^30.0.1",
+    "expo": "^31.0.4",
     "lodash": "^4.17.11",
     "lodash.throttle": "^4.1.1",
     "prop-types": "^15.6.2",
     "prop-types-extra": "^1.1.0",
-    "react": "^16.6.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "react": "^16.5.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.1.tar.gz",
     "react-native-circular-progress": "^1.0.1",
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-picker-select": "^5.1.0",
     "react-native-radio-buttons": "^1.0.0",
     "react-native-status-bar-height": "^2.1.0",
-    "react-navigation": "^2.18.0",
+    "react-navigation": "^2.18.2",
     "react-navigation-fluid-transitions": "^0.2.72",
     "react-navigation-redux-helpers": "^2.0.6",
     "react-redux": "^5.0.7",
@@ -35,6 +35,8 @@
     "reselect": "^4.0.0"
   },
   "devDependencies": {
+    "@babel/plugin-transform-react-jsx-source": "^7.0.0",
+    "@babel/runtime": "^7.1.5",
     "babel-eslint": "^10.0.1",
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-react-flow-props-to-prop-types": "^0.15.0",
@@ -46,9 +48,11 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.82.0",
+    "react-native-snap-carousel": "^3.7.5",
     "react-native-svg-transformer": "^0.11.0",
     "reactotron-react-native": "^2.1.0",
     "reactotron-redux": "^2.1.0",
+    "schedule": "0.4.0",
     "why-did-you-update": "^0.1.1"
   }
 }

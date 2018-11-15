@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { pure } from 'recompose';
-import { SIZES, COLORS } from '@/constants';
+import { SIZES } from '@/constants';
 import { createStyleSheet } from '@/utils';
 
 import { type StylesheetType } from '@/types/rnTypes';
@@ -16,7 +16,7 @@ type Props = {
 };
 
 const Header = ({ children, style }: Props) => (
-  <View style={StyleSheet.flatten(styles.wrapper, style)}>
+  <View style={[styles.wrapper, style]}>
     {children}
   </View>
 );

@@ -4,8 +4,8 @@ import { createStackNavigator } from 'react-navigation';
 import { ANIMATIONS } from '@/constants';
 
 import App from './AppNavigator';
-import CreateGoal from './CreateGoalNavigator';
 import { CompleteTask } from '@/containers/screens';
+import { CreateGoal } from '@/components/screens';
 import Screen3 from '@/components/Test/Screen3';
 
 const routes = {
